@@ -3,8 +3,7 @@ run_batch <- function(bacon_params){
   
   for(i in 1:nrow(bacon_params)){
     #for(i in ids_rerun){
-    
-    print(i)
+
     site.params <- bacon_params[i,]
     if (is.na(site.params$thick)) {next}
 
@@ -16,7 +15,9 @@ run_batch <- function(bacon_params){
     # This allows things to work.
     
     if (!is.na(site.params$suitable)) {
-      site.params <- run.bacon(site.params)
+      bacon_params[i,] <- call_bacon(site.params)
     }
   }
+  
+  return(bacon_params)
 }

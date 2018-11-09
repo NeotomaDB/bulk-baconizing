@@ -207,4 +207,4 @@ for (i in 1:length(sites)) {
 
 readr::write_csv(x = params, path = paste0('data/params/bacon_params_v', version, '.csv'))
 
-# run_batch(params)
+run_batch(params[1:2,])

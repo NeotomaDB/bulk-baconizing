@@ -1,13 +1,13 @@
-run.bacon <- function(site.params){
+call_bacon <- function(site_params){
   
   # check for suitability
-  if (site.params$suitable == 1){
+  if (site_params$suitable == 1){
     
-    thick <- site.params$thick
+    thick <- site_params$thick
     
     # find hiatus depth
-    geochron <- readr::read_csv(paste0('Cores/', site.params$handle, 
-                                       '/', site.params$handle, '.csv'))  
+    geochron <- readr::read_csv(paste0('Cores/', site_params$handle, 
+                                       '/', site_params$handle, '.csv'))  
     
     
     if (any(stringr::str_detect(geochron$labid, "sett")) & nrow(geochron) > 2){
@@ -15,35 +15,35 @@ run.bacon <- function(site.params){
       # determine which bacon parameters to input
       if (which(stringr::str_detect(geochron$labid, "sett")) == nrow(geochron)){ # if preset is the last sample
         hiatus.depth       = NA
-        acc.mean.val       = site.params$acc.mean.mod
-        acc.shape.val      = site.params$acc.shape.mod      
-        site.params$hiatus = 0
+        acc.mean.val       = site_params$acc.mean.mod
+        acc.shape.val      = site_params$acc.shape.mod      
+        site_params$hiatus = 0
       } else if (which(stringr::str_detect(geochron$labid, "sett")) == 1){ # if preset is the first sample
         hiatus.depth       = NA
-        acc.mean.val       = site.params$acc.mean.old
-        acc.shape.val      = site.params$acc.shape.old      
-        site.params$hiatus = 0
+        acc.mean.val       = site_params$acc.mean.old
+        acc.shape.val      = site_params$acc.shape.old      
+        site_params$hiatus = 0
       } else {    
         hiatus.depth = geochron$depth[stringr::str_detect(geochron$labid, "sett")] #- 1
-        acc.mean.val     = c(site.params$acc.mean.mod, site.params$acc.mean.old)
-        acc.shape.val    = c(site.params$acc.shape.mod, site.params$acc.shape.old)
-        site.params$hiatus = 1
+        acc.mean.val     = c(site_params$acc.mean.mod, site_params$acc.mean.old)
+        acc.shape.val    = c(site_params$acc.shape.mod, site_params$acc.shape.old)
+        site_params$hiatus = 1
       }
       
     } else if (any(stringr::str_detect(geochron$labid, "sett")) & nrow(geochron) == 2) { # if preset and only two geochron samples, use modern priors
       hiatus.depth       = NA
-      acc.mean.val       = site.params$acc.mean.mod
-      acc.shape.val      = site.params$acc.shape.mod
-      site.params$hiatus = 0
+      acc.mean.val       = site_params$acc.mean.mod
+      acc.shape.val      = site_params$acc.shape.mod
+      site_params$hiatus = 0
     } else if (!any(stringr::str_detect(geochron$labid, "sett"))) { # if no preset then use historical priors 
       hiatus.depth       = NA
-      acc.mean.val       = site.params$acc.mean.old
-      acc.shape.val      = site.params$acc.shape.old
-      site.params$hiatus = 0
+      acc.mean.val       = site_params$acc.mean.old
+      acc.shape.val      = site_params$acc.shape.old
+      site_params$hiatus = 0
     } 
     
     out <- try(
-      with(site.params, 
+      with(site_params, 
            Bacon(core          = handle,
                  coredir       = 'Cores',
                  acc.mean      = acc.mean.val, 
@@ -60,14 +60,14 @@ run.bacon <- function(site.params){
     )
     if (!(class(out) == 'try-error')){
       
-      site.params$success = 1
+      site_params$success = 1
       
     } else {
       
-      site.params$success = 0
+      site_params$success = 0
       
     }
     
   }
-  return(site.params)
+  return(site_params)
 }

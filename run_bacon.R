@@ -15,9 +15,10 @@ library(rgdal)
 source('R/make_coredf.R')
 source('R/load_pollen.R')
 source('R/add_msg.R')
-source('R/run_bacon.R')
+source('R/call_bacon.R')
 source('R/run_batch.R')
 source('R/helpers.R')
+
 
 
 

@@ -17,10 +17,13 @@ source('R/load_pollen.R')
 source('R/add_msg.R')
 source('R/run_bacon.R')
 source('R/run_batch.R')
+source('R/helpers.R')
+
 
 
 #  This set of code is to assist with versioning locally.
-setup <- FALSE
+setup <- FALSE     # Set to TRUE if you want to download all new sites.
+params <- TRUE    # Set to TRUE if you want to regenerate the params file.
 version <- 7
 my_date <- lubridate::round_date(lubridate::now("UTC"), unit="day")
 corepath <- 'Cores'
@@ -38,7 +41,7 @@ dl <- get_dataset(datasettype='pollen',
 
 pol <- load_pollen(dl, version = version, setup = setup)
 
-if (!file.exists(paste0('data/params/bacon_params_v', version, '.csv'))) {
+if (!file.exists(paste0('data/params/bacon_params_v', version, '.csv')) | params == TRUE) {
   params <- data.frame(handle = sapply(dl, function(x) { x$dataset.meta$collection.handle }),
                        datasetid = as.integer(sapply(dl, function(x) { x$dataset.meta$dataset.id })),
                        acc.mean.mod = 3.02,
@@ -204,4 +207,4 @@ for (i in 1:length(sites)) {
 
 readr::write_csv(x = params, path = paste0('data/params/bacon_params_v', version, '.csv'))
 
-run_batch(params)
+# run_batch(params)

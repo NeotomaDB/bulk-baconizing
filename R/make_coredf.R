@@ -112,6 +112,7 @@ make_coredf <- function(corename, x, corepath = 'Cores', params) {
   
   if (corename %in% sett$handle) {
     
+    sett_row <- which(sett$handle == corename)
     depth <- as.numeric(stringr::str_extract(sett$pre1.d[sett_row], '[0-9]*'))
     
     coord <- sett %>% 
@@ -123,19 +124,20 @@ make_coredf <- function(corename, x, corepath = 'Cores', params) {
       select(state)
     
     if (any(output$labid %in% c('Pre-EuroAmerican settlement horizon', 'European settlement horizon'))) {
-      sett_row <- which(output$labid %in% c('Pre-EuroAmerican settlement horizon', 'European settlement horizon'))      
       
-      output$depth[sett_row] <- depth
+      geo_row <- which(output$labid %in% c('Pre-EuroAmerican settlement horizon', 'European settlement horizon'))      
 
-      output$age[sett_row] <- 1950 - as.numeric(get_survey_year(coord, state))
-      output$error[sett_row] <- 50
+      output$depth[geo_row] <- depth
+
+      output$age[geo_row] <- 1950 - as.numeric(get_survey_year(coord, state))
+      output$error[geo_row] <- 50
       params$notes[i] <- add_msg(params$notes[i], 'Adjusted settlement horizon based on expert elicitation.')
       
     } else {
       new_row <- data.frame(labid = 'European settlement horizon',
                             age = get_survey_year(coord, state),
                             error = 50,
-                            depth = depth, 
+                            depth = depth,
                             cc = 0)
       output <- rbind(output, new_row)
       output <- output[order(output$depth), ]

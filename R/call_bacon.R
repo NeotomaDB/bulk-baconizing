@@ -61,6 +61,7 @@ call_bacon <- function(site_params){
     if (!(class(out) == 'try-error')){
       
       site_params$success = 1
+      bacon_age_posts(site_params$handle)
       
     } else {
       

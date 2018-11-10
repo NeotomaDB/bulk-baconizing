@@ -135,7 +135,7 @@ make_coredf <- function(corename, x, corepath = 'Cores', params) {
       
     } else {
       new_row <- data.frame(labid = 'European settlement horizon',
-                            age = get_survey_year(coord, state),
+                            age = 1950 - get_survey_year(coord, state),
                             error = 50,
                             depth = depth,
                             cc = 0)

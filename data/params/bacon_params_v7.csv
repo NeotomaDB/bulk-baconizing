@@ -1,284 +1,284 @@
 handle,datasetid,acc.mean.mod,acc.mean.old,acc.shape.mod,acc.shape.old,mem.strength,mem.mean,hiatus,thick,age.type,run,suitable,ndates,success,notes
-ALLIE,29,3.02,15,0.53,0.9,2,0.5,NA,5,Calibrated radiocarbon years BP,FALSE,1,2,NA,Adjusted settlement horizon based on expert elicitation.
-ALMORA1,30,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,6,NA,.
-HELLSKIT,3131,3.02,15,0.53,0.9,2,0.5,NA,5,Varve years BP,FALSE,NA,NA,NA,Annual laminations defined as an age model but ages and depths not aligned.
-LAKEMARY,3473,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,5,NA,Added settlement horizon based on expert elicitation.
-ANDERSLK,202,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,3,NA,.
-ANDREE,204,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,3,NA,.
-ANDRUSC2,205,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,12,NA,.
-BADMED,223,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Adjusted settlement horizon based on expert elicitation.
-BBASS,241,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Adjusted settlement horizon based on expert elicitation.
-BECKMAN,249,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Adjusted settlement horizon based on expert elicitation.
+ALLIE,29,3.02,15,0.53,0.9,2,0.5,NA,5,Calibrated radiocarbon years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+ALMORA1,30,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,6,NA,Site has been added since last Bacon adjustments.
+HELLSKIT,3131,3.02,15,0.53,0.9,2,0.5,NA,15,Varve years BP,FALSE,NA,NA,NA,Thickness adjusted based on prior work.; Annual laminations defined as an age model but ages and depths not aligned.
+LAKEMARY,3473,3.02,15,0.53,0.9,2,0.5,NA,10,Radiocarbon years BP,FALSE,1,5,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+ANDERSLK,202,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,3,NA,Site has been added since last Bacon adjustments.
+ANDREE,204,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,3,NA,Site has been added since last Bacon adjustments.
+ANDRUSC2,205,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,12,NA,Site has been added since last Bacon adjustments.
+BADMED,223,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+BBASS,241,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+BECKMAN,249,3.02,15,0.53,0.9,2,0.5,NA,10,Calendar years BP,FALSE,1,2,NA,Thickness adjusted based on prior work.; Adjusted settlement horizon based on expert elicitation.
 BECKMNBG,3062,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,3,NA,Added settlement horizon based on expert elicitation.
-BIGJOHN,272,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,5,NA,There are no default models defined for the best age type: Age models have same preparation date.  Model with highest chron ID was selected; Added settlement horizon based on expert elicitation.
-BILLYS,275,3.02,15,0.53,0.9,2,0.5,NA,5,Calibrated radiocarbon years BP,FALSE,1,9,NA,There are no default models defined for the best age type: Default assigned to best age-type by precedence.; Added settlement horizon based on expert elicitation.
-BLANDIN,280,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Adjusted settlement horizon based on expert elicitation.
-BLKHOOF,282,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,2,NA,.
-BLUMOUND,287,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,6,NA,Adjusted settlement horizon based on expert elicitation.
-BOBLAKE,296,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Adjusted settlement horizon based on expert elicitation.
-BOGD,298,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,5,NA,Adjusted settlement horizon based on expert elicitation.
-BOSSUOT,305,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Adjusted settlement horizon based on expert elicitation.
-BROWNC12,313,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,11,NA,.
-BROWNSBY,314,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-BURNTSDE,325,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-CAMP11LK,332,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-CAMP12LK,333,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-CAMPBELL,334,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-CEDARBLK,352,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-CHIPPEWA,369,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-CINDY,382,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MNGRCL,515,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-CRAZY,521,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-CUB2,532,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-DALTON,545,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-DARKLAKE,546,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-DEMONTLK,679,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-DENTONLK,681,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-DEVILSWI,684,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-DISTER59,700,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-DISTRHFT,3081,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-DOGFISH,717,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-DUNNIGAN,774,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-EASTTWIN,781,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-EGGERT,786,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-ERNSTPIT,806,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-FAITH,817,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-FARQUAR,822,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-FAWNLAKE,824,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-FOXPOND,846,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-FRAINSLK,847,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-FRENCH,850,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-GASS,860,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-GEORGE,869,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MNBELG,15245,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-GOLDSMTH,967,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-GREENLK,982,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-GRICE,990,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-HANSEN,1004,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-HEMOPOND,1032,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-HORSE,1109,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-HORSHOHA,1110,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-HOSTAGE,1111,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-HUGLAKE,1134,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-HUSTLER,1138,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-IOLABOG,1151,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-IRVIN,1153,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-JACOBSN1,1163,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-JACOBSN2,3138,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MNSHBL,15274,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-KEGAN,1446,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-KELLHOL1,1447,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-KELLHOL2,3452,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-KELLNERS,1448,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-KIRCHNR1,1520,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-KIRCHNR2,3455,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-KITCHNER,1524,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-KOTIRANT,1548,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-KRYZ,1552,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-KYLENLK,1564,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LAKE16,1580,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LAKE27,1581,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LAKEANN,1584,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LAKEANNF,3468,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LAKEANNH,3469,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LAKECARL,1588,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LEWISLK,1629,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LILYLAKE,1633,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LITTBASS,1639,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LITTLPIN,1643,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LKCLDSA,1649,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LKCLDSH,3482,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LKCLDSSW,3483,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LOSTLAKE,1665,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MABEL,1685,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-STWDARK2,3781,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MARTINPD,1708,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MCCRANEY,1720,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MCNRNY2A,1725,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MCNRNY3A,3485,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MCNRNY4A,3486,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MENDOTAC,1735,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MENDOTAD,3488,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MINNIEN,1757,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MINNIEO,3492,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MUDLKMN1,1777,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MUDLKMN2,1778,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MURPHY,1781,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MYRTLE,1786,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-NELSLK,1793,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-NELSONPD,1794,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-ONAMIA,1830,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-ONDRISPD,1831,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-OTTOMLK,1840,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-PGONIABG,3541,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-POGONIA,3558,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-THIRDLK,3784,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-THRDBGN,3786,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-THRDBGW,3788,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-PENNINGT,1884,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-PETERSL,1891,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-PLEASAMN,1955,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-PORTAGE,1966,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-RADTKE,2011,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-REICHOW,2051,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-REIDEL,2053,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-RHOLL,2062,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-RICEMNA,2066,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-RICEMNB,3568,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-ROSSBURG,2290,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-RUBYLAKE,2309,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-RUTZLAKE,2314,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-RYERSE,2318,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-SEDIVY,2354,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-SEIDEL01,2355,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-SEIDEL02,3620,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-SHAGAWA,2375,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-SILVERMN,2383,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-SISEEBA,2394,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-SOLUM,2581,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-SOSTANCH,2584,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-SPECTACL,2585,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-SPIRIT,2586,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-STCATHER,2600,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-STONE,2605,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-STONTAM1,2607,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-STONTAM2,3780,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-SUNFISH,2613,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-TAMARACK,2624,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-TERHELL,2638,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-THOMPSON,2640,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-TOENJES,2648,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-TWINMN1,2881,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-UPGRAVEN,2888,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-VESTABRG,3831,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-WEBERLK,3837,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-WENTZEL,2948,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-WHITLIL1,2952,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-WHITLILY,3841,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-WILWRDPD,2956,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-WINTERGR,2961,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-WOLFCRK,3029,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-WOLSFELD,3031,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-WOLVERIN,3032,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-WOODLAKE,3035,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-YELLOWDG,3047,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-CANYONMI,15682,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-SOUHERON,10970,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-OCHEDA,10971,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-BLOMFORD,10973,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-FAWNANMN,10974,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-FROVOLD,10975,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-GOOSEMN,10976,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-OLSONMN,10977,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-RNDGROVE,10983,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LTDOLLAR,12001,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LASTLAKE,12004,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MNLYC2,12005,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MONSON,12006,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-DEANS,12007,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-EMILY,12008,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-PERCHMN,12009,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-CHUBLAKE,12010,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MNDLLR,12011,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-ZIEBELL,12012,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MNDLML,12013,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LYBECK,12014,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-UNION,12015,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MNFRAL,12016,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-ALBERTL3,15248,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-EVRHRTLK,12024,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-SHARKEY,13029,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-KIMBLE,13032,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-IRWINSMT,13047,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-WESTOLAF,13051,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-OAKGLEN,13056,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-CAMPLAKE,13057,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-ADELINE,13060,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-ELEVENS,13069,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-ESKALAKE,13071,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-FALLISON,13073,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-GLIMML1,13097,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-BASSK,14270,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-SALLIE,14403,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-TOWER1,14410,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-TOWER4,14443,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-TOWER6,14889,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-TOWER7,17993,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MNPPJL,14435,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-HELLHOLE,14446,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LILY,14535,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-KELLYDUD,14537,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MARTHA,14539,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-NORPOL,19316,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MINNREG,14626,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-AMBER,14631,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-CAMP,14633,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-CRYSTAL,14635,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-FISHL,14637,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-FISHS,14639,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-EAGLEL,14641,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-EMILY_NE,14643,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-FULLER,14645,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LAKEMINA,14839,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-ELKGR-89,20311,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-NELSONMI,14933,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MUDLKMI,15032,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LILYMI,15035,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MNCLEB,15167,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MNCLEC,15168,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MNCLE4,15169,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MNCLED,15219,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MNCLEL,15269,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MNBCSC,15228,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MNCLSQ,15252,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MNCHLH,15254,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MNOTCL,15256,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MNCVTL,15266,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MNHBLS,15270,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MNWSSO,15273,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-WILLIAMJ,15281,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MNHNLL,15294,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-EMRICK,15302,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-ESOLDIER,15309,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-GUARD,15311,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-TROUTLBG,15316,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MNHNWB,15318,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-DEEPLAKE,15403,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-ADVENTUR,15460,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-BENACH,15463,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-BLUEJ,15477,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-BROZIE,15478,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-CAMPTWO,15479,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-COWDEN,15487,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-FERRY01,15489,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-HICKSMI,15492,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MORRIMI,15511,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-BUCKMI,15660,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-HEMLOCK,15740,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-WARNERWI,15882,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-KERRMI,15916,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-CROOKEDN,15919,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-CROOKEDR,20695,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-CROOKEDU,20697,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-JAYLAKE,15922,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-OPINES,15925,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-QUALLY,15965,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-ITASCALC,15985,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-ITASCAMB,15989,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-ITASCAMC,15992,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-ITASCAMD,15998,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-ITASCAT2,16002,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LIMABOG,16129,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-CAPITOLA,17304,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-BEAVERWI,17387,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-STEELMN,17396,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LORRAINE,17404,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-PENEGOR,17406,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-FOXMN,19834,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LITSHING,17947,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MADELIA,19812,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LONESTAR,19931,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-LILY04,19933,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-SRHODY,20397,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-MINDEN,20512,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
-OTTERMI,25306,3.02,15,0.53,0.9,2,0.5,NA,5,NA,FALSE,NA,NA,NA,.
+BIGJOHN,272,3.02,15,0.53,0.9,2,0.5,NA,15,Radiocarbon years BP,FALSE,1,5,NA,Thickness adjusted based on prior work.; There are no default models defined for the best age type: Age models have same preparation date.  Model with highest chron ID was selected; Added settlement horizon based on expert elicitation.
+BILLYS,275,3.02,15,0.53,0.9,2,0.5,NA,15,Calibrated radiocarbon years BP,FALSE,1,9,NA,Thickness adjusted based on prior work.; There are no default models defined for the best age type: Default assigned to best age-type by precedence.; Added settlement horizon based on expert elicitation.
+BLANDIN,280,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+BLKHOOF,282,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+BLUMOUND,287,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,6,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+BOBLAKE,296,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+BOGD,298,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,5,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+BOSSUOT,305,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+BROWNC12,313,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,11,NA,Site has been added since last Bacon adjustments.
+BROWNSBY,314,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,13,NA,Added settlement horizon based on expert elicitation.
+BURNTSDE,325,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,3,NA,Added settlement horizon based on expert elicitation.
+CAMP11LK,332,3.02,15,0.53,0.9,2,0.5,NA,20,Radiocarbon years BP,FALSE,1,14,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+CAMP12LK,333,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,15,NA,Site has been added since last Bacon adjustments.; Added settlement horizon based on expert elicitation.
+CAMPBELL,334,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+CEDARBLK,352,3.02,15,0.53,0.9,2,0.5,NA,20,Radiocarbon years BP,FALSE,1,6,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+CHIPPEWA,369,3.02,15,0.53,0.9,2,0.5,NA,15,Radiocarbon years BP,FALSE,1,4,NA,Thickness adjusted based on prior work.
+CINDY,382,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+MNGRCL,515,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+CRAZY,521,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+CUB2,532,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,8,NA,Site has been added since last Bacon adjustments.; Added settlement horizon based on expert elicitation.
+DALTON,545,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+DARKLAKE,546,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,NA,NA,NA,Site has been added since last Bacon adjustments.; Annual laminations defined in the age models.
+DEMONTLK,679,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,7,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+DENTONLK,681,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,14,NA,Site has been added since last Bacon adjustments.; Added settlement horizon based on expert elicitation.
+DEVILSWI,684,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,13,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+DISTER59,700,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,4,NA,Site has been added since last Bacon adjustments.
+DISTRHFT,3081,3.02,15,0.53,0.9,2,0.5,NA,20,Radiocarbon years BP,FALSE,1,7,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+DOGFISH,717,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,3,NA,Added settlement horizon based on expert elicitation.
+DUNNIGAN,774,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,15,NA,Site has been added since last Bacon adjustments.; Added settlement horizon based on expert elicitation.
+EASTTWIN,781,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+EGGERT,786,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+ERNSTPIT,806,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+FAITH,817,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+FARQUAR,822,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+FAWNLAKE,824,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+FOXPOND,846,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+FRAINSLK,847,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,9,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+FRENCH,850,3.02,15,0.53,0.9,2,0.5,NA,20,Radiocarbon years BP,FALSE,1,6,NA,Thickness adjusted based on prior work.; There are no default models defined for the best age type: Most recently generated model chosen; Added settlement horizon based on expert elicitation.
+GASS,860,3.02,15,0.53,0.9,2,0.5,NA,20,Radiocarbon years BP,FALSE,1,9,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+GEORGE,869,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+MNBELG,15245,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+GOLDSMTH,967,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+GREENLK,982,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,5,NA,Site has been added since last Bacon adjustments.; Added settlement horizon based on expert elicitation.
+GRICE,990,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+HANSEN,1004,3.02,100,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,3,NA,High accumulation rates for the core detected: Assigning default accumulation rate to 100.
+HEMOPOND,1032,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+HORSE,1109,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+HORSHOHA,1110,3.02,15,0.53,0.9,2,0.5,NA,20,Radiocarbon years BP,FALSE,1,5,NA,Thickness adjusted based on prior work.
+HOSTAGE,1111,3.02,15,0.53,0.9,2,0.5,NA,10,Radiocarbon years BP,FALSE,1,5,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+HUGLAKE,1134,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+HUSTLER,1138,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,12,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+IOLABOG,1151,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,3,NA,Site has been added since last Bacon adjustments.; Added settlement horizon based on expert elicitation.
+IRVIN,1153,3.02,15,0.53,0.9,2,0.5,NA,15,Calibrated radiocarbon years BP,FALSE,1,9,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+JACOBSN1,1163,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,3,NA,Site has been added since last Bacon adjustments.
+JACOBSN2,3138,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,4,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+MNSHBL,15274,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+KEGAN,1446,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+KELLHOL1,1447,3.02,15,0.53,0.9,2,0.5,NA,10,Radiocarbon years BP,FALSE,1,7,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+KELLHOL2,3452,3.02,15,0.53,0.9,2,0.5,NA,15,Radiocarbon years BP,FALSE,1,5,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+KELLNERS,1448,3.02,15,0.53,0.9,2,0.5,NA,20,Radiocarbon years BP,FALSE,1,6,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+KIRCHNR1,1520,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,6,NA,Site has been added since last Bacon adjustments.
+KIRCHNR2,3455,3.02,15,0.53,0.9,2,0.5,NA,10,Radiocarbon years BP,FALSE,1,4,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+KITCHNER,1524,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,6,NA,Site has been added since last Bacon adjustments.; Added settlement horizon based on expert elicitation.
+KOTIRANT,1548,3.02,15,0.53,0.9,2,0.5,NA,20,Calibrated radiocarbon years BP,FALSE,1,6,NA,Thickness adjusted based on prior work.
+KRYZ,1552,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+KYLENLK,1564,3.02,15,0.53,0.9,2,0.5,NA,10,Radiocarbon years BP,FALSE,1,9,NA,Thickness adjusted based on prior work.
+LAKE16,1580,3.02,15,0.53,0.9,2,0.5,NA,20,Radiocarbon years BP,FALSE,1,6,NA,Thickness adjusted based on prior work.
+LAKE27,1581,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,4,NA,.
+LAKEANN,1584,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+LAKEANNF,3468,3.02,15,0.53,0.9,2,0.5,NA,20,Calibrated radiocarbon years BP,FALSE,1,5,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+LAKEANNH,3469,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+LAKECARL,1588,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+LEWISLK,1629,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+LILYLAKE,1633,3.02,15,0.53,0.9,2,0.5,NA,15,Calibrated radiocarbon years BP,FALSE,1,10,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+LITTBASS,1639,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,7,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+LITTLPIN,1643,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,NA,NA,NA,Site has been added since last Bacon adjustments.; Annual laminations defined in the age models.
+LKCLDSA,1649,3.02,15,0.53,0.9,2,0.5,NA,5,Varve years BP,FALSE,NA,NA,NA,Annual laminations defined as an age model but ages and depths not aligned.
+LKCLDSH,3482,3.02,15,0.53,0.9,2,0.5,NA,5,Calibrated radiocarbon years BP,FALSE,NA,NA,NA,Annual laminations defined as an age model but ages and depths not aligned.
+LKCLDSSW,3483,3.02,15,0.53,0.9,2,0.5,NA,5,Varve years BP,FALSE,NA,NA,NA,Site has been added since last Bacon adjustments.; Annual laminations defined as an age model but ages and depths not aligned.
+LOSTLAKE,1665,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,7,NA,Added settlement horizon based on expert elicitation.
+MABEL,1685,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,NA,1,NA,Site has been added since last Bacon adjustments.; Only one age constraint exists for the record.
+STWDARK2,3781,3.02,15,0.53,0.9,2,0.5,NA,20,Radiocarbon years BP,FALSE,1,6,NA,Thickness adjusted based on prior work.
+MARTINPD,1708,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+MCCRANEY,1720,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+MCNRNY2A,1725,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,11,NA,Site has been added since last Bacon adjustments.; Added settlement horizon based on expert elicitation.
+MCNRNY3A,3485,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,11,NA,Site has been added since last Bacon adjustments.; Added settlement horizon based on expert elicitation.
+MCNRNY4A,3486,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,9,NA,Site has been added since last Bacon adjustments.; Added settlement horizon based on expert elicitation.
+MENDOTAC,1735,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,8,NA,Site has been added since last Bacon adjustments.; Added settlement horizon based on expert elicitation.
+MENDOTAD,3488,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,7,NA,Site has been added since last Bacon adjustments.; Added settlement horizon based on expert elicitation.
+MINNIEN,1757,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+MINNIEO,3492,3.02,15,0.53,0.9,2,0.5,NA,15,Calibrated radiocarbon years BP,FALSE,1,9,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+MUDLKMN1,1777,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+MUDLKMN2,1778,3.02,15,0.53,0.9,2,0.5,NA,20,Radiocarbon years BP,FALSE,1,5,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+MURPHY,1781,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+MYRTLE,1786,3.02,15,0.53,0.9,2,0.5,NA,20,Calibrated radiocarbon years BP,FALSE,1,8,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+NELSLK,1793,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,16,NA,Added settlement horizon based on expert elicitation.
+NELSONPD,1794,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,2,NA,.
+ONAMIA,1830,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+ONDRISPD,1831,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,4,NA,Added settlement horizon based on expert elicitation.
+OTTOMLK,1840,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,11,NA,Site has been added since last Bacon adjustments.; Added settlement horizon based on expert elicitation.
+PGONIABG,3541,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,3,NA,Added settlement horizon based on expert elicitation.
+POGONIA,3558,3.02,15,0.53,0.9,2,0.5,NA,20,Radiocarbon years BP,FALSE,1,9,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+THIRDLK,3784,3.02,15,0.53,0.9,2,0.5,NA,5,Calibrated radiocarbon years BP,FALSE,1,5,NA,Site has been added since last Bacon adjustments.; Added settlement horizon based on expert elicitation.
+THRDBGN,3786,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,3,NA,Site has been added since last Bacon adjustments.; Added settlement horizon based on expert elicitation.
+THRDBGW,3788,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,4,NA,Site has been added since last Bacon adjustments.; Added settlement horizon based on expert elicitation.
+PENNINGT,1884,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+PETERSL,1891,3.02,15,0.53,0.9,2,0.5,NA,15,Radiocarbon years BP,FALSE,1,3,NA,Thickness adjusted based on prior work.
+PLEASAMN,1955,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+PORTAGE,1966,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,5,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+RADTKE,2011,3.02,15,0.53,0.9,2,0.5,NA,15,Radiocarbon years BP,FALSE,1,10,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+REICHOW,2051,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+REIDEL,2053,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,9,NA,Site has been added since last Bacon adjustments.; Added settlement horizon based on expert elicitation.
+RHOLL,2062,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+RICEMNA,2066,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,4,NA,Site has been added since last Bacon adjustments.
+RICEMNB,3568,3.02,15,0.53,0.9,2,0.5,NA,20,Radiocarbon years BP,FALSE,1,3,NA,Thickness adjusted based on prior work.
+ROSSBURG,2290,3.02,15,0.53,0.9,2,0.5,NA,15,Radiocarbon years BP,FALSE,1,4,NA,Thickness adjusted based on prior work.
+RUBYLAKE,2309,3.02,15,0.53,0.9,2,0.5,NA,15,Varve years BP,FALSE,NA,NA,NA,Thickness adjusted based on prior work.; Annual laminations defined as an age model but ages and depths not aligned.
+RUTZLAKE,2314,3.02,15,0.53,0.9,2,0.5,NA,15,Calibrated radiocarbon years BP,FALSE,1,12,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+RYERSE,2318,3.02,100,0.53,0.9,2,0.5,NA,10,Radiocarbon years BP,FALSE,1,7,NA,Thickness adjusted based on prior work.; High accumulation rates for the core detected: Assigning default accumulation rate to 100.; Added settlement horizon based on expert elicitation.
+SEDIVY,2354,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+SEIDEL01,2355,3.02,15,0.53,0.9,2,0.5,NA,20,Radiocarbon years BP,FALSE,1,4,NA,Thickness adjusted based on prior work.
+SEIDEL02,3620,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+SHAGAWA,2375,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,3,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+SILVERMN,2383,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+SISEEBA,2394,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+SOLUM,2581,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+SOSTANCH,2584,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+SPECTACL,2585,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+SPIRIT,2586,3.02,15,0.53,0.9,2,0.5,NA,15,Radiocarbon years BP,FALSE,1,9,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+STCATHER,2600,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+STONE,2605,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+STONTAM1,2607,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,5,NA,Site has been added since last Bacon adjustments.; Added settlement horizon based on expert elicitation.
+STONTAM2,3780,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+SUNFISH,2613,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+TAMARACK,2624,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,6,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+TERHELL,2638,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,3,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+THOMPSON,2640,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+TOENJES,2648,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+TWINMN1,2881,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+UPGRAVEN,2888,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,8,NA,Site has been added since last Bacon adjustments.; Added settlement horizon based on expert elicitation.
+VESTABRG,3831,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,7,NA,Added settlement horizon based on expert elicitation.
+WEBERLK,3837,3.02,15,0.53,0.9,2,0.5,NA,20,Radiocarbon years BP,FALSE,1,8,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+WENTZEL,2948,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,5,NA,Added settlement horizon based on expert elicitation.
+WHITLIL1,2952,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+WHITLILY,3841,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,3,NA,Site has been added since last Bacon adjustments.
+WILWRDPD,2956,3.02,15,0.53,0.9,2,0.5,NA,5,Radiocarbon years BP,FALSE,1,2,NA,.
+WINTERGR,2961,3.02,15,0.53,0.9,2,0.5,NA,20,Radiocarbon years BP,FALSE,1,12,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+WOLFCRK,3029,3.02,15,0.53,0.9,2,0.5,NA,20,Radiocarbon years BP,FALSE,1,12,NA,Thickness adjusted based on prior work.
+WOLSFELD,3031,3.02,15,0.53,0.9,2,0.5,NA,20,Calibrated radiocarbon years BP,FALSE,1,18,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+WOLVERIN,3032,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,7,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+WOODLAKE,3035,3.02,15,0.53,0.9,2,0.5,NA,15,Radiocarbon years BP,FALSE,1,9,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+YELLOWDG,3047,3.02,15,0.53,0.9,2,0.5,NA,10,Radiocarbon years BP,FALSE,1,11,NA,Thickness adjusted based on prior work.
+CANYONMI,15682,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,9,NA,Site has been added since last Bacon adjustments.
+SOUHERON,10970,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+OCHEDA,10971,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+BLOMFORD,10973,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+FAWNANMN,10974,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+FROVOLD,10975,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+GOOSEMN,10976,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+OLSONMN,10977,3.02,15,0.53,0.9,2,0.5,NA,15,Calendar years BP,FALSE,1,3,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+RNDGROVE,10983,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+LTDOLLAR,12001,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,3,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+LASTLAKE,12004,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,3,NA,Site has been added since last Bacon adjustments.; Added settlement horizon based on expert elicitation.
+MNLYC2,12005,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+MONSON,12006,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+DEANS,12007,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+EMILY,12008,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+PERCHMN,12009,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+CHUBLAKE,12010,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+MNDLLR,12011,3.02,15,0.53,0.9,2,0.5,NA,10,Calendar years BP,FALSE,1,2,NA,Thickness adjusted based on prior work.
+ZIEBELL,12012,3.02,15,0.53,0.9,2,0.5,NA,15,Calendar years BP,FALSE,1,3,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+MNDLML,12013,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+LYBECK,12014,3.02,15,0.53,0.9,2,0.5,NA,15,Calendar years BP,FALSE,1,3,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+UNION,12015,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+MNFRAL,12016,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+ALBERTL3,15248,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+EVRHRTLK,12024,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+SHARKEY,13029,3.02,15,0.53,0.9,2,0.5,NA,20,Calibrated radiocarbon years BP,FALSE,1,14,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+KIMBLE,13032,3.02,15,0.53,0.9,2,0.5,NA,20,Calibrated radiocarbon years BP,FALSE,1,12,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+IRWINSMT,13047,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,24,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+WESTOLAF,13051,3.02,15,0.53,0.9,2,0.5,NA,15,Calibrated radiocarbon years BP,FALSE,1,13,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+OAKGLEN,13056,3.02,15,0.53,0.9,2,0.5,NA,20,Calendar years BP,FALSE,1,3,NA,Thickness adjusted based on prior work.; Added settlement horizon based on expert elicitation.
+CAMPLAKE,13057,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+ADELINE,13060,3.02,15,0.53,0.9,2,0.5,NA,5,Calibrated radiocarbon years BP,FALSE,1,7,NA,Site has been added since last Bacon adjustments.; There are multiple default models defined for the best age type: Default assigned to most recent model; Adjusted settlement horizon based on expert elicitation.
+ELEVENS,13069,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,10,NA,Site has been added since last Bacon adjustments.
+ESKALAKE,13071,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,6,NA,Site has been added since last Bacon adjustments.
+FALLISON,13073,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,7,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+GLIMML1,13097,3.02,15,0.53,0.9,2,0.5,NA,15,Calibrated radiocarbon years BP,FALSE,1,7,NA,Thickness adjusted based on prior work.
+BASSK,14270,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,5,NA,Site has been added since last Bacon adjustments.
+SALLIE,14403,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+TOWER1,14410,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,12,NA,Site has been added since last Bacon adjustments.
+TOWER4,14443,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+TOWER6,14889,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,3,NA,Site has been added since last Bacon adjustments.
+TOWER7,17993,3.02,15,0.53,0.9,2,0.5,NA,5,Calibrated radiocarbon years BP,FALSE,1,4,NA,.
+MNPPJL,14435,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+HELLHOLE,14446,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,7,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+LILY,14535,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,4,NA,Site has been added since last Bacon adjustments.; Adjusted settlement horizon based on expert elicitation.
+KELLYDUD,14537,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,4,NA,Site has been added since last Bacon adjustments.
+MARTHA,14539,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,5,NA,Site has been added since last Bacon adjustments.
+NORPOL,19316,3.02,15,0.53,0.9,2,0.5,NA,5,Calibrated radiocarbon years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+MINNREG,14626,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,5,NA,Site has been added since last Bacon adjustments.
+AMBER,14631,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,4,NA,.
+CAMP,14633,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,4,NA,.
+CRYSTAL,14635,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,4,NA,Site has been added since last Bacon adjustments.
+FISHL,14637,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,4,NA,Site has been added since last Bacon adjustments.
+FISHS,14639,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,5,NA,Site has been added since last Bacon adjustments.
+EAGLEL,14641,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,4,NA,Site has been added since last Bacon adjustments.
+EMILY_NE,14643,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,4,NA,Site has been added since last Bacon adjustments.
+FULLER,14645,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,4,NA,Site has been added since last Bacon adjustments.
+LAKEMINA,14839,3.02,15,0.53,0.9,2,0.5,NA,5,Varve years BP,FALSE,NA,NA,NA,Site has been added since last Bacon adjustments.; Annual laminations defined in the age models.
+ELKGR-89,20311,3.02,15,0.53,0.9,2,0.5,NA,5,Calibrated radiocarbon years BP,FALSE,1,4,NA,.
+NELSONMI,14933,3.02,15,0.53,0.9,2,0.5,NA,10,Calibrated radiocarbon years BP,FALSE,1,9,NA,Thickness adjusted based on prior work.
+MUDLKMI,15032,3.02,15,0.53,0.9,2,0.5,NA,20,Calibrated radiocarbon years BP,FALSE,1,9,NA,Thickness adjusted based on prior work.
+LILYMI,15035,3.02,15,0.53,0.9,2,0.5,NA,15,Calibrated radiocarbon years BP,FALSE,1,7,NA,Thickness adjusted based on prior work.
+MNCLEB,15167,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,.
+MNCLEC,15168,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,.
+MNCLE4,15169,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+MNCLED,15219,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+MNCLEL,15269,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,12,NA,.
+MNBCSC,15228,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+MNCLSQ,15252,3.02,15,0.53,0.9,2,0.5,NA,20,Calibrated radiocarbon years BP,FALSE,1,3,NA,Thickness adjusted based on prior work.
+MNCHLH,15254,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+MNOTCL,15256,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+MNCVTL,15266,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+MNHBLS,15270,3.02,15,0.53,0.9,2,0.5,NA,5,Varve years BP,FALSE,NA,NA,NA,Annual laminations defined as an age model but ages and depths not aligned.
+MNWSSO,15273,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+WILLIAMJ,15281,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+MNHNLL,15294,3.02,15,0.53,0.9,2,0.5,NA,5,Calibrated radiocarbon years BP,FALSE,1,5,NA,.
+EMRICK,15302,3.02,15,0.53,0.9,2,0.5,NA,20,Calibrated radiocarbon years BP,FALSE,1,7,NA,Thickness adjusted based on prior work.
+ESOLDIER,15309,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,5,NA,Site has been added since last Bacon adjustments.
+GUARD,15311,3.02,100,0.53,0.9,2,0.5,NA,5,Calibrated radiocarbon years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; High accumulation rates for the core detected: Assigning default accumulation rate to 100.
+TROUTLBG,15316,3.02,15,0.53,0.9,2,0.5,NA,20,Calibrated radiocarbon years BP,FALSE,1,2,NA,Thickness adjusted based on prior work.
+MNHNWB,15318,3.02,15,0.53,0.9,2,0.5,NA,5,Calibrated radiocarbon years BP,FALSE,1,3,NA,.
+DEEPLAKE,15403,3.02,15,0.53,0.9,2,0.5,NA,20,Calibrated radiocarbon years BP,FALSE,1,8,NA,Thickness adjusted based on prior work.
+ADVENTUR,15460,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+BENACH,15463,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+BLUEJ,15477,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+BROZIE,15478,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+CAMPTWO,15479,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+COWDEN,15487,3.02,15,0.53,0.9,2,0.5,NA,15,Calibrated radiocarbon years BP,FALSE,1,4,NA,Thickness adjusted based on prior work.
+FERRY01,15489,3.02,15,0.53,0.9,2,0.5,NA,15,Calibrated radiocarbon years BP,FALSE,1,5,NA,Thickness adjusted based on prior work.
+HICKSMI,15492,3.02,15,0.53,0.9,2,0.5,NA,15,Calibrated radiocarbon years BP,FALSE,1,4,NA,Thickness adjusted based on prior work.
+MORRIMI,15511,3.02,15,0.53,0.9,2,0.5,NA,10,Calibrated radiocarbon years BP,FALSE,1,4,NA,Thickness adjusted based on prior work.
+BUCKMI,15660,3.02,15,0.53,0.9,2,0.5,NA,20,Calibrated radiocarbon years BP,FALSE,1,7,NA,Thickness adjusted based on prior work.
+HEMLOCK,15740,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,4,NA,Site has been added since last Bacon adjustments.
+WARNERWI,15882,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,6,NA,Site has been added since last Bacon adjustments.
+KERRMI,15916,3.02,100,0.53,0.9,2,0.5,NA,5,Calibrated radiocarbon years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.; High accumulation rates for the core detected: Assigning default accumulation rate to 100.
+CROOKEDN,15919,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,6,NA,Site has been added since last Bacon adjustments.
+CROOKEDR,20695,3.02,15,0.53,0.9,2,0.5,NA,5,Calibrated radiocarbon years BP,FALSE,1,16,NA,Site has been added since last Bacon adjustments.
+CROOKEDU,20697,3.02,15,0.53,0.9,2,0.5,NA,5,Calibrated radiocarbon years BP,FALSE,1,14,NA,Site has been added since last Bacon adjustments.
+JAYLAKE,15922,3.02,15,0.53,0.9,2,0.5,NA,5,Calibrated radiocarbon years BP,FALSE,1,8,NA,Site has been added since last Bacon adjustments.
+OPINES,15925,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,7,NA,Site has been added since last Bacon adjustments.
+QUALLY,15965,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+ITASCALC,15985,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,3,NA,Site has been added since last Bacon adjustments.
+ITASCAMB,15989,3.02,15,0.53,0.9,2,0.5,NA,5,Calibrated radiocarbon years BP,FALSE,1,4,NA,.
+ITASCAMC,15992,3.02,15,0.53,0.9,2,0.5,NA,5,Calibrated radiocarbon years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+ITASCAMD,15998,3.02,15,0.53,0.9,2,0.5,NA,5,Calibrated radiocarbon years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+ITASCAT2,16002,3.02,15,0.53,0.9,2,0.5,NA,5,Calibrated radiocarbon years BP,FALSE,1,2,NA,Site has been added since last Bacon adjustments.
+LIMABOG,16129,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,6,NA,Site has been added since last Bacon adjustments.
+CAPITOLA,17304,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,6,NA,Site has been added since last Bacon adjustments.
+BEAVERWI,17387,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,6,NA,Site has been added since last Bacon adjustments.
+STEELMN,17396,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,36,NA,Site has been added since last Bacon adjustments.
+LORRAINE,17404,3.02,15,0.53,0.9,2,0.5,NA,15,Calibrated radiocarbon years BP,FALSE,1,6,NA,Thickness adjusted based on prior work.
+PENEGOR,17406,3.02,15,0.53,0.9,2,0.5,NA,5,Calibrated radiocarbon years BP,FALSE,1,7,NA,.
+FOXMN,19834,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,6,NA,Site has been added since last Bacon adjustments.
+LITSHING,17947,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,22,NA,Site has been added since last Bacon adjustments.
+MADELIA,19812,3.02,100,0.53,0.9,2,0.5,NA,5,Calibrated radiocarbon years BP,FALSE,1,2,NA,High accumulation rates for the core detected: Assigning default accumulation rate to 100.
+LONESTAR,19931,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,12,NA,Site has been added since last Bacon adjustments.
+LILY04,19933,3.02,15,0.53,0.9,2,0.5,NA,5,Calendar years BP,FALSE,1,14,NA,Site has been added since last Bacon adjustments.
+SRHODY,20397,3.02,15,0.53,0.9,2,0.5,NA,10,Calibrated radiocarbon years BP,FALSE,1,11,NA,Thickness adjusted based on prior work.
+MINDEN,20512,3.02,15,0.53,0.9,2,0.5,NA,10,Calibrated radiocarbon years BP,FALSE,1,12,NA,Thickness adjusted based on prior work.
+OTTERMI,25306,3.02,15,0.53,0.9,2,0.5,NA,5,Calibrated radiocarbon years BP,FALSE,1,5,NA,Site has been added since last Bacon adjustments.

@@ -1,16 +1,16 @@
 ### Clean Bacon Run:
 
-library(rbacon)
-library(neotoma)
-library(maps)
-library(fields)
-library(raster)
-library(rgdal)
-library(dplyr)
-library(lubridate)
-library(httr)
-library(jsonlite)
-library(rgdal)
+library(rbacon, quietly = TRUE)
+library(neotoma, quietly = TRUE)
+library(maps, quietly = TRUE)
+library(fields, quietly = TRUE)
+library(raster, quietly = TRUE)
+library(rgdal, quietly = TRUE)
+library(dplyr, quietly = TRUE)
+library(lubridate, quietly = TRUE)
+library(httr, quietly = TRUE)
+library(jsonlite, quietly = TRUE)
+library(rgdal, quietly = TRUE)
 
 source('R/make_coredf.R')
 source('R/load_pollen.R')
@@ -19,9 +19,6 @@ source('R/call_bacon.R')
 source('R/run_batch.R')
 source('R/helpers.R')
 source('R/bacon_age_posts.R')
-
-
-
 
 #  This set of code is to assist with versioning locally.
 setup <- FALSE     # Set to TRUE if you want to download all new sites.
@@ -34,14 +31,14 @@ corepath <- 'Cores'
 # parameters passed to get_dataset.
 domain = c('Minnesota', 'Wisconsin', 'Michigan')
 
-# Some cores have varves, but I think I fix that elsewhere.
-varves = read.csv('data/varves.csv', stringsAsFactors=FALSE)
 
 dl <- get_dataset(datasettype='pollen',
                   gpid = domain,
                   ageyoung=0)
 
 pol <- load_pollen(dl, version = version, setup = setup)
+
+## Now generate the list of parameters here:
 
 if (!file.exists(paste0('data/params/bacon_params_v', version, '.csv')) | params == TRUE) {
   params <- data.frame(handle = sapply(dl, function(x) { x$dataset.meta$collection.handle }),
@@ -69,6 +66,23 @@ if (!file.exists(paste0('data/params/bacon_params_v', version, '.csv')) | params
                             col_types = paste0(c('c','i', rep('n',8),'c', 'l','l','i','l','c'), collapse=''))
 }
 
+## This adjusts the thickness estimates based on prior runs of the cores:
+thick_list <- readr::read_csv('data/paleon_thick.csv')
+
+modified_ids <- params$datasetid[which(params$datasetid %in% thick_list$dataset_id[!thick_list$thick == 5])]
+
+for (i in 1:nrow(params)) {
+  if (params$datasetid[i] %in% modified_ids) {
+    params$thick[i] <- thick_list$thick[which(thick_list$dataset_id == params$datasetid[i])] 
+    params$notes[i] <- add_msg(params$notes[i], 'Thickness adjusted based on prior work.')
+  } else {
+    if (!params$datasetid[i] %in% thick_list$dataset_id) {
+      params$notes[i] <- add_msg(params$notes[i], 'Site has been added since last Bacon adjustments.')
+    }
+  }
+}
+
+## Now the code itself begins to execute:
 sites <- sapply(dl, function(x) { x$dataset.meta$dataset.id })
 
 #  Check that the parameters table is up to date.
@@ -141,17 +155,20 @@ for (i in 1:length(sites)) {
           modeldefault$default <- new_default
           params$notes[i] <- add_msg(params$notes[i], 'There are no default models defined for the best age type: Most recently generated model chosen')
         } else {
+          
+          # You are the default if you have the highest chronology id.
           chronid <- sapply(chrons$chronologies, function(x) x$chronologyid)
+          
           new_default <- most_recent == max(most_recent) &
             modeldefault$order == min(modeldefault$order) &
             chronid == max(chronid)
+          
           modeldefault$default <- new_default
           params$notes[i] <- add_msg(params$notes[i], 'There are no default models defined for the best age type: Age models have same preparation date.  Model with highest chron ID was selected')
         }
       }
     }
   }
-
 
   # Back into analysis:
 
@@ -165,13 +182,18 @@ for (i in 1:length(sites)) {
 
   agetypes <- sapply(chrons[[2]], function(x) x$agetype)
 
+  ## Here we check to see if we're dealing with varved data:
+  
   if ('Varve years BP' %in% agetypes) {
+    
     if (length(list.files(corepath)) == 0 | !handle %in% list.files(corepath)) {
       works <- dir.create(path = paste0(corepath, '/', handle))
       assertthat::assert_that(works, msg = 'Could not create the directory.')
     }
 
     if (all(depths == ages)) {
+      ## It's not clear what's happening here, but we identify the records for further
+      #  investigation.
       ages <- data.frame( labid = "Annual laminations",
                          age = ages,
                          error = 0,
@@ -179,10 +201,14 @@ for (i in 1:length(sites)) {
                          cc = 0,
                          stringsAsFactors = FALSE)
       message('Annual laminations defined in the age models.')
+      
       params$notes[i] <- add_msg(params$notes[i], 'Annual laminations defined in the age models.')
+      params$suitable[i] <- 1
     } else {
+      
       message('Annual laminations defined in the age models but ages and depths not aligned.')
       params$notes[i] <- add_msg(params$notes[i], 'Annual laminations defined as an age model but ages and depths not aligned.')
+    
     }
 
   } else {

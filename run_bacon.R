@@ -21,8 +21,8 @@ source('R/helpers.R')
 source('R/bacon_age_posts.R')
 
 #  This set of code is to assist with versioning locally.
-setup <- FALSE     # Set to TRUE if you want to download all new sites.
-params <- TRUE    # Set to TRUE if you want to regenerate the params file.
+setup <- FALSE     # Set to TRUE if you want to download all new sites (should do this the first time)
+param_reset <- TRUE    # Set to TRUE if you want to regenerate the params file (should do this once generally)
 version <- 7
 my_date <- lubridate::round_date(lubridate::now("UTC"), unit="day")
 corepath <- 'Cores'
@@ -30,7 +30,6 @@ corepath <- 'Cores'
 # Define using state names here, but basically can be a change in the
 # parameters passed to get_dataset.
 domain = c('Minnesota', 'Wisconsin', 'Michigan')
-
 
 dl <- get_dataset(datasettype='pollen',
                   gpid = domain,
@@ -40,7 +39,7 @@ pol <- load_pollen(dl, version = version, setup = setup)
 
 ## Now generate the list of parameters here:
 
-if (!file.exists(paste0('data/params/bacon_params_v', version, '.csv')) | params == TRUE) {
+if (!file.exists(paste0('data/params/bacon_params_v', version, '.csv')) | param_reset == TRUE) {
   params <- data.frame(handle = sapply(dl, function(x) { x$dataset.meta$collection.handle }),
                        datasetid = as.integer(sapply(dl, function(x) { x$dataset.meta$dataset.id })),
                        acc.mean.mod = 3.02,
@@ -67,9 +66,11 @@ if (!file.exists(paste0('data/params/bacon_params_v', version, '.csv')) | params
 }
 
 ## This adjusts the thickness estimates based on prior runs of the cores:
+## In general this would be something you would do by hand to the parameters file.
 thick_list <- readr::read_csv('data/paleon_thick.csv')
-
 modified_ids <- params$datasetid[which(params$datasetid %in% thick_list$dataset_id[!thick_list$thick == 5])]
+
+## Here we beging to go through the default thicknesses and then adjust them based on the provided file.
 
 for (i in 1:nrow(params)) {
   if (params$datasetid[i] %in% modified_ids) {
@@ -97,12 +98,14 @@ ageorder <- get_table('agetypes')
 for (i in 1:length(sites)) {
 
   # Write each age file:
-
   url <- paste0('http://api-dev.neotomadb.org/v2.0/data/datasets/', sites[i], '/chronology')
   chrons <- jsonlite::fromJSON(url, simplifyVector=FALSE)$data[[1]]
 
   modeldefault <- chrons$chronologies %>%
-    purrr::map(function(x){ data.frame(agetype = x$agetype, default = x$isdefault, stringsAsFactors = FALSE) }) %>%
+    purrr::map(function (x) { 
+      data.frame(agetype = x$agetype, 
+                 default = x$isdefault, 
+                 stringsAsFactors = FALSE) }) %>%
     bind_rows()
 
   modeldefault$order <- ageorder$Precedence[match(modeldefault$agetype, ageorder$AgeType)]
@@ -235,4 +238,4 @@ for (i in 1:length(sites)) {
 
 readr::write_csv(x = params, path = paste0('data/params/bacon_params_v', version, '.csv'))
 
-run_batch(params)
+params <- run_batch(params)

@@ -1,3 +1,12 @@
+check_params <- function(x) {
+  assertthat::assert_that('data.frame' %in% class(x), msg = "The parameter object must be of class data.frame")
+  assertthat::assert_that(all(c("handle", "datasetid", "acc.mean.mod", "acc.mean.old",
+                            "acc.shape.mod", "acc.shape.old", "mem.strength",
+                            "mem.mean", "hiatus", "thick", "age.type", "run", 
+                            "suitable", "ndates", "success", "notes") %in% colnames(x)),
+                          msg = "Not all required column names are in the parameter object.")
+}
+
 pollen_to_albers <- function(coord, proj4 = '+proj=longlat +ellps=WGS84', rescale=1e6){
   #' Convert latlong coordinates to Albers Gt Lakes St Lawrence
   #' 

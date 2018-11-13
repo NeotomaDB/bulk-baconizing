@@ -1,0 +1,20 @@
+#  Should the program remove any existing files in the Cores directory and start again?
+clean_run: true
+
+#  What version of the run is this?  This will create a new parameters file if none exists.
+version: 1
+
+# If a parameters file exists with the current version number should that file overwritten?
+reset_parameters: true
+
+# Where will the Bacon core files go?
+core_path: 'Cores'
+
+#  For any records with assigned dates, what date should be used (either 'YYYY-MM-DD' or 'today')
+date: 'today'
+
+# Use modern hiatus break:
+modern: true
+
+# Prior thickness
+thickness: data/paleon_thick.csv

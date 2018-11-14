@@ -13,6 +13,7 @@ library(httr, quietly = TRUE)
 library(jsonlite, quietly = TRUE)
 library(rgdal, quietly = TRUE)
 library(lubridate, quietly = TRUE)
+library(parallel, quietly = TRUE)
 
 run_files <- list.files('R', pattern = '.R$', full.names = TRUE)
 

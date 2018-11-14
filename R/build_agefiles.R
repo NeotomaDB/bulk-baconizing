@@ -2,8 +2,8 @@ build_agefiles <- function(param, datasets, downloads, ageorder = NULL, settings
   
   if(!(is.na(param$suitable)) & 
      param$suitable == 1 & 
-     file.exists(paste0('Cores/', handle, '/', handle, '.csv')) &
-     file.exists(paste0('Cores/', handle, '/', handle, '_depths.txt'))) {
+     file.exists(paste0('Cores/', param$handle, '/', param$handle, '.csv')) &
+     file.exists(paste0('Cores/', param$handle, '/', param$handle, '_depths.txt'))) {
     if(verbose == TRUE) {
       message('Bacon core and depths files have already been written.  Set `suitable` to NA to rewrite files.')
     }

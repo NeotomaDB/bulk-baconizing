@@ -17,8 +17,8 @@ This is intended for bulk runs of Bacon, the project uses a set of settings stor
 cat(paste0(readLines('settings.yaml'), '\n'))
 ```
 
-```{r setup_runs, echo=TRUE, results='hide'}
-source('R/setup_runs.R')
+```{r setup_runs, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+source('R/setup_runs.R', echo=FALSE, verbose=FALSE)
 ```
 
 There are a number of libraries that are used in this project.  It is likely that you may be missing one or several.  If this is the case you might be interested in [this bash script](https://gist.github.com/SimonGoring/fe3b0bf6b4cb9b8f0a2aa6cdce10bb29) for Mac or Linux.  Otherwise, take some time to look at `R/setup_runs` and ensure you install all packages listed.
@@ -54,7 +54,7 @@ The Baconizing tool records parameters in a parameter `data.frame` called `param
 A unique element here is the use of two accumulation rates, one identified as `mod` and one identified as `old`.  This comes from work by Goring et al. (2012) and Dawson et al (2017) who identifiy a break in accumulation rates at or around a European settlement horizon.  This can be used, or not, and the `modern` flag can be set to `false` if you do not wish to use these modern/historical settings.
 
 | Column | Default | Purpose |
-| ====== | ======= | ======= |
+| -------- | -------- | ---------------------------------------------------- |
 | handle | none | The unique text identifer for the dataset collection unit. | 
 | datasetid | none | The unique dataset identifier. |
 | acc.mean.mod | 3.02 | Accumulation rate for *modern* sediment (above an identified Settlement Horizon) |
@@ -193,3 +193,4 @@ params <- run_batch(params, settings = settings)
 ```
 
 The ultimate product here is a Cores directory with a folder for each dataset that generates a suitable chronology for Bacon, a parameters file (in `data/params/`) that records the parameters used in the Bacon model, along with any notes about elements that may have been changed or were of note in the Bacon runs.
+

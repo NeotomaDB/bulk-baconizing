@@ -1,7 +1,7 @@
 #' @title Run Bacon on a set of sites
 #' @param x A data frame of parameters.
 
-run_batch <- function(x){
+run_batch <- function(x, settings){
   
   check_params(x)
   
@@ -21,12 +21,13 @@ run_batch <- function(x){
     # sudo ln ./usr/lib/x86_64-linux-gnu/libgsl.so ./usr/lib/x86_64-linux-gnu/libgsl.so.0
     # This allows things to work.
     
-    if (!is.na(x$suitable[i])) {
+    if (!is.na(x$suitable[i]) & x$suitable[i] == 1) {
       x[i,] <- call_bacon(x[i,])
-      readr::write_csv(x = x,
-                       path = paste0('data/params/bacon_params_v', version, '.csv'))
       
-    }
+      readr::write_csv(x = x,
+                       path = paste0('data/params/bacon_params_v', settings$version, '.csv'))
+      
+    } 
   }
   
   return(x)

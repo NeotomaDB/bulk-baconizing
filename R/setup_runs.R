@@ -14,13 +14,9 @@ library(jsonlite, quietly = TRUE)
 library(rgdal, quietly = TRUE)
 library(lubridate, quietly = TRUE)
 
-source('R/make_coredf.R')
-source('R/load_downloads.R')
-source('R/add_msg.R')
-source('R/call_bacon.R')
-source('R/run_batch.R')
-source('R/helpers.R')
-source('R/bacon_age_posts.R')
+run_files <- list.files('R', pattern = '.R$', full.names = TRUE)
+
+run_all <- sapply(run_files, function(x) if(!x == 'R/setup_runs.R') source(file = x))
 
 settings <- yaml::read_yaml('settings.yaml')
 

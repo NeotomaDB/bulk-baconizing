@@ -1,5 +1,5 @@
 #  Should the program remove any existing files in the Cores directory and start again?
-clean_run: true
+clean_run: false
 
 #  What version of the run is this?  This will create a new parameters file if none exists.
 version: 1
@@ -18,3 +18,6 @@ modern: true
 
 # Prior thickness
 thickness: data/paleon_thick.csv
+
+# Settlement indicators
+settlement: data/expert_assessment.csv

@@ -6,6 +6,16 @@ call_bacon <- function(site_params){
 
       thick <- site_params$thick
 
+      if (!(file.exists(paste0('Cores/', site_params$handle,
+                             '/', site_params$handle, '.csv')) &
+          file.exists(paste0('Cores/', site_params$handle,
+                             '/', site_params$handle, '_depths.txt')))) {
+        message("Files needed for Bacon do not exist.")
+        site_params$run <- 0
+        site_params$success <- 0
+        return(site_params)
+      }
+      
       # find hiatus depth
       geochron <- readr::read_csv(paste0('Cores/', site_params$handle,
                                          '/', site_params$handle, '.csv'))
@@ -61,20 +71,23 @@ call_bacon <- function(site_params){
       )
 
       if (!(class(out) == 'try-error')){
-
+        site_params$run <- 1
         agetest <- try(agedepth())
 
         if ('try-error' %in% class(agetest)) {
-          site_params$success = 0
+          
+          site_params$success <- 0
           site_params$notes <- add_msg(site_params$notes, "Core failed in Bacon plotting.")
         } else {
+          # This function generates the posterior estimates for the record.
           outputs <- bacon_age_posts(site_params$handle)
-          site_params$success = 1
+          site_params$success <- 1
         }
 
       } else {
         site_params$notes <- add_msg(site_params$notes, "Core failed in Bacon run.")
-        site_params$success = 0
+        site_params$run <- 1
+        site_params$success <- 0
 
       }
     }

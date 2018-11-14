@@ -5,14 +5,20 @@ run_batch <- function(x, settings){
   
   check_params(x)
   
-  for(i in 1:nrow(x)){
-    #for(i in ids_rerun){
+  if(!settings$parallel == FALSE) {
+
+    cores <- parallel::detectCores()
+    max_cores <- min(settings$parallel, cores, na.rm=TRUE)
+
+  }
+  
+  x_out <- mclapply(1:3, function(i, x, settings){
 
     if ((!is.na(x$success[i])) & x$success[i] == 1) {
       message(paste0(x$handle, ' has already been run. Skipping.\n'))
-      next
+      return(x[i,])
     }
-    if (is.na(x$thick[i])) {next}
+    if (is.na(x$thick[i])) { return(x[i,]) }
     
     # This fails in linux if libgsl.so.0 cannot be found.  To fix this I ran:
     # > sudo find . -name "libgsl.so"
@@ -22,13 +28,26 @@ run_batch <- function(x, settings){
     # This allows things to work.
     
     if (!is.na(x$suitable[i]) & x$suitable[i] == 1) {
-      x[i,] <- call_bacon(x[i,])
+      run_out <- try(call_bacon(x[i,]))
+      
+      if (!'try-error' %in% class(run_out)) {
+        x[i,] <- run_out
+        
+      } else {
+        x$success[i] <- 0
+        x$run[i] <- 1
+        x$notes[i] <- add_msg(x$notes[i], "Bacon run attempted and failed.")
+      }
       
       readr::write_csv(x = x,
                        path = paste0('data/params/bacon_params_v', settings$version, '.csv'))
-      
-    } 
-  }
+    }
+    return(x[i,])
+  }, x = x, settings = settings, mc.cores = max_cores)
+  
+  x_out <- do.call(rbind.data.frame, x_out)
+  
+  x[match(x_out$datasetid), ] <- x_out
   
   return(x)
 }

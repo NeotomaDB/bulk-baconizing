@@ -1,5 +1,5 @@
 #  Should the program remove any existing files in the Cores directory and start again?
-clean_run: false
+clean_run: true
 
 #  What version of the run is this?  This will create a new parameters file if none exists.
 version: 1

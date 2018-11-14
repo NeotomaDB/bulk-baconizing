@@ -17,11 +17,37 @@ This is intended for bulk runs of Bacon, the project uses a set of settings stor
 cat(paste0(readLines('settings.yaml'), '\n'))
 ```
 
+A yaml file is a special kind of markup that uses a `key`: `value` pairing, with `#` to indicate a comment.
+
+### Settings
+
+*   `clean_run`: Should we clear all the files and parameters and start from scratch?
+
+*   `version`: The use of a version key allows you to keep track of your Bacon parameters if, over the course of a project, you make changes in your choices about how you want to run your analysis.  If the version number changes a new parameter file will be generated.
+
+*   `reset_parameters`: Bulk generation of chronologies is an itterative process.  In general default parameters will be set, and then, over the course of running bacon, parameters for individual cores might be changed.  In the initial stages it might be worth modifying all default values in the code below and then setting `reset_parameters` to `true` so that the full table is re-written.  Otherwise, edit the value to `false` so that the table is not overwritten each time the scripts are run.
+
+*   `core_path`: Bacon needs to output files to a particular location, this tells Bacon where core files will be stored.
+
+*   `date`: In cases where files might be overwritten, the default is to overwrite but store the old file with a date-stamp.  The default is to use the current date, but it might be that you want to associate a date stamp with a particular version.  In that case you can change the setting from `today` (which will use the current date) to a date of format `YYYY-MM-DD`.
+
+*   `modern`: In Goring et al (2012) and elsewhere it is shown that modern sediment often has a higher accumulation rate than earlier sediment.  One solution is to initiate an instantaneous hiatus at an identified "settlement" horizon, and then set the accumulation rate of the upper sediment to a higher `acc.mean` rate.  If `modern` is set to `true`, the program will place a hiatus at the modern horizon.  If false it will not.
+
+*   `thickness`: There is a file included in the repository called `data/paleon_thick.csv`, however, it may be the case that in previous runs you have adjusted thickness values.  For example, in `version` 2 of your runs you could point to the `params` file generated in version 1 by pointing to `data/params/bacon_params_v1.csv`.
+
+*   `settlement`: In Kujawa et al (2017) and in Dawson et al (2018) an expert-assessment exercise was undertaken to evaluate the presence and location of biostratigraphic markers for Euro-American settlement in the Upper Midwestern United States.  This file is included for reference.  With columns indicating `datasetid` and `depth`, if the parameter is set to a file location, such as `data/expert_assessment.csv`, then any indicator of Settlement will be revised, otherwise (e.g., `settlement: false`) the chronological controls for the records will remain as-is.
+
+*   `accumulation`: Similar to thickness, if modifications have been made to accumulation rates, a file can be defined here.
+
+*   `parallel`: Should the code try to run Bacon in parallel?  This is either the value `false` or the maximum number of cores to attempt (e.g., `3`).  This means it is possible to run your script on fewer cores than your system has available to allow you to continue work on other projects.
+
+Throughout your workflow you will likely change some of these parameters.  For example, it is often best, when changing your selections for datasets to begin either with a higher `version` number, or set `clean_run` to `true`, however, as you begin fine tuning your results, you will want to set `clean_run` back to `false`, and `reset_parameters` to `false` as well.  This will prevent unneccessary errors.
+
 ```{r setup_runs, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
 source('R/setup_runs.R', echo=FALSE, verbose=FALSE)
 ```
 
-There are a number of libraries that are used in this project.  It is likely that you may be missing one or several.  If this is the case you might be interested in [this bash script](https://gist.github.com/SimonGoring/fe3b0bf6b4cb9b8f0a2aa6cdce10bb29) for Mac or Linux.  Otherwise, take some time to look at `R/setup_runs` and ensure you install all packages listed.
+There are a number of libraries that are used in this project.  It is likely that you may be missing one or several.  If this is the case you might be interested in [this bash script](https://gist.github.com/SimonGoring/fe3b0bf6b4cb9b8f0a2aa6cdce10bb29) for Mac or Linux.  Otherwise, take some time to look at `R/setup_runs.R` and ensure you install all packages listed.
 
 ## Get Pollen Data
 
@@ -32,32 +58,34 @@ Here we download the sedimentary data.  The core component here is the `get_data
 # parameters passed to get_dataset.
 
 dataset_list <- get_dataset(datasettype='pollen',
-                            gpid = c('Minnesota', 'Wisconsin', 'Michigan'),
+                            gpid = c('Michigan'),
                             ageyoung=0)
 
 #  The load_pollen() function will download the pollen datasets if either:
 #  there is not currently a downloaded object saved with the same dataset version
 #  or the setup parameter is TRUE, which calls for the whole data file to be re-written.
 
-downloads <- load_downloads(dataset_list, 
-                            version = settings$version, 
+downloads <- load_downloads(dataset_list,
+                            version = settings$version,
                             setup = settings$clean_run)
 
 ```
 
 It might be the case that you want to do further validation on samples based on parameters in the `downloads` object (*e.g.*, only sites with a certain taxon).  The downloads are required for the generation of the core depths file used by Bacon.
 
+**Note, with the code that is generating this document, there have been `r length(dataset_list)` records downloaded from Neotoma, for which age files will be generated.**
+
 ## Parameters
 
-The Baconizing tool records parameters in a parameter `data.frame` called `params`.  This `data.frame` is generated and the saved to file to ensure that errors in the Bacon run do not affect any information stored in the parameters.  The `data.frame` includes a number of columns.  
+The Baconizing tool records parameters in a parameter `data.frame` called `params`.  This `data.frame` is generated and the saved to file to ensure that errors in the Bacon run do not affect any information stored in the parameters.  The `data.frame` includes a number of columns.
 
 A unique element here is the use of two accumulation rates, one identified as `mod` and one identified as `old`.  This comes from work by Goring et al. (2012) and Dawson et al (2017) who identifiy a break in accumulation rates at or around a European settlement horizon.  This can be used, or not, and the `modern` flag can be set to `false` if you do not wish to use these modern/historical settings.
 
 | Column | Default | Purpose |
 | -------- | -------- | ---------------------------------------------------- |
-| handle | none | The unique text identifer for the dataset collection unit. | 
+| handle | none | The unique text identifer for the dataset collection unit. |
 | datasetid | none | The unique dataset identifier. |
-| acc.mean.mod | 3.02 | Accumulation rate for *modern* sediment (above an identified Settlement Horizon) |
+| acc.mean.mod | 3.02 | Accumulation rate for *modern* sediment (above an identified Settlement Horizon).  If the `settings.yaml` flag `modern` is set to `false` this will be the same as `acc.mean.old`. |
 | acc.mean.old | 15 | Accumulation rate for sediment if no horizon is identified, or the `modern` flag is set to `false`. |
 | acc.shape.mod | 0.53 | Shape parameter for modern sediment (as above). |
 | acc.shape.old | 0.9 | Shape parameter for sediement (as above). |
@@ -72,21 +100,21 @@ A unique element here is the use of two accumulation rates, one identified as `m
 | success | NA | Did Bacon run and return a result successfully? |
 | notes | `.` | Any notes associated with the run. |
 
-```{r create_params}
+```{r create_params, echo=TRUE, warning=FALSE}
 
 existing_params <- file.exists(paste0('data/params/bacon_params_v', settings$version, '.csv'))
 
 if ((!existing_params) | settings$reset_parameters == TRUE) {
-  
+
   message("Writing a new parameters file.")
-  
+
   if (existing_params) {
     file.copy(paste0('data/params/bacon_params_v', settings$version, '.csv'),
               paste0('data/params/bacon_params_v', settings$version, '_', lubridate::round_date(lubridate::now("UTC"), unit="day"),'.csv'))
   }
   ds_handles <- sapply(dataset_list, function(x) { x$dataset.meta$collection.handle })
   ds_ids <- as.integer(sapply(dataset_list, function(x) { x$dataset.meta$dataset.id }))
-  
+
   params <- data.frame(handle = ds_handles,
                        datasetid = ds_ids,
                        acc.mean.mod = 3.02,
@@ -114,6 +142,7 @@ if ((!existing_params) | settings$reset_parameters == TRUE) {
 
 ```
 
+**Note, for the run that generated this document there were parameters set for `r nrow(params)` records.  Of these `r sum(params$suitable == 1, na.rm=TRUE)` would be suitable to be run by Bacon.  This is a `r ifelse(settings$reset_parameters|settings$clean_run, "clean ", "re-")`run for the parameters file, based on your settings.**
 
 ### Prior thicknesses
 
@@ -141,6 +170,32 @@ if(is.null(settings$thickness) | settings$thickness == FALSE | "character" %in% 
 
 ```
 
+### Prior accumulations
+
+In the case that there has been a prior run or some prior assessment of accumulation rates the user should set the `accumulation` value of `settings.yaml` to point to the correct file location.  Otherwise the value should be set to `false`.
+
+```{r prior_accumulation, echo = TRUE, results = 'asis'}
+
+if(is.null(settings$accumulation) | settings$accumulation == FALSE | "character" %in% class(settings$accumulation)) {
+
+  if ("character" %in% class(settings$accumulation)) {
+    if (file.exists(settings$accumulation)) {
+      params <- add_accumulation(file = settings$accumulation,
+                              id_col = 1,
+                              accum_col = 4,
+                              parameters = params)
+    } else {
+      stop("The file defined in `settings.yaml` does not exist.")
+    }
+  } else {
+    message("No accumulation file is defined.")
+  }
+} else {
+  stop("The setting for accumulations in `settings.yaml` is not set correctly.")
+}
+
+```
+
 ## Add Core Files
 
 Here we begin to generate the `csv` files for the cores to allow Bacon to run.  This requires calling Neotoma's API and then resolving the return so that it is turned into a `csv`.  There are several decisions that go into the construction of the CSV file.  These decisions are documented both using the `notes` column of the parameter file, and also commented in the file `R/build_agefiles.R`.  The main decisions are:
@@ -155,8 +210,8 @@ Here we begin to generate the `csv` files for the cores to allow Bacon to run.  
 ageorder <- get_table('agetypes')
 
 for (i in 1:nrow(params)) {
-  
-  params[i, ] <- build_agefiles(param = params[i,], 
+
+  params[i, ] <- build_agefiles(param = params[i,],
                                 ageorder = ageorder,
                                 datasets = dataset_list,
                                 downloads = downloads,
@@ -168,29 +223,30 @@ for (i in 1:nrow(params)) {
 
 ```
 
-In addition to notes regarding the choice of age file, notes are also raised if:
+## Possible warnings raised
 
-* there are significantly high accumulation rates (more than 100yr/cm)
-* There are adjusted indicators for Euro-american settlement (defined in a file reported in `settings.yaml`.)
-* If there is a core top with missing age information (age is assigned `-60`, to be adjusted by the user).
-* If there are no uncertainty constraints on an age that is not associated with geochronological information (uncertainties are assigned to `0`).
-* If the chronological control is not associated with a geochronological object and comes from an age estimate such as `Guess`, or `Deglaciation` (age is dropped)
-* If a geochronological object does not have a proper lab ID associated with it.
-* If the geochronological object has a NULL age.
-* If a 210Pb age has an assigned age greater than 500 (may have been assigned years AD/BC)
-* If there was no uncertainty associated with a 210Pb age.
-* If there was no uncertainty associated with a geochronological age other than 210Pb.
-* If there is only one chronological constraint.
-* If core files already existed in the `Cores` directory associated with the record.
-* If for one reason or another something prevented the core file from being written.
+The script is set up so that places where there is an objective choice, a clear notation of that choice is made and added to the parameter file's `notes` column as a semi-colon separated list.  In addition to notes regarding the choice of age file, notes are also raised if:
+
+*   There are significantly high accumulation rates (more than 100yr/cm)
+*   There are adjusted indicators for Euro-american settlement (defined in a file reported in `settings.yaml`.)
+*   If there is a core top with missing age information (age is assigned `-60`, to be adjusted by the user).
+*   If there are no uncertainty constraints on an age that is not associated with geochronological information (uncertainties are assigned to `0`).
+*   If the chronological control is not associated with a geochronological object and comes from an age estimate such as `Guess`, or `Deglaciation` (age is dropped)
+*   If a geochronological object does not have a proper lab ID associated with it.
+*   If the geochronological object has a NULL age.
+*   If a 210Pb age has an assigned age greater than 500 (may have been assigned years AD/BC)
+*   If there was no uncertainty associated with a 210Pb age.
+*   If there was no uncertainty associated with a geochronological age other than 210Pb.
+*   If there is only one chronological constraint.
+*   If core files already existed in the `Cores` directory associated with the record.
+*   If for one reason or another something prevented the core file from being written.
 
 ## Running Bacon
 
 The final step, once all the files have been written, is to run Bacon.  Using the `rbacon` package we can simplify everything:
 
-```{r, eval=FALSE}
+```{r, eval=TRUE, results='hide', message = FALSE, warning=FALSE }
 params <- run_batch(params, settings = settings)
 ```
 
 The ultimate product here is a Cores directory with a folder for each dataset that generates a suitable chronology for Bacon, a parameters file (in `data/params/`) that records the parameters used in the Bacon model, along with any notes about elements that may have been changed or were of note in the Bacon runs.
-

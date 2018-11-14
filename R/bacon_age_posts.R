@@ -1,7 +1,6 @@
 #' @title Get age posteriors
 #' @description Using the output files from Bacon get the full posterior at depths.
 #' @param handle The site handle.
-#'
 
 bacon_age_posts <- function(handle)
 {
@@ -19,14 +18,12 @@ bacon_age_posts <- function(handle)
   bacon_settings <- readr::read_csv(paste0('Cores/', handle, '/', handle, '_settings.txt'),
                                     col_names = FALSE, comment = '#') %>% as.data.frame
 
-
   if (length(out_files) > 1) {
     message('Multiple Bacon output files exist.')
   }
 
   for (k in 1:length(out_files)) {
-    cat(paste0(out_files, '\n'))
-    cat(k)
+    
     outer <- readr::read_delim(out_files[k], col_names = FALSE,delim = ' ') %>% as.data.frame
 
     # We can do this match because we know how Bacon writes out files.

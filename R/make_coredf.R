@@ -1,12 +1,12 @@
-make_coredf <- function(corename, x, corepath = 'Cores', params) {
-  
-  i <- match(corename, params$handle)
+make_coredf <- function(x, settings, core_param) {
+
+  corepath <- settings$core_path
   
   assertthat::assert_that(file.exists(corepath), 
                           msg = 'Core directory must exist.')
   
-  if (length(list.files(corepath)) == 0 | !corename %in% list.files(corepath)) {
-    works <- dir.create(path = paste0(corepath, '/', corename))
+  if (length(list.files(corepath)) == 0 | !core_param$handle %in% list.files(corepath)) {
+    works <- dir.create(path = paste0(corepath, '/', core_param$handle))
     assertthat::assert_that(works, msg = 'Could not create the directory.')
   }
   
@@ -18,12 +18,12 @@ make_coredf <- function(corename, x, corepath = 'Cores', params) {
   build_row <- function(z) {
     if (is.null(unlist(z$geochron))) {
       # There is no "geochron" data:
-      if (is.null(z$age)) {
-        params$notes[i] <- add_msg(params$notes[i], 'A chroncontrol was missing an age.  Assigned -60.')
+      if (is.null(z$age) & z$chroncontroltype == 'Core top') {
+        core_param$notes <- add_msg(core_param$notes, 'A chroncontrol was missing an age.  Assigned -60.')
         z$age <- -60
       }
       if (is.null(z$ageyounger)) {
-        params$notes[i] <- add_msg(params$notes[i], 'A chroncontrol was missing an age range (ageyounger, ageolder).  Assigned 0.')
+        core_param$notes <- add_msg(core_param$notes, 'A chroncontrol was missing an age range (ageyounger, ageolder).  Assigned 0.')
         z$agelimityounger <- 0
         z$agelimitolder <- 0
       }
@@ -35,7 +35,7 @@ make_coredf <- function(corename, x, corepath = 'Cores', params) {
                            depth = NA,
                            cc = NA, 
                            stringsAsFactors = FALSE)
-        params$notes[i] <- add_msg(params$notes[i], 'Estimated age chroncontrol was dropped from the table of geochrons.')
+        core_param$notes <- add_msg(core_param$notes, 'Estimated age chroncontrol was dropped from the table of geochrons.')
       } else {
         out <- data.frame( labid = stringr::str_replace_all(z$chroncontroltype, ',', '_'),
                            age = z$age,
@@ -47,20 +47,20 @@ make_coredf <- function(corename, x, corepath = 'Cores', params) {
     } else {
       # We're dealing with geochronological data:
       if(is.null(z$geochron$labnumber)) {
-        params$notes[i] <- add_msg(params$notes[i], 'A geochronological element was missing a lab number.  Assigned: unassigned')
+        core_param$notes <- add_msg(core_param$notes, 'A geochronological element was missing a lab number.  Assigned: unassigned')
         z$geochron$labnumber <- 'unassigned'
       }
       
       # There's no age element?
       if (is.null(z$geochron$age)) {
         z$geochron$age <- (z$agelimitolder + z$agelimityounger) / 2
-        params$notes[i] <- add_msg(params$notes[i], 'Geochronological age was NULL.  Assigned the midpoint of ages.')
+        core_param$notes <- add_msg(core_param$notes, 'Geochronological age was NULL.  Assigned the midpoint of ages.')
       }
       
       # Lead210 data is dealt with in our paper:
       if (z$geochron$geochrontype == 'Lead-210' & z$geochron$age > 500) {
         z$geochron$age <- 1950 - z$geochron$age
-        params$notes[i] <- add_msg(params$notes[i], 'A 210Pb age had an assigned age greater than 500ybp: Assumed age scale incorrect.')
+        core_param$notes <- add_msg(core_param$notes, 'A 210Pb age had an assigned age greater than 500ybp: Assumed age scale incorrect.')
       }
       
       # Lead210 data is dealt with in our paper:
@@ -72,13 +72,13 @@ make_coredf <- function(corename, x, corepath = 'Cores', params) {
         z$geochron$errorolder <- predict(model, 
                                          newdata = data.frame(age = z$geochron$age)) %>% 
           exp
-        params$notes[i] <- add_msg(params$notes[i], 'A 210Pb age had no error assigned.  Used the Binford estimator to assign uncertainty.')
+        core_param$notes <- add_msg(core_param$notes, 'A 210Pb age had no error assigned.  Used the Binford estimator to assign uncertainty.')
         
       }
       
       if (is.null(z$geochron$errorolder)) {
         z$geochron$errorolder <- 0
-        params$notes[i] <- add_msg(params$notes[i], 'No uncertainty assigned to the geochronological element. Assigned 0.')
+        core_param$notes <- add_msg(core_param$notes, 'No uncertainty assigned to the geochronological element. Assigned 0.')
       }
       
       # Made a decision here to modify the lead210 errors to 0.
@@ -95,60 +95,67 @@ make_coredf <- function(corename, x, corepath = 'Cores', params) {
   output <- x$controls %>% purrr::map(build_row) %>% bind_rows() %>% na.omit()
   
   if(nrow(output) < 2) {
-    params$notes[i] <- add_msg(params$notes[i], 'Only one age constraint exists for the record.')
+    core_param$notes <- add_msg(core_param$notes, 'Only one age constraint exists for the record.')
   } else {
     
     too_fast <- diff(range(output$age)) / diff(range(output$depth))
     
     if (too_fast > 50) {
-      params$acc.mean.old[i] <- 100
-      params$notes[i] <- add_msg(params$notes[i], 'High accumulation rates for the core detected: Assigning default accumulation rate to 100.')
+      core_param$acc.mean.old <- 100
+      core_param$notes <- add_msg(core_param$notes, 'High accumulation rates for the core detected: Assigning default accumulation rate to 100.')
     }
   }
   
-  # Reassign settlement ages if they are present:
-  sett <- suppressMessages(readr::read_csv('data/expert_assessment.csv')) %>% 
-    filter(!is.na(pre1.d))
+  if (!is.null(settings$settlement) & exists(settings$settlement)) {
+    # Reassign settlement ages if they are present:
+    sett <- suppressMessages(readr::read_csv('data/expert_assessment.csv')) %>% 
+      filter(!is.na(pre1.d))
+    
+    if (core_param$handle %in% sett$handle) {
+      
+      sett_row <- which(sett$handle == core_param$handle)
+      depth <- as.numeric(stringr::str_extract(sett$pre1.d[sett_row], '[0-9]*'))
+      
+      coord <- sett %>% 
+        filter(sett$handle == core_param$handle) %>% 
+        select(long, lat)
+      
+      state <- sett %>% 
+        filter(sett$handle == core_param$handle) %>% 
+        select(state)
+      
+      horizons <- c('Pre-EuroAmerican settlement horizon', 
+                    'European settlement horizon',
+                    'Ambrosia rise')
+      
+      if (any(output$labid %in% horizons)) {
+        
+        geo_row <- which(output$labid %in% horizons)      
   
-  if (corename %in% sett$handle) {
-    
-    sett_row <- which(sett$handle == corename)
-    depth <- as.numeric(stringr::str_extract(sett$pre1.d[sett_row], '[0-9]*'))
-    
-    coord <- sett %>% 
-      filter(sett$handle == corename) %>% 
-      select(long, lat)
-    
-    state <- sett %>% 
-      filter(sett$handle == corename) %>% 
-      select(state)
-    
-    if (any(output$labid %in% c('Pre-EuroAmerican settlement horizon', 'European settlement horizon'))) {
-      
-      geo_row <- which(output$labid %in% c('Pre-EuroAmerican settlement horizon', 'European settlement horizon'))      
-
-      output$depth[geo_row] <- depth
-
-      output$age[geo_row] <- 1950 - as.numeric(get_survey_year(coord, state))
-      output$error[geo_row] <- 50
-      params$notes[i] <- add_msg(params$notes[i], 'Adjusted settlement horizon based on expert elicitation.')
-      
-    } else {
-      new_row <- data.frame(labid = 'European settlement horizon',
-                            age = 1950 - get_survey_year(coord, state),
-                            error = 50,
-                            depth = depth,
-                            cc = 0)
-      output <- rbind(output, new_row)
-      output <- output[order(output$depth), ]
-      params$notes[i] <- add_msg(params$notes[i], 'Added settlement horizon based on expert elicitation.')
+        output$depth[geo_row] <- depth
+        output$labid[geo_row] <- "Expert assigned settlement horizon"
+  
+        output$age[geo_row] <- 1950 - as.numeric(get_survey_year(coord, state))
+        output$error[geo_row] <- 50
+        core_param$notes <- add_msg(core_param$notes, 'Adjusted settlement horizon based on expert elicitation.')
+        
+      } else {
+        new_row <- data.frame(labid = 'Expert assigned settlement horizon',
+                              age = 1950 - get_survey_year(coord, state),
+                              error = 50,
+                              depth = depth,
+                              cc = 0)
+        output <- rbind(output, new_row)
+        output <- output[order(output$depth), ]
+        core_param$notes <- add_msg(core_param$notes, 'Added settlement horizon based on expert elicitation.')
+      }
     }
   }
-  
+    
   if (nrow(output) > 1) {
-    params$suitable[i] <- 1
+    core_param$suitable <- 1
   }
   
-  return(list(output, params))
+  return(list(output, core_param))
   
 }

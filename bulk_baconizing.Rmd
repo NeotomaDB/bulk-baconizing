@@ -53,7 +53,7 @@ There are a number of libraries that are used in this project.  It is likely tha
 
 Here we download the sedimentary data.  The core component here is the `get_dataset()` function.  The newest version of `neotoma` (version >= 1.7.3) allows a user to pass in a vector of dataset IDs, so you can either get datasets using a set of parameters in the `get_dataset()` function (see help for the function), or you can pass in a vector of dataset IDs (for example, if you've already picked a set of sites to be examined).  Here we us state names in the United States to define the range of sample sites.
 
-```{r datasets_and_pollen, echo=TRUE, results='hide'}
+```{r datasets_and_pollen, echo=TRUE, results='hide', message=FALSE, warnings=FALSE}
 # Define using state names here, but basically can be a change in the
 # parameters passed to get_dataset.
 

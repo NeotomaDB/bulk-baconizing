@@ -4,13 +4,13 @@
 
 bacon_age_posts <- function(handle)
 {
-  
+
   out_files <- list.files(paste0('Cores/', handle),
                           pattern = ".out$",
                           full.names = TRUE)
 
   assertthat::assert_that(length(out_files) > 0, msg = list.files(paste0('Cores/', handle)))
-  
+
   depth <- readr::read_csv(paste0('Cores/', handle, '/', handle, '_depths.txt'),
                            col_names = FALSE) %>%
     as.data.frame()
@@ -23,7 +23,7 @@ bacon_age_posts <- function(handle)
   }
 
   for (k in 1:length(out_files)) {
-    
+
     outer <- readr::read_delim(out_files[k], col_names = FALSE,delim = ' ') %>% as.data.frame
 
     # We can do this match because we know how Bacon writes out files.
@@ -31,17 +31,21 @@ bacon_age_posts <- function(handle)
       as.numeric()
 
     if (ncol(outer) == (sections + 3)) {
-      priors <- matrix(NA, nrow = nrow(depth), ncol = nrow(outer))
+      posteriors <- matrix(NA, nrow = nrow(depth), ncol = nrow(outer))
 
       for(j in 1:nrow(outer)) {
         x <- seq(bacon_settings[1,1], bacon_settings[2,1], length.out = sections + 1)
-        y <- c(outer[j,1], outer[j,1] + cumsum((diff(x) * outer[j,2:(ncol(outer) - 2)]) %>% 
+        y <- c(outer[j,1], outer[j,1] + cumsum((diff(x) * outer[j,2:(ncol(outer) - 2)]) %>%
                                                  as.numeric))
-        priors[,j] <- approx(x, y, xout = depth %>% unlist())$y
+        posteriors[,j] <- round(approx(x, y, xout = depth %>% unlist())$y, 0)
       }
-      readr::write_csv(paste0('Cores/', handle, '/', handle, '_', sections, '_priorout.csv'), 
-                       x = as.data.frame(priors))
+      readr::write_csv(paste0('Cores/', handle, '/', handle, '_', sections, '_posteriorout.csv'),
+                       x = as.data.frame(posteriors))
     }
 
   }
+  if(length(out_files) == 1) {
+    return(as.data.frame(posteriors))
+  }
+
 }

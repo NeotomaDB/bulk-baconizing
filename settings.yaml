@@ -22,6 +22,8 @@ thickness: data/paleon_thick.csv
 # Settlement indicators
 settlement: data/expert_assessment.csv
 
+# In some work we have assignments for accumulation rates set as defauly.  Others may not.
 accumulation: false
 
+# How many processing cores should be used.
 parallel: 3

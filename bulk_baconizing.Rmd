@@ -3,7 +3,7 @@ title: "Bulk Baconizing"
 author: "Simon Goring"
 date: "November 13, 2018"
 bibliography: styles/baconizing.bib
-output: 
+output:
   html_document:
     code_folding: show
     fig_caption: yes
@@ -30,27 +30,64 @@ Over the course of working with the Neotoma Paleoecology Database [@williams2017
 
 This repository makes use of experience obtained in working through several projects [@kujawa2016theeffect;@dawson2016quantifying], and uses data from several projects as the basis for establishing certain prior values.  We make an effort in this document to clearly explain the steps neccessary to undertake such a project in a fairly straightforward manner.
 
+### The workflow
+
+The general workflow is encoded in this current document, which knits together descriptive text and R commands ([read more about RMarkdown documents](https://bookdown.org/yihui/rmarkdown/)).  This document is intended to provide context but to also operate as a stand-alone tool to generate a number of age records.  The R code embedded in the `Rmd` file does the following:
+
+1.  Read a set of pre-defined settings and load the neccessary R libraries.
+2.  Fetch a set of datasets from Neotoma and download the relevant records.
+3.  Generate a table with default parameters for Bacon.
+4.  Given any prior information from the user, optionally adjust site-level default parameters for thickness, accumulation rates, etc.
+5.  For each dataset with sufficient chronological information, write the neccessary files to a core folder, along with relevant core depths.
+6.  For each core with a sufficient number of chronological controls, run Bacon.
+7.  Write the ghost plots to file and produce a table of posterior estimates for each depth.
+
+This code is provided as an RMarkdown document, to help guide the user, and it can support extensive customization if a user chooses to make changes anywhere in the code.
+
+### Executing the code
+
+Many people working with R may choose to use RStudio.  If you are using RStudio you can customize elements of this document (for example, removing this header information) and then use the *knit* button to compile the document into an HTML document, while generating the neccessary output files.
+
+Users who use the R Console without any other editor can move to the appropriate working directory (using `setwd()`) and then run the entire document using the following command:
+
+```R
+library(rmarkdown)
+render('bulk_baconizing.Rmd')
+```
+
+This can be shortened to: `rmarkdown::render('bulk_baconizing.Rmd')`.  Similarly, if you wish to execute the code from a console or terminal you can navigate to the working directory and execute the following:
+
+```bash
+Rscript -e "rmarkdown::render('bulk_baconizing.Rmd')"
+```
+
+Note the use of two different quotations.  The inner and outer quotations must be different (e.g., double on the outside, single on the inside, or *vice versa*).  Whether you customize the code, or choose to run it as is (for just the US state of Michigan), these three methods of executing the code are your main options.
+
+### Providing Feedback
+
 If, in any place instructions are not clear or more details are required please feel free to contact us by either [raising a GitHub Issue for this repository](https://github.com/neotomadb/bulk-baconizing), or by mailing me directly at [goring@wisc.edu](mailto:goring@wisc.edu).
 
-## Setting up the system
+## Setting up the System
 
-### Getting started
+### Getting Started
 
-There are several ways of working with this repository.  If you are not familiar with Github and simply wish to run the code locally, then navigate to the GitHub repository for this project, and click the green **Clone or download** button.  From there, select **Download ZIP**. 
+There are several ways of working with this code base. If you are not familiar with [Github](http://github.com) and wish to run the code locally, navigate to the [GitHub repository for this project](http://github.com/NeotomaDB/bulk_baconizing), and click the green **Clone or download** button.  From there, select **Download ZIP**.
 
 ![](images/download_file.png)
 
-If you are familiar with GitHub and wish to use `git` as part of your workflow then you can also choose to clone the repository.  To do this, you can either [fork the repository](), which would make a copy of it under your own personal GitHub account, or you can clone it directly and [make a new branch]().
+If you are familiar with GitHub and wish to use `git` as part of your workflow then you can also choose to clone the repository.  To do this, you can either [fork the repository](https://help.github.com/articles/fork-a-repo/), which would make a copy of it under your own personal GitHub account, or you can clone it directly and [make a new branch](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging).
 
-This is intended for bulk runs of Bacon, the project uses a set of settings stored in the parent directory in a file called `settings.yaml`.  By default these settings are:
+In either case, if you make changes to the repository that are specific to your application, that's great!  If you make changes that are possibly of note to all users, consider making a [pull request](https://help.github.com/articles/about-pull-requests/).  We welcome all contributions.
+
+### Defining Your Settings
+
+Because there are a number of elements to this project, it was decided to place some of the main elements into a single, easy to use file.  The project stores these settings in the parent directory in a file called `settings.yaml`.  By default these settings are:
 
 ```{r settings_file, echo=FALSE, results='asis'}
 cat(paste0(readLines('settings.yaml'), '\n'))
 ```
 
-A yaml file is a special kind of markup that uses a `key`: `value` pairing, with `#` to indicate a comment.  We assign parameters to the various keys here so that we can define the behaviour of the model runs.  In the following section we explain each parameter and its behaviour:
-
-### Settings
+A `yaml` file is a special kind of markup that uses a `key`: `value` pairing, with `#` to indicate a comment.  We assign parameters to the various keys here so that we can define the behaviour of the model runs.  In the following section we explain each parameter and its behaviour:
 
 *   `clean_run`: (default `true`) Should we clear all the files and parameters and start from scratch? Can take either `true` or `false`.
 
@@ -72,27 +109,29 @@ A yaml file is a special kind of markup that uses a `key`: `value` pairing, with
 
 *   `parallel`: (default `true`) Should the code try to run Bacon in parallel?  This is either the value `false` or the maximum number of cores to attempt (e.g., `3`).  This means it is possible to run your script on fewer cores than your system has available to allow you to continue work on other projects.  The code used in this script uses the `mclapply()` function, which means that the parallel operations, which use [parallel forking in R](https://garthtarr.com/parallel-computation-in-r/), are not available for Windows systems.
 
-Throughout your workflow you will likely change some of these parameters.  For example, it is often best, when changing your selections for datasets to begin either with a higher `version` number, or set `clean_run` to `true`, however, as you begin fine tuning your results, you will want to set `clean_run` back to `false`, and `reset_parameters` to `false` as well.  This will prevent unneccessary errors.
+#### Modifying the Settings
+
+Throughout your workflow you will likely change some of these settings.  For example, if you are changing the search parameters for your dataset search, you may want to keep some prior information, but increment the `version`, or set `clean_run` to `true`, however, as you begin fine tuning your results, you will want to set `clean_run` back to `false`, and `reset_parameters` to `false` as well.  This will prevent unneccessary errors, and reduce the amount of time required for the runs to complete, since it will accept completed runs and not attempt to re-run them.
 
 ```{r setup_runs, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
 source('R/setup_runs.R', echo=FALSE, verbose=FALSE)
 ```
 
-There are a number of libraries that are used in this project.  It is likely that you may be missing one or several.  If this is the case you might be interested in [this bash script](https://gist.github.com/SimonGoring/fe3b0bf6b4cb9b8f0a2aa6cdce10bb29) for Mac or Linux.  Otherwise, take some time to look at `R/setup_runs.R` and ensure you install all packages listed.
+There are a number of libraries used in this project.  It is likely that you may be missing one or several.  If this is the case you might be interested in [this bash script](https://gist.github.com/SimonGoring/fe3b0bf6b4cb9b8f0a2aa6cdce10bb29) for Mac or Linux.  You may also be interested in the [autoinst package for R](https://github.com/jimhester/autoinst). Otherwise, take some time to look at `R/setup_runs.R` and ensure you install all packages listed.
 
-## Get Pollen Data
+## Getting Core Data
 
-Here we download the sedimentary data.  The core component here is the `get_dataset()` function.  The newest version of `neotoma` (version >= 1.7.3) allows a user to pass in a vector of dataset IDs, so you can either get datasets using a set of parameters in the `get_dataset()` function (see help for the function), or you can pass in a vector of dataset IDs (for example, if you've already picked a set of sites to be examined).  Here we us state names in the United States to define the range of sample sites.
+Here we download the sedimentary data.  The key component here is the `get_dataset()` function.  The newest version of `neotoma` (version >= 1.7.3) allows a user to pass in a vector of dataset IDs, so you can either get datasets using a set of parameters in the `get_dataset()` function (see [help for the get_dataset() function](https://www.rdocumentation.org/packages/neotoma/versions/1.7.0/topics/get_dataset)), or you can pass in a vector of dataset IDs (for example, if you've already picked a set of sites to be examined).  In this example I am using the state, Michigan, as my search parameter:
 
-```{r datasets_and_pollen, echo=TRUE, results='hide', message=FALSE, warnings=FALSE}
-# Define using state names here, but basically can be a change in the
-# parameters passed to get_dataset.
+```{r datasets_and_downloads, echo=TRUE, results='hide', message=FALSE, warnings=FALSE}
+# Define using state names here.  Could also use altitudes, locations,
+#  dataset types. . .
 
 dataset_list <- get_dataset(datasettype='pollen',
-                            gpid = c('Michigan'),
+                            gpid = c('Kansas'),
                             ageyoung=0)
 
-#  The load_pollen() function will download the pollen datasets if either:
+#  The load_downloads() function will download the datasets if either:
 #  there is not currently a downloaded object saved with the same dataset version
 #  or the setup parameter is TRUE, which calls for the whole data file to be re-written.
 
@@ -102,15 +141,33 @@ downloads <- load_downloads(dataset_list,
 
 ```
 
-It might be the case that you want to do further validation on samples based on parameters in the `downloads` object (*e.g.*, only sites with a certain taxon).  The downloads are required for the generation of the core depths file used by Bacon.
+It might be the case that you want to do further validation on samples based on parameters in the `downloads` object (*e.g.*, only sites with a certain taxon).  The downloads are required for the generation of the core depths file used by Bacon.  If you want to further adjust the records, do so with the dataset object, not the `downloads`.  For example, you can remove elements of a list by setting them to `NULL`, so if you know you want to remove the dataset in the 5th position, you could assign `dataset_list[[5]] <- NULL`.  You would then need to re-run `load_downloads()` and ensure that `setup` was `TRUE` in `load_downloads()`:
 
-**Note, with the code that is generating this document, there have been `r length(dataset_list)` records downloaded from Neotoma, for which age files will be generated.**
+```r
+# This code is not run:
+
+dataset_list <- get_dataset(gpid = 'Michigan')
+
+# Only accept sites with a site description:
+
+for (i in length(dataset_list):1) {
+  if (is.na(dataset_list[[i]]$site$description)) {
+    dataset_list[[i]] <- NULL
+  }
+}
+
+# We would go from approximately 810 datasets to 502.
+
+downloads <- load_downloads(dataset_list,
+                            version = settings$version,
+                            setup = TRUE)
+```
 
 ## Parameters
 
 The Baconizing tool records parameters in a parameter `data.frame` called `params`.  This `data.frame` is generated and the saved to file to ensure that errors in the Bacon run do not affect any information stored in the parameters.  The `data.frame` includes a number of columns.
 
-A unique element here is the use of two accumulation rates, one identified as `mod` and one identified as `old`.  This comes from work by Goring et al. (2012) and Dawson et al (2017) who identifiy a break in accumulation rates at or around a European settlement horizon.  This can be used, or not, and the `modern` flag can be set to `false` if you do not wish to use these modern/historical settings.
+One unique element in this workflow is the use of two accumulation rates, one identified as `mod` and one identified as `old`.  This comes from work by Goring et al. [-@goring2012deposition] and Dawson et al [-@dawson2016quantifying] who identifiy a break in accumulation rates at or around a European settlement horizon.  This treatment of modern sediments is the default, however, the `modern` flag in the `settings.yaml` file can be set to `false` if you do not wish to use these modern/historical settings.
 
 | Column | Default | Purpose |
 | -------- | -------- | ---------------------------------------------------- |
@@ -130,6 +187,8 @@ A unique element here is the use of two accumulation rates, one identified as `m
 | ndates | NA | How many dates are used in the chronology? |
 | success | NA | Did Bacon run and return a result successfully? |
 | notes | `.` | Any notes associated with the run. |
+
+Any of these parameters can be changed simply by altering the values in the code below before running the document.  If you have already run the document using a set of parameters and decide to change defaults, you can either change the `version` in `settings.yaml` or choose to set `reset_parameters` to `true`.
 
 ```{r create_params, echo=TRUE, warning=FALSE}
 
@@ -161,8 +220,12 @@ if ((!existing_params) | settings$reset_parameters == TRUE) {
                        suitable = NA,
                        ndates = as.integer(NA),
                        success = NA,
+                       reliableold = NA,
+                       reliableyoung = NA,
                        notes = ".",
                        stringsAsFactors = FALSE)
+
+  default <- params
 
   readr::write_csv(x = params,
                    path = paste0('data/params/bacon_params_v', settings$version, '.csv'))
@@ -172,8 +235,6 @@ if ((!existing_params) | settings$reset_parameters == TRUE) {
 }
 
 ```
-
-**Note, for the run that generated this document there were parameters set for `r nrow(params)` records.  Of these `r sum(params$suitable == 1, na.rm=TRUE)` would be suitable to be run by Bacon.  This is a `r ifelse(settings$reset_parameters|settings$clean_run, "clean ", "re-")`run for the parameters file, based on your settings.**
 
 ### Prior thicknesses
 
@@ -189,6 +250,9 @@ if(is.null(settings$thickness) | settings$thickness == FALSE | "character" %in% 
                               id_col = 1,
                               thick_col = 4,
                               parameters = params)
+        readr::write_csv(x = params,
+                   path = paste0('data/params/bacon_params_v', settings$version, '.csv'))
+
     } else {
       stop("The file defined in `settings.yaml` does not exist.")
     }
@@ -281,3 +345,55 @@ params <- run_batch(params, settings = settings)
 ```
 
 The ultimate product here is a Cores directory with a folder for each dataset that generates a suitable chronology for Bacon, a parameters file (in `data/params/`) that records the parameters used in the Bacon model, along with any notes about elements that may have been changed or were of note in the Bacon runs.
+
+A file has been added to the standard Bacon output.  In each directory the file **`handle`**`_XXX_posteriorout.csv` represents draws from the posterior provided by Bacon.  You will see NAs in this result (but not in the Bacon `ages` file)
+
+## Run Summary
+
+### Success / Failure
+
+```{r svg_box, echo=FALSE, result='as-is'}
+
+success <- round(sum(params$success == 1, na.rm=TRUE) / length(dataset_list) * 400, 0)
+fail <- round((1 - sum(params$success == 1, na.rm=TRUE) / length(dataset_list)) * 400, 0)
+
+paste0('<svg width="400" height="110">
+ <rect y="0" x="0" width="',success,'" height="100" style="fill:rgb(102,102,255);stroke-width:1;stroke:rgb(0,0,0)" />
+ <rect y="0" x="',fail,'" width="',fail,'" height="100" style="fill:rgb(255,153,153);stroke-width:1;stroke:rgb(0,0,0)" />
+</svg>
+")
+
+```
+
+Here we summarize some elements of the run that was conducted with this document:
+
+*   Number of datasets obtained from Neotoma: `r length(dataset_list)`
+*   Number of sites with suitable chronologies: `r sum(params$suitable == 1, na.rm=TRUE)`
+*   Number of sites with Bacon runs: `r sum(params$run == 1, na.rm=TRUE)`
+*   Number of sites with successful Bacon runs: `r sum(params$success == 1, na.rm=TRUE)`
+
+### All Dataset Notes
+
+This interactive table allows you to page through your records for each site to examine the notes associated with each record.  You can use the filters at the bottom of the table to search for individual records, or certain fields.  The dataset IDs link to Neotoma Explorer
+
+```{r echo=FALSE}
+params %>%
+  filter((!notes == ".")) %>%
+  select(handle, datasetid, suitable, run, success, notes) %>%
+  mutate(notes = stringr::str_replace_all(notes, ';', '\\n')) %>%
+  mutate(datasetid = paste0('<a href=http://apps.neotomadb.org/explorer/?datasetid=', datasetid, ' target="_blank">',datasetid,'</a>')) %>%
+  DT::datatable(filter = 'bottom', escape = FALSE)
+
+```
+
+### Successful Runs
+
+```{r echo=FALSE}
+params %>%
+  filter(success == 1) %>%
+  select(handle, datasetid, reliableyoung, reliableold, notes) %>%
+  mutate(notes = stringr::str_replace_all(notes, ';', '\\n')) %>%
+  mutate(datasetid = paste0('<a href=http://apps.neotomadb.org/explorer/?datasetid=', datasetid, ' target="_blank">',datasetid,'</a>')) %>%
+  DT::datatable(filter = 'bottom', escape = FALSE)
+)
+```

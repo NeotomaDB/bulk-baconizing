@@ -15,7 +15,7 @@ call_bacon <- function(site_params){
         site_params$success <- 0
         return(site_params)
       }
-      
+
       # find hiatus depth
       geochron <- readr::read_csv(paste0('Cores/', site_params$handle,
                                          '/', site_params$handle, '.csv'))
@@ -55,7 +55,7 @@ call_bacon <- function(site_params){
 
       out <- try(
         with(site_params,
-             Bacon(core          = handle,
+             evaluate("Bacon(core          = handle,
                    coredir       = 'Cores',
                    acc.mean      = acc.mean.val,
                    acc.shape     = acc.shape.val,
@@ -66,22 +66,25 @@ call_bacon <- function(site_params){
                    suggest       = FALSE,
                    depths.file   = TRUE, # i want to pass one, but bacon sometimes barfs if i do and i can't figure out why
                    hiatus.max    = 10,
-                   hiatus.depths = hiatus.depth)
+                   hiatus.depths = hiatus.depth)")
         )
       )
 
       if (!(class(out) == 'try-error')){
         site_params$run <- 1
-        agetest <- try(agedepth())
+        agetest <- evaluate("try(agedepth())")
 
         if ('try-error' %in% class(agetest)) {
-          
+
           site_params$success <- 0
           site_params$notes <- add_msg(site_params$notes, "Core failed in Bacon plotting.")
         } else {
           # This function generates the posterior estimates for the record.
           outputs <- bacon_age_posts(site_params$handle)
           site_params$success <- 1
+          test_outs <- outputs %>% na.omit()
+          site_params$reliableold <- quantile(test_outs[nrow(test_outs),], 0.33, na.rm=TRUE)
+          site_params$reliableyoung <- quantile(test_outs[1,], 0.66, na.rm=TRUE)
         }
 
       } else {

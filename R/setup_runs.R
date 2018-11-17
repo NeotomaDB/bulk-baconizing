@@ -14,12 +14,19 @@ library(jsonlite, quietly = TRUE)
 library(rgdal, quietly = TRUE)
 library(lubridate, quietly = TRUE)
 library(parallel, quietly = TRUE)
+library(evaluate, quietly = TRUE)
 
 run_files <- list.files('R', pattern = '.R$', full.names = TRUE)
 
 run_all <- sapply(run_files, function(x) if(!x == 'R/setup_runs.R') source(file = x))
 
 settings <- yaml::read_yaml('settings.yaml')
+
+if (settings$clean_run == TRUE) {
+  if (length(list.files(settings$core_path)) > 1) {
+    message("A clean run is expected but files for older runs exist in your core path.")
+  }
+}
 
 if (settings$date == 'today') {
   settings$date <- lubridate::round_date(lubridate::now("UTC"), unit="day")

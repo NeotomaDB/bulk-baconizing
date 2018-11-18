@@ -17,8 +17,8 @@ call_bacon <- function(site_params){
       }
 
       # find hiatus depth
-      geochron <- readr::read_csv(paste0('Cores/', site_params$handle,
-                                         '/', site_params$handle, '.csv'))
+      geochron <- suppressMessages(readr::read_csv(paste0('Cores/', site_params$handle,
+                                         '/', site_params$handle, '.csv')))
 
 
       if (any(stringr::str_detect(geochron$labid, "sett")) & nrow(geochron) > 2){
@@ -54,25 +54,23 @@ call_bacon <- function(site_params){
       }
 
       out <- try(
-        with(site_params,
-             evaluate("Bacon(core          = handle,
+             Bacon(core          = site_params$handle,
                    coredir       = 'Cores',
                    acc.mean      = acc.mean.val,
                    acc.shape     = acc.shape.val,
-                   mem.strength  = mem.strength,
-                   mem.mean      = mem.mean,
-                   thick         = thick,
+                   mem.strength  = site_params$mem.strength,
+                   mem.mean      = site_params$mem.mean,
+                   thick         = site_params$thick,
                    ask           = FALSE,
                    suggest       = FALSE,
                    depths.file   = TRUE, # i want to pass one, but bacon sometimes barfs if i do and i can't figure out why
                    hiatus.max    = 10,
-                   hiatus.depths = hiatus.depth)")
+                   hiatus.depths = hiatus.depth)
         )
-      )
 
       if (!(class(out) == 'try-error')){
         site_params$run <- 1
-        agetest <- evaluate("try(agedepth())")
+        agetest <- try(agedepth(set = out))
 
         if ('try-error' %in% class(agetest)) {
 

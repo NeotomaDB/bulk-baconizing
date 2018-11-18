@@ -12,7 +12,7 @@ run_batch <- function(x, settings){
 
   }
 
-  x_out <- lapply(1:nrow(x), function(i, x, settings){
+  x_out <- mclapply(1:nrow(x), function(i, x, settings){
 
     if ((!is.na(x$success[i])) & x$success[i] == 1) {
       message(paste0(x$handle, ' has already been run. Skipping.\n'))
@@ -41,13 +41,14 @@ run_batch <- function(x, settings){
 
       readr::write_csv(x = x,
                        path = paste0('data/params/bacon_params_v', settings$version, '.csv'))
+      cat('...')
     }
     return(x[i,])
-  }, x = x, settings = settings)
+  }, x = x, settings = settings, mc.cores=max_cores)
 
   x_out <- do.call(rbind.data.frame, x_out)
 
-  x[match(x_out$datasetid), ] <- x_out
+  x[match(x_out$datasetid, x$datasetid), ] <- x_out
 
   return(x)
 }

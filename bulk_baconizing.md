@@ -8,6 +8,7 @@ output:
     code_folding: show
     fig_caption: yes
     keep_md: yes
+    number_sections: yes
     self_contained: yes
     theme: readable
     toc: yes
@@ -19,9 +20,7 @@ keywords: chronology, geochronology, paleoecology, age-models, Bacon, 210Pb, 14C
 csl: styles/elsevier-harvard.csl
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+
 
 ## Introduction
 
@@ -82,9 +81,35 @@ In either case, if you make changes to the repository that are specific to your 
 
 Because there are a number of elements to this project, it was decided to place some of the main elements into a single, easy to use file.  The project stores these settings in the parent directory in a file called `settings.yaml`.  By default these settings are:
 
-```{r settings_file, echo=FALSE, results='asis'}
-cat(paste0(readLines('settings.yaml'), '\n'))
-```
+#  Should the program remove any existing files in the Cores directory and start again?
+ clean_run: true
+ 
+ #  What version of the run is this?  This will create a new parameters file if none exists.
+ version: 1
+ 
+ # If a parameters file exists with the current version number should that file overwritten?
+ reset_parameters: true
+ 
+ # Where will the Bacon core files go?
+ core_path: 'Cores'
+ 
+ #  For any records with assigned dates, what date should be used (either 'YYYY-MM-DD' or 'today')
+ date: 'today'
+ 
+ # Use modern hiatus break:
+ modern: true
+ 
+ # Prior thickness
+ thickness: data/paleon_thick.csv
+ 
+ # Settlement indicators
+ settlement: data/expert_assessment.csv
+ 
+ # In some work we have assignments for accumulation rates set as defauly.  Others may not.
+ accumulation: false
+ 
+ # How many processing cores should be used.
+ parallel: 3
 
 A `yaml` file is a special kind of markup that uses a `key`: `value` pairing, with `#` to indicate a comment.  We assign parameters to the various keys here so that we can define the behaviour of the model runs.  In the following section we explain each parameter and its behaviour:
 
@@ -112,7 +137,8 @@ A `yaml` file is a special kind of markup that uses a `key`: `value` pairing, wi
 
 Throughout your workflow you will likely change some of these settings.  For example, if you are changing the search parameters for your dataset search, you may want to keep some prior information, but increment the `version`, or set `clean_run` to `true`, however, as you begin fine tuning your results, you will want to set `clean_run` back to `false`, and `reset_parameters` to `false` as well.  This will prevent unneccessary errors, and reduce the amount of time required for the runs to complete, since it will accept completed runs and not attempt to re-run them.
 
-```{r setup_runs, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+
+```r
 source('R/setup_runs.R', echo=FALSE, verbose=FALSE)
 ```
 
@@ -122,7 +148,8 @@ There are a number of libraries used in this project.  It is likely that you may
 
 Here we download the sedimentary data.  The key component here is the `get_dataset()` function.  The newest version of `neotoma` (version >= 1.7.3) allows a user to pass in a vector of dataset IDs, so you can either get datasets using a set of parameters in the `get_dataset()` function (see [help for the get_dataset() function](https://www.rdocumentation.org/packages/neotoma/versions/1.7.0/topics/get_dataset)), or you can pass in a vector of dataset IDs (for example, if you've already picked a set of sites to be examined).  In this example I am using the state, Michigan, as my search parameter:
 
-```{r datasets_and_downloads, echo=TRUE, results='hide', message=FALSE, warnings=FALSE}
+
+```r
 # Define using state names here.  Could also use altitudes, locations,
 #  dataset types. . .
 
@@ -137,7 +164,6 @@ dataset_list <- get_dataset(datasettype='pollen',
 downloads <- load_downloads(dataset_list,
                             version = settings$version,
                             setup = settings$clean_run)
-
 ```
 
 It might be the case that you want to do further validation on samples based on parameters in the `downloads` object (*e.g.*, only sites with a certain taxon).  The downloads are required for the generation of the core depths file used by Bacon.  If you want to further adjust the records, do so with the dataset object, not the `downloads`.  For example, you can remove elements of a list by setting them to `NULL`, so if you know you want to remove the dataset in the 5th position, you could assign `dataset_list[[5]] <- NULL`.  You would then need to re-run `load_downloads()` and ensure that `setup` was `TRUE` in `load_downloads()`:
@@ -189,8 +215,8 @@ One unique element in this workflow is the use of two accumulation rates, one id
 
 Any of these parameters can be changed simply by altering the values in the code below before running the document.  If you have already run the document using a set of parameters and decide to change defaults, you can either change the `version` in `settings.yaml` or choose to set `reset_parameters` to `true`.
 
-```{r create_params, echo=TRUE, warning=FALSE}
 
+```r
 existing_params <- file.exists(paste0('data/params/bacon_params_v', settings$version, '.csv'))
 
 if ((!existing_params) | settings$reset_parameters == TRUE) {
@@ -232,15 +258,18 @@ if ((!existing_params) | settings$reset_parameters == TRUE) {
   params <- readr::read_csv(paste0('data/params/bacon_params_v', settings$version, '.csv'),
                             col_types = paste0(c('c','i', rep('n',8),'c', 'l','l','i','l','c'), collapse=''))
 }
+```
 
+```
+## Writing a new parameters file.
 ```
 
 ### Prior thicknesses
 
 In the case that there has been a prior run or some prior assessment of thicknesses the user should set the `thickness` value of `settings.yaml` to point to the correct file location.  Otherwise the value should be set to `false`.
 
-```{r prior_thickness, echo = TRUE, results = 'asis'}
 
+```r
 if(is.null(settings$thickness) | settings$thickness == FALSE | "character" %in% class(settings$thickness)) {
 
   if ("character" %in% class(settings$thickness)) {
@@ -261,15 +290,32 @@ if(is.null(settings$thickness) | settings$thickness == FALSE | "character" %in% 
 } else {
   stop("The setting for thickness in `settings.yaml` is not set correctly.")
 }
+```
 
+```
+## Parsed with column specification:
+## cols(
+##   dataset_id = col_integer(),
+##   name = col_character(),
+##   handle = col_character(),
+##   thick = col_integer()
+## )
+```
+
+```
+## None of the dataset ids in the thickness file are in the parameter file.
+```
+
+```
+## Modifying 0 records to update thicknesses.
 ```
 
 ### Prior accumulations
 
 In the case that there has been a prior run or some prior assessment of accumulation rates the user should set the `accumulation` value of `settings.yaml` to point to the correct file location.  Otherwise the value should be set to `false`.
 
-```{r prior_accumulation, echo = TRUE, results = 'asis'}
 
+```r
 if(is.null(settings$accumulation) | settings$accumulation == FALSE | "character" %in% class(settings$accumulation)) {
 
   if ("character" %in% class(settings$accumulation)) {
@@ -287,7 +333,10 @@ if(is.null(settings$accumulation) | settings$accumulation == FALSE | "character"
 } else {
   stop("The setting for accumulations in `settings.yaml` is not set correctly.")
 }
+```
 
+```
+## No accumulation file is defined.
 ```
 
 ## Add Core Files
@@ -299,8 +348,8 @@ Here we begin to generate the `csv` files for the cores to allow Bacon to run.  
 3.  In cases where a chronology exists for the best age type, but there is no assigned default model, choose the chonology that is most recent, based either on creation date or chronology id. **Raises a message in `notes`**
 4.  In cases where a chronology exists for the best age type, but there are multiple assigned default model, choose the chonology that is most recent, based either on creation date or chronology id. **Raises a message in `notes`**
 
-```{r write_agefiles, echo = TRUE, results='hide'}
 
+```r
 ageorder <- get_table('agetypes')
 
 for (i in 1:nrow(params)) {
@@ -314,7 +363,6 @@ for (i in 1:nrow(params)) {
                  path = paste0('data/params/bacon_params_v', settings$version, '.csv'))
 
 }
-
 ```
 
 ## Possible warnings raised
@@ -339,9 +387,9 @@ The script is set up so that places where there is an objective choice, a clear 
 
 The final step, once all the files have been written, is to run Bacon.  Using the `rbacon` package we can simplify everything:
 
-```{r baconruns, eval=TRUE, results='hide', messages = FALSE, warning=FALSE, fig.show='hide'}
-params <- run_batch(params, settings = settings)
 
+```r
+params <- run_batch(params, settings = settings)
 ```
 
 The ultimate product here is a Cores directory with a folder for each dataset that generates a suitable chronology for Bacon, a parameters file (in `data/params/`) that records the parameters used in the Bacon model, along with any notes about elements that may have been changed or were of note in the Bacon runs.
@@ -352,49 +400,26 @@ A file has been added to the standard Bacon output.  In each directory the file 
 
 ### Success / Failure
 
-```{r svg_box, echo=FALSE, result='as-is'}
-
-success <- round(sum(params$success == 1, na.rm=TRUE) / length(dataset_list) * 400, 0)
-fail <- round((1 - sum(params$success == 1, na.rm=TRUE) / length(dataset_list)) * 400, 0)
-
-htmltools::HTML(paste0('<svg width="400" height="110">
- <rect y="0" x="0" width="',success,'" height="100" style="fill:rgb(102,102,255);stroke-width:1;stroke:rgb(0,0,0)" />
- <rect y="0" x="',success,'" width="',fail,'" height="100" style="fill:rgb(255,153,153);stroke-width:1;stroke:rgb(0,0,0)" />
-</svg>'))
-
-```
+<!--html_preserve--><svg width="400" height="110">
+ <rect y="0" x="0" width="400" height="100" style="fill:rgb(102,102,255);stroke-width:1;stroke:rgb(0,0,0)" />
+ <rect y="0" x="400" width="0" height="100" style="fill:rgb(255,153,153);stroke-width:1;stroke:rgb(0,0,0)" />
+</svg><!--/html_preserve-->
 
 Here we summarize some elements of the run that was conducted with this document:
 
-*   Number of datasets obtained from Neotoma: `r length(dataset_list)`
-*   Number of sites with suitable chronologies: `r sum(params$suitable == 1, na.rm=TRUE)`
-*   Number of sites with Bacon runs: `r sum(params$run == 1, na.rm=TRUE)`
-*   Number of sites with successful Bacon runs: `r sum(params$success == 1, na.rm=TRUE)`
+*   Number of datasets obtained from Neotoma: 4
+*   Number of sites with suitable chronologies: 4
+*   Number of sites with Bacon runs: 4
+*   Number of sites with successful Bacon runs: 4
 
 ### All Dataset Notes
 
 This interactive table allows you to page through your records for each site to examine the notes associated with each record.  You can use the filters at the bottom of the table to search for individual records, or certain fields.  The dataset IDs link to [Neotoma Explorer](http://apps.neotomadb.org/Explorer) and can be used to investigate sites further.
 
-```{r echo=FALSE}
-params %>%
-  filter((!notes == ".")) %>%
-  select(handle, datasetid, suitable, run, success, notes) %>%
-  mutate(notes = stringr::str_replace_all(notes, ';', '\\n')) %>%
-  mutate(datasetid = paste0('<a href=http://apps.neotomadb.org/explorer/?datasetid=', datasetid, ' target="_blank">',datasetid,'</a>')) %>%
-  DT::datatable(filter = 'bottom', escape = FALSE)
-
-```
+<!--html_preserve--><div id="htmlwidget-afd4a876acf04f2e55f9" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-afd4a876acf04f2e55f9">{"x":{"filter":"bottom","filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["1","2","3","4"],["ARRINGTO","CHEYENNE","MUSCOTAA","MUSCOTAB"],["<a href=http://apps.neotomadb.org/explorer/?datasetid=214 target=\"_blank\">214<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=367 target=\"_blank\">367<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1782 target=\"_blank\">1782<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3495 target=\"_blank\">3495<\/a>"],[1,1,1,1],[1,1,1,1],[1,1,1,1],["Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file."]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>handle<\/th>\n      <th>datasetid<\/th>\n      <th>suitable<\/th>\n      <th>run<\/th>\n      <th>success<\/th>\n      <th>notes<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
 
 ### Successful Runs
 
-```{r echo=FALSE}
-params %>%
-  filter(success == 1) %>%
-  select(handle, datasetid, reliableyoung, reliableold, notes) %>%
-  mutate(notes = stringr::str_replace_all(notes, ';', '\\n')) %>%
-  mutate(datasetid = paste0('<a href=http://apps.neotomadb.org/explorer/?datasetid=', datasetid, ' target="_blank">',datasetid,'</a>')) %>%
-  DT::datatable(filter = 'bottom', escape = FALSE)
-
-```
-
-## References
+<!--html_preserve--><div id="htmlwidget-a8d9c38c3762f694e3cc" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a8d9c38c3762f694e3cc">{"x":{"filter":"bottom","filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1\" data-max=\"20559\" data-scale=\"2\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"13001\" data-max=\"29602\" data-scale=\"2\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["1","2","3","4"],["ARRINGTO","CHEYENNE","MUSCOTAA","MUSCOTAB"],["<a href=http://apps.neotomadb.org/explorer/?datasetid=214 target=\"_blank\">214<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=367 target=\"_blank\">367<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1782 target=\"_blank\">1782<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3495 target=\"_blank\">3495<\/a>"],[20559,1,212,11673.24],[27241.01,29602,14009,13001],["Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file."]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>handle<\/th>\n      <th>datasetid<\/th>\n      <th>reliableyoung<\/th>\n      <th>reliableold<\/th>\n      <th>notes<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->

@@ -15,6 +15,7 @@ library(rgdal, quietly = TRUE)
 library(lubridate, quietly = TRUE)
 library(parallel, quietly = TRUE)
 library(evaluate, quietly = TRUE)
+library(htmltools, quietly = TRUE)
 
 run_files <- list.files('R', pattern = '.R$', full.names = TRUE)
 

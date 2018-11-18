@@ -1,3 +1,4 @@
+
 add_msg <- function(x, msg) {
   post_message <- function(x, msg) {
     if(stringr::str_detect(string = x, pattern = msg)) {
@@ -15,7 +16,7 @@ add_msg <- function(x, msg) {
   }
 
   if (length(x) > 1) {
-    out <- sapply(x, function(x) post_msg(x, msg))
+    out <- sapply(x, function(x) post_message(x, msg))
   } else if (length(x) == 1) {
     out <- post_message(x, msg)
   } else {

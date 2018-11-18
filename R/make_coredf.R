@@ -53,9 +53,9 @@ make_coredf <- function(x, settings, core_param) {
       if (z$chroncontroltype == "Radiocarbon, average of two or more dates") {
         core_param$notes <- add_msg(core_param$notes, 'A chroncontrol using several geochrons was used, but only one chroncontrol was reported.')
       }
-      if (stringr::str_detect(z$chroncontroltype, 'resevoir')) {
+      if (stringr::str_detect(z$chroncontroltype, 'reservoir')) {
         if (x$agetype == 'Radiocarbon years BP') {
-          core_param$notes <- add_msg(core_param$notes, 'A chroncontrol uses a resevoir correction, returning resevoir correction in 14C years.')
+          core_param$notes <- add_msg(core_param$notes, 'A chroncontrol uses a reservoir correction, returning reservoir correction in 14C years.')
           out <- data.frame( labid = stringr::str_replace_all(z$chroncontroltype, ',', '_'),
                              age = z$age,
                              error = abs(z$age - z$agelimityounger),
@@ -63,7 +63,8 @@ make_coredf <- function(x, settings, core_param) {
                              cc = 1, stringsAsFactors = FALSE)
           return(out)
         } else {
-          core_param$notes <- add_msg(core_param$notes, 'A chroncontrol uses a resevoir correction, returning uncorrected 14C age (corrected age is also calibrated).')
+          core_param$notes <- add_msg(core_param$notes, 'A chroncontrol uses a reservoir correction, returning uncorrected 14C age (corrected age is also calibrated).')
+          core_params$suitable <- 0
         }
       }
 
@@ -168,7 +169,7 @@ make_coredf <- function(x, settings, core_param) {
     }
   }
 
-  if (nrow(output) > 1) {
+  if (nrow(output) > 1 & is.na(core_param$suitable)) {
     core_param$suitable <- 1
   }
 

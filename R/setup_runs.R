@@ -16,20 +16,26 @@ library(lubridate, quietly = TRUE)
 library(parallel, quietly = TRUE)
 library(evaluate, quietly = TRUE)
 library(htmltools, quietly = TRUE)
+library(DT, quietly = TRUE)
 
-run_files <- list.files('R', pattern = '.R$', full.names = TRUE)
+run_files <- list.files("R", pattern = ".R$", full.names = TRUE)
 
-run_all <- sapply(run_files, function(x) if(!x == 'R/setup_runs.R') source(file = x))
+run_all <- sapply(run_files, function(x) {
+    if (!x == "R/setup_runs.R") source(file = x)
+  })
 
-settings <- yaml::read_yaml('settings.yaml')
+settings <- yaml::read_yaml("settings.yaml")
+
+
 
 if (settings$clean_run == TRUE) {
   if (length(list.files(settings$core_path)) > 1) {
-    message("A clean run is expected but files for older runs exist in your core path.")
+    message("A clean run is expected but files for older runs exist
+      in your core path.") %>% strwrap()
   }
 }
 
-if (settings$date == 'today') {
+if (settings$date == "today") {
   settings$date <- lubridate::round_date(lubridate::now("UTC"), unit="day")
 } else {
   settings$date <- lubridate::as_date(settings$date)

@@ -82,7 +82,7 @@ In either case, if you make changes to the repository that are specific to your 
 
 Because there are a number of elements to this project, it was decided to place some of the main elements into a single, easy to use file.  The project stores these settings in the parent directory in a file called `settings.yaml`.  By default these settings are:
 
-```{r settings_file, echo=FALSE, results='asis'}
+```{r settings_file, echo=FALSE}
 cat(paste0(readLines('settings.yaml'), '\n'))
 ```
 
@@ -311,7 +311,7 @@ for (i in 1:nrow(params)) {
                                 downloads = downloads,
                                 settings = settings)
   readr::write_csv(x = params,
-                 path = paste0('data/params/bacon_params_v', settings$version, '.csv'))
+                 path = paste0("data/params/bacon_params_v", settings$version, ".csv"))
 
 }
 
@@ -339,7 +339,7 @@ The script is set up so that places where there is an objective choice, a clear 
 
 The final step, once all the files have been written, is to run Bacon.  Using the `rbacon` package we can simplify everything:
 
-```{r baconruns, eval=TRUE, results='hide', messages = FALSE, warning=FALSE, fig.show='hide'}
+```{r baconruns, eval=TRUE, results="hide", messages = FALSE, warning=FALSE, fig.show="hide"}
 params <- run_batch(params, settings = settings)
 
 ```
@@ -352,7 +352,7 @@ A file has been added to the standard Bacon output.  In each directory the file 
 
 ### Success / Failure
 
-```{r svg_box, echo=FALSE, result='as-is'}
+```{r svg_box, echo=FALSE, result="as-is"}
 
 success <- round(sum(params$success == 1, na.rm=TRUE) / length(dataset_list) * 400, 0)
 fail <- round((1 - sum(params$success == 1, na.rm=TRUE) / length(dataset_list)) * 400, 0)
@@ -379,9 +379,9 @@ This interactive table allows you to page through your records for each site to 
 params %>%
   filter((!notes == ".")) %>%
   select(handle, datasetid, suitable, run, success, notes) %>%
-  mutate(notes = stringr::str_replace_all(notes, ';', '\\n')) %>%
-  mutate(datasetid = paste0('<a href=http://apps.neotomadb.org/explorer/?datasetid=', datasetid, ' target="_blank">',datasetid,'</a>')) %>%
-  DT::datatable(filter = 'bottom', escape = FALSE)
+  mutate(notes = stringr::str_replace_all(notes, ";", "\\n")) %>%
+  mutate(datasetid = paste0("<a href=http://apps.neotomadb.org/explorer/?datasetid=", datasetid, " target='_blank'>",datasetid,"</a>")) %>%
+  DT::datatable(filter = "bottom", escape = FALSE)
 
 ```
 
@@ -391,7 +391,7 @@ params %>%
 params %>%
   filter(success == 1) %>%
   select(handle, datasetid, reliableyoung, reliableold, notes) %>%
-  mutate(notes = stringr::str_replace_all(notes, ';', '\\n')) %>%
+  mutate(notes = stringr::str_replace_all(notes, ";", "\\n")) %>%
   mutate(datasetid = paste0('<a href=http://apps.neotomadb.org/explorer/?datasetid=', datasetid, ' target="_blank">',datasetid,'</a>')) %>%
   DT::datatable(filter = 'bottom', escape = FALSE)
 

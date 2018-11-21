@@ -127,7 +127,7 @@ Here we download the sedimentary data.  The key component here is the `get_datas
 #  dataset types. . .
 
 dataset_list <- get_dataset(datasettype='pollen',
-                            gpid = c('Michigan', 'Wisconsin', 'Minnesota'),
+                            gpid = c('Kansas'),
                             ageyoung=0)
 
 #  The load_downloads() function will download the datasets if either:
@@ -305,7 +305,7 @@ ageorder <- get_table('agetypes')
 
 for (i in 1:nrow(params)) {
 
-  params[i, ] <- build_agefiles(param = params[i,],
+  params[i, ] <- build_agefiles(param = params[i, ],
                                 ageorder = ageorder,
                                 datasets = dataset_list,
                                 downloads = downloads,
@@ -363,13 +363,14 @@ htmltools::HTML(paste0('<svg width="400" height="110">
 </svg>'))
 
 ```
+**Figure**. Success (blue) and failure (pink) rate of the Bacon runs.
 
 Here we summarize some elements of the run that was conducted with this document:
 
-*   Number of datasets obtained from Neotoma: `r length(dataset_list)`
-*   Number of sites with suitable chronologies: `r sum(params$suitable == 1, na.rm=TRUE)`
-*   Number of sites with Bacon runs: `r sum(params$run == 1, na.rm=TRUE)`
-*   Number of sites with successful Bacon runs: `r sum(params$success == 1, na.rm=TRUE)`
+*   Number of datasets obtained from Neotoma: **`r length(dataset_list)`**
+*   Number of sites with suitable chronologies: **`r sum(params$suitable == 1, na.rm=TRUE)`**
+*   Number of sites with Bacon runs: **`r sum(params$run == 1, na.rm=TRUE)`**
+*   Number of sites with successful Bacon runs: **`r sum(params$success == 1, na.rm=TRUE)`**
 
 ### All Dataset Notes
 
@@ -381,7 +382,8 @@ params %>%
   select(handle, datasetid, suitable, run, success, notes) %>%
   mutate(notes = stringr::str_replace_all(notes, ";", "\\n")) %>%
   mutate(datasetid = paste0("<a href=http://apps.neotomadb.org/explorer/?datasetid=", datasetid, " target='_blank'>",datasetid,"</a>")) %>%
-  DT::datatable(filter = "bottom", escape = FALSE)
+  DT::datatable(filter = "bottom", escape = FALSE) %>%
+  DT::formatStyle(columns = colnames(.), fontSize = '50%')
 
 ```
 
@@ -393,7 +395,8 @@ params %>%
   select(handle, datasetid, reliableyoung, reliableold, notes) %>%
   mutate(notes = stringr::str_replace_all(notes, ";", "\\n")) %>%
   mutate(datasetid = paste0('<a href=http://apps.neotomadb.org/explorer/?datasetid=', datasetid, ' target="_blank">',datasetid,'</a>')) %>%
-  DT::datatable(filter = 'bottom', escape = FALSE)
+  DT::datatable(filter = 'bottom', escape = FALSE) %>%
+  DT::formatStyle(columns = colnames(.), fontSize = '50%')
 
 ```
 

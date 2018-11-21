@@ -73,7 +73,7 @@ make_coredf <- function(x, settings, core_param) {
           return(out)
         } else {
           core_param$notes <- add_msg(core_param$notes, "A chroncontrol uses a reservoir correction, returning uncorrected 14C age (corrected age is also calibrated).")
-          core_params$suitable <- 0
+          core_param$suitable <- 0
         }
       }
 

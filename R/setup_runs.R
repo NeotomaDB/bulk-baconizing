@@ -26,7 +26,10 @@ run_all <- sapply(run_files, function(x) {
 
 settings <- yaml::read_yaml("settings.yaml")
 
-
+if (!settings$core_path %in% list.dirs()) {
+  dir.create(settings$core_path)
+  message("User defined core directory did not exist.  Generating directory.")
+}
 
 if (settings$clean_run == TRUE) {
   if (length(list.files(settings$core_path)) > 1) {
@@ -36,7 +39,7 @@ if (settings$clean_run == TRUE) {
 }
 
 if (settings$date == "today") {
-  settings$date <- lubridate::round_date(lubridate::now("UTC"), unit="day")
+  settings$date <- lubridate::round_date(lubridate::now("UTC"), unit = "day")
 } else {
   settings$date <- lubridate::as_date(settings$date)
 }

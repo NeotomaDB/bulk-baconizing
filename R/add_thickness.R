@@ -20,17 +20,20 @@ add_thickness <- function(file, id_col = 1, thick_col = 2, parameters, verbose =
   }
 
   thicknesses <- thicknesses %>%
-    filter(ids %in% parameters$datasetid & thick %in% parameters$thick)
-
-  if (verbose) {
-    message(paste0("Modifying ", nrow(thicknesses), " records to update thicknesses."))
-  }
+    filter(ids %in% parameters$datasetid)
 
   param_rows <- match(thicknesses$ids, params$datasetid)
+  
+  if (verbose) {
+    
+    changed <- !(parameters$thick[param_rows] == thicknesses$thick)
+    
+    message(paste0("Modifying ", sum(changed), " records to update thicknesses."))
+  }
 
   parameters$thick[param_rows] <- thicknesses$thick
 
-  parameters$notes[param_rows] <- add_msg(parameters$notes[param_rows],
+  parameters$notes[param_rows[changed]] <- add_msg(parameters$notes[param_rows[changed]],
                                           'Thickness adjusted based on prior work.')
 
   return(parameters)

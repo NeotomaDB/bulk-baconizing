@@ -15,7 +15,7 @@ load_downloads <- function(dl, path = "./", version = NULL, setup = FALSE) {
     }
     pol <- readRDS(paste0(path, "data/pollen_v", version, ".rds"))
   } else {
-    pol <- suppressMessages(neotoma::get_download(dl))
+    pol <- suppressWarnings(suppressMessages(neotoma::get_download(dl)))
     saveRDS(pol, paste0(path, "data/pollen_v", version, ".rds"))
   }
 

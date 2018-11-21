@@ -25,11 +25,11 @@ run_batch <- function(x, settings){
     # This provided the path to libgsl.so
     # Then, I created a simlink:
     # sudo ln ./usr/lib/x86_64-linux-gnu/libgsl.so
-    #         ./usr/lib/x86_64-linux-gnu/libgsl.so.0
+    # ./usr/lib/x86_64-linux-gnu/libgsl.so.0
     # This allows things to work.
 
     if (!is.na(x$suitable[i]) & x$suitable[i] == 1) {
-      run_out <- try(call_bacon(x[i, ]))
+      run_out <- try(call_bacon(x[i, ], settings))
 
       if (!"try-error" %in% class(run_out)) {
         x[i, ] <- run_out

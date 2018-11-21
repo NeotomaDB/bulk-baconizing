@@ -2,9 +2,9 @@ library(dplyr)
 
 call_bacon <- function(site_params, settings) {
 
-  bacon_chrons <- paste0(settings$core_path, site_params$handle,
+  bacon_chrons <- paste0(settings$core_path, '/', site_params$handle,
                          "/", site_params$handle, ".csv")
-  bacon_depths <- paste0(settings$core_path, site_params$handle,
+  bacon_depths <- paste0(settings$core_path, '/', site_params$handle,
                         "/", site_params$handle, "_depths.txt")
 
   # check for suitability

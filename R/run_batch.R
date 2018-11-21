@@ -12,7 +12,7 @@ run_batch <- function(x, settings){
 
   }
 
-  x_out <- mclapply(1:nrow(x), function(i, x, settings){
+  x_out <- lapply(1:nrow(x), function(i, x, settings){
 
     if ((!is.na(x$success[i])) & x$success[i] == 1) {
       message(paste0(x$handle, ' has already been run. Skipping.\n'))
@@ -44,7 +44,7 @@ run_batch <- function(x, settings){
       cat('...')
     }
     return(x[i,])
-  }, x = x, settings = settings, mc.cores=max_cores)
+  }, x = x, settings = settings)
 
   x_out <- do.call(rbind.data.frame, x_out)
 

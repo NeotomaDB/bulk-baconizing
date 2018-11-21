@@ -127,7 +127,7 @@ Here we download the sedimentary data.  The key component here is the `get_datas
 #  dataset types. . .
 
 dataset_list <- get_dataset(datasettype='pollen',
-                            gpid = c('Michigan', 'Wisconsin', 'Minnesota'),
+                            gpid = c('Michigan','Wisconsin','Minnesota'),
                             ageyoung=0)
 
 #  The load_downloads() function will download the datasets if either:
@@ -341,7 +341,8 @@ The final step, once all the files have been written, is to run Bacon.  Using th
 
 ```{r baconruns, eval=TRUE, results="hide", messages = FALSE, warning=FALSE, fig.show="hide"}
 params <- run_batch(params, settings = settings)
-
+readr::write_csv(x = params,
+                 path = paste0("data/params/bacon_params_v", settings$version, ".csv"))
 ```
 
 The ultimate product here is a Cores directory with a folder for each dataset that generates a suitable chronology for Bacon, a parameters file (in `data/params/`) that records the parameters used in the Bacon model, along with any notes about elements that may have been changed or were of note in the Bacon runs.

@@ -26,7 +26,7 @@ run_all <- sapply(run_files, function(x) {
 
 settings <- yaml::read_yaml("settings.yaml")
 
-if (!settings$core_path %in% list.dirs()) {
+if (!paste0('./', settings$core_path) %in% list.dirs()) {
   dir.create(settings$core_path)
   message("User defined core directory did not exist.  Generating directory.")
 }

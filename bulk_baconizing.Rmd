@@ -14,8 +14,8 @@ output:
     toc_float: yes
 dev: svg
 highlight: tango
-keywords: chronology, geochronology, paleoecology, age-models, Bacon, 210Pb, 14C,
-  radiocarbon
+keywords: chronology, geochronology, paleoecology, age-models,
+  Bacon, 210Pb, 14C, radiocarbon
 csl: styles/elsevier-harvard.csl
 ---
 
@@ -82,11 +82,13 @@ In either case, if you make changes to the repository that are specific to your 
 
 Because there are a number of elements to this project, it was decided to place some of the main elements into a single, easy to use file.  The project stores these settings in the parent directory in a file called `settings.yaml`.  By default these settings are:
 
-```{r settings_file, echo=FALSE}
+```{r settings_file, echo=FALSE, comment=NA}
 cat(paste0(readLines('settings.yaml'), '\n'))
 ```
 
 A `yaml` file is a special kind of markup that uses a `key`: `value` pairing, with `#` to indicate a comment.  We assign parameters to the various keys here so that we can define the behaviour of the model runs.  In the following section we explain each parameter and its behaviour:
+
+#### Settings Defined
 
 *   `clean_run`: (default `true`) Should we clear all the files and parameters and start from scratch? Can take either `true` or `false`.
 
@@ -127,8 +129,8 @@ Here we download the sedimentary data.  The key component here is the `get_datas
 #  dataset types. . .
 
 dataset_list <- get_dataset(datasettype='pollen',
-                            gpid = c('Kansas'),
-                            ageyoung=0)
+                            gpid = c('Utah'),
+                            ageyoung = 0)
 
 #  The load_downloads() function will download the datasets if either:
 #  there is not currently a downloaded object saved with the same dataset version
@@ -170,24 +172,24 @@ One unique element in this workflow is the use of two accumulation rates, one id
 
 | Column | Default | Purpose |
 | -------- | -------- | ---------------------------------------------------- |
-| handle | none | The unique text identifer for the dataset collection unit. |
-| datasetid | none | The unique dataset identifier. |
-| acc.mean.mod | 3.02 | Accumulation rate for *modern* sediment (above an identified Settlement Horizon).  If the `settings.yaml` flag `modern` is set to `false` this will be the same as `acc.mean.old`. |
-| acc.mean.old | 15 | Accumulation rate for sediment if no horizon is identified, or the `modern` flag is set to `false`. |
-| acc.shape.mod | 0.53 | Shape parameter for modern sediment (as above). |
-| acc.shape.old | 0.9 | Shape parameter for sediement (as above). |
-| mem.strength | 2 | Memory (accumulation autocorrelation parameter) |
-| mem.mean | 0.5 | Mean value for memory. |
-| hiatus | NA | Location of a hiatus, either set at settlement, or a known hiatus. |
-| thick | 5 | Section thickness (cm) to be used by Bacon. |
-| age.type | NA | From the dataset, what is the original age type for the core chronology. |
-| run |  NA | Has the model been run by Bacon? |
-| suitable | NA | Is the model suitable for a Bacon run? |
-| ndates | NA | How many dates are used in the chronology? |
-| success | NA | Did Bacon run and return a result successfully? |
-| notes | `.` | Any notes associated with the run. |
+|  **`handle`**  | none | The unique text identifer for the dataset collection unit. |
+|  **datasetid**  | none | The unique dataset identifier. |
+|  **acc.mean.mod**  | 3.02 | Accumulation rate for *modern* sediment (above an identified Settlement Horizon).  If the `settings.yaml` flag `modern` is set to `false` this will be the same as `acc.mean.old`. |
+|  **acc.mean.old**  | 15 | Accumulation rate for sediment if no horizon is identified, or the `modern` flag is set to `false`. |
+|  **acc.shape.mod**  | 0.53 | Shape parameter for modern sediment (as above). |
+|  **acc.shape.old**  | 0.9 | Shape parameter for sediement (as above). |
+|  **mem.strength**  | 2 | Memory (accumulation autocorrelation parameter) |
+|  **mem.mean**  | 0.5 | Mean value for memory. |
+|  **`hiatus`**  | NA | Location of a hiatus, either set at settlement, or a known hiatus. |
+|  **`thick`**  | 5 | Section thickness (cm) to be used by Bacon. |
+|  **`age.type`**  | NA | From the dataset, what is the original age type for the core chronology. |
+|  **`run`**  |  NA | Has the model been run by Bacon? |
+|  **`suitable`**  | NA | Is the model suitable for a Bacon run? |
+|  **`ndates`**  | NA | How many dates are used in the chronology? |
+|  **`success`**  | NA | Did Bacon run and return a result successfully? |
+|  **`notes`**  | `.` | Any notes associated with the run. |
 
-Any of these parameters can be changed simply by altering the values in the code below before running the document.  If you have already run the document using a set of parameters and decide to change defaults, you can either change the `version` in `settings.yaml` or choose to set `reset_parameters` to `true`.
+Any of these parameters can be changed by altering the values in the code chunk below (in the Rmd file) before running the document.  If you have already run the document using a set of parameters and decide to change defaults, you can either change the `version` in `settings.yaml` or choose to set `reset_parameters` to `true`.  Once you have run the full script and you have produced Bacon files you can manually edit individual sites by opening the `data/params/bacon_params_version.csv` file.
 
 ```{r create_params, echo=TRUE, warning=FALSE}
 
@@ -341,6 +343,8 @@ The final step, once all the files have been written, is to run Bacon.  Using th
 
 ```{r baconruns, eval=TRUE, results="hide", messages = FALSE, warning=FALSE, fig.show="hide"}
 params <- run_batch(params, settings = settings)
+readr::write_csv(x = params,
+              path = paste0("data/params/bacon_params_v", settings$version, ".csv"))
 
 ```
 

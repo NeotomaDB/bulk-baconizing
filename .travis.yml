@@ -1,0 +1,22 @@
+language: r
+sudo: false
+script: make agegen
+cache: packages
+r_packages:
+  - yaml
+  - rbacon
+  - neotoma
+  - maps
+  - fields
+  - raster
+  - rgdal
+  - dplyr
+  - lubridate
+  - httr
+  - jsonlite
+  - rgdal
+  - lubridate
+  - parallel
+  - evaluate
+  - htmltools
+  - DT

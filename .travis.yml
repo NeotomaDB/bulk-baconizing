@@ -21,6 +21,8 @@ r_packages:
   - htmltools
   - DT
   - rmarkdown
+  - readr
+  - leaflet
 addons:
   apt:
     packages:

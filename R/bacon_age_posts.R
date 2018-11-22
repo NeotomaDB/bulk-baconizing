@@ -10,9 +10,6 @@ bacon_age_posts <- function(handle, settings) {
   settings_file <- paste0(settings$core_path, "/",
      handle, "/", handle, "_settings.txt")
 
-  posterior_file <- paste0(settings$core_path, "/",
-     handle, "/", handle, "_", sections, "_posteriorout.csv")
-
   out_files <- list.files(paste0(settings$core_path, "/", handle),
                           pattern = ".out$",
                           full.names = TRUE)
@@ -46,16 +43,20 @@ bacon_age_posts <- function(handle, settings) {
       posteriors <- matrix(NA, nrow = nrow(depth), ncol = nrow(outer))
 
       for (j in 1:nrow(outer)) {
-        x <- seq(from = bacon_settings[1,1],
-                 to = bacon_settings[2,1],
+        x <- seq(from = bacon_settings[1, 1],
+                 to = bacon_settings[2, 1],
                  length.out = sections + 1)
-        y <- c(outer[j,1],
-               outer[j,1] +
+        y <- c(outer[j, 1],
+               outer[j, 1] +
                  cumsum((diff(x) * outer[j, 2:(ncol(outer) - 2)]) %>%
                                                  as.numeric))
         posteriors[, j] <- round(approx(x = x, y = y,
                                        xout = depth %>% unlist())$y, 0)
       }
+
+      posterior_file <- paste0(settings$core_path, "/",
+         handle, "/", handle, "_", sections, "_posteriorout.csv")
+
       readr::write_csv(posterior_file,
                        x = as.data.frame(posteriors))
     }

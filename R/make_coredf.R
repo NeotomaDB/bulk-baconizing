@@ -19,6 +19,14 @@ make_coredf <- function(x, settings, core_param) {
   build_row <- function(z) {
     if (is.null(unlist(z$geochron))) {
       # There is no 'geochron' data:
+      if (is.null(z$depth)) {
+        out <- data.frame(labid = stringr::str_replace_all(z$chroncontroltype,
+          ",", "_"), age = z$age, error = abs(z$age - z$agelimityounger),
+          depth = NA, cc = ifelse(z$chroncontroltype %in% uncal, 1,
+          0), stringsAsFactors = FALSE)
+
+          return(out)
+      }
       if (is.null(z$age) & z$chroncontroltype == "Core top") {
         core_param$notes <- add_msg(core_param$notes,
           "A chroncontrol was missing an age.  Assigned -60.")
@@ -138,7 +146,7 @@ make_coredf <- function(x, settings, core_param) {
       sett_row <- which(sett$handle == core_param$handle)
       depth <- as.numeric(stringr::str_extract(sett$pre1.d[sett_row], "[0-9]*"))
 
-      coord <- sett %>% 
+      coord <- sett %>%
         filter(sett$handle == core_param$handle) %>%
         select(long, lat)
 

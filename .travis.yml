@@ -20,3 +20,8 @@ r_packages:
   - evaluate
   - htmltools
   - DT
+addons:
+  apt:
+    packages:
+      - libgdal-dev
+      - libproj-dev

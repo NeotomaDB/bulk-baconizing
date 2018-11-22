@@ -12,11 +12,15 @@ Please note that this project is released with a [Contributor Code of Conduct](C
 *   [Simon Goring](http://goring.org) [![orcid](https://img.shields.io/badge/orcid-0000--0002--2700--4605-brightgreen.svg)](https://orcid.org/0000-0002-2700-4605)
 *   Andria Dawson
 *   Allison Stegner [![orcid](https://img.shields.io/badge/orcid-0000--0002--1412--8203-brightgreen.svg)](https://orcid.org/0000-0002-1412-8203)
-*   Yue Wang
+*   Yue Wang [![orcid](https://img.shields.io/badge/orcid-0000--0002--9826--3276-brightgreen.svg)](https://orcid.org/0000-0002-9826-3276)
+
+## Maintenance Files
+
+There are several files in this repository that serve a purpose for the organziation, and for the support of several processes outside of an end-users needs.  Specifically `.travis.yaml` and `Makefile`.  You can keep these files, or not, but they are required to support integration with the [Travis Continuous Integration](https://travis-ci.org/) platform.  For more on the use of [Continuous Integration](https://en.wikipedia.org/wiki/Continuous_integration) with RMarkdown, please visit the post [Adding CI to RMarkdown Documents](http://www.goring.org/resources/Adding_CI_To_RMarkdown.html).
 
 ## How to Use
 
-This is intended to be used as a template for users, and not as a solution in and of itself.  The process for generating chronologies is itterative.  The use of this Rmd script is intended to be an itterative process, whereby you select sites, run Bacon, revise parameters and run the script again.  Each itteration will involve modifying the parameters file, and also the `settings.yaml` file.  Please be sure to check carefully as you do this.  Errors may result in long wait times, or runs that provide
+This is intended to be used as a template for users, and not as a solution in and of itself.  The process for generating chronologies is itterative.  The use of this Rmd script is intended to be an itterative process, whereby you select sites, run Bacon, revise parameters and run the script again.  Each itteration will involve modifying the parameters file, and also the `settings.yaml` file.  Please be sure to check carefully as you do this.  Errors may result in long wait times, or runs that provide no new useful information.
 
 ### Running with RStudio
 

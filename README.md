@@ -1,5 +1,6 @@
 ![DUB](https://img.shields.io/dub/l/vibe-d.svg)
- [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+ [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)  [![Build Status](https://travis-ci.org/NeotomaDB/bulk-baconizing.svg?branch=master)](https://travis-ci.org/NeotomaDB/bulk-baconizing)
+
 
 # Bulk Baconizing
 

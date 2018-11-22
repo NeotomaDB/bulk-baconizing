@@ -4249,21 +4249,38 @@ render('bulk_baconizing.Rmd')</code></pre>
 <div id="defining-your-settings" class="section level3">
 <h3>Defining Your Settings</h3>
 <p>Because there are a number of elements to this project, it was decided to place some of the main elements into a single, easy to use file. The project stores these settings in the parent directory in a file called <code>settings.yaml</code>. By default these settings are:</p>
-</div>
-</div>
-<div id="should-the-program-remove-any-existing-files-in-the-cores-directory-and-start-again" class="section level1">
-<h1>Should the program remove any existing files in the Cores directory and start again?</h1>
-<p>clean_run: true</p>
-<p># What version of the run is this? This will create a new parameters file if none exists. version: 1</p>
-<p># If a parameters file exists with the current version number should that file overwritten? reset_parameters: true</p>
-<p># Where will the Bacon core files go? core_path: ‘Cores’</p>
-<p># For any records with assigned dates, what date should be used (either ‘YYYY-MM-DD’ or ‘today’) date: ‘today’</p>
-<p># Use modern hiatus break: modern: true</p>
-<p># Prior thickness thickness: data/paleon_thick.csv</p>
-<p># Settlement indicators settlement: data/expert_assessment.csv</p>
-<p># In some work we have assignments for accumulation rates set as defauly. Others may not. accumulation: false</p>
-<p># How many processing cores should be used. parallel: 3</p>
+<pre><code>#  Should the program remove any existing files in the Cores directory and start again?
+ clean_run: true
+ 
+ #  What version of the run is this?  This will create a new parameters file if none exists.
+ version: 1
+ 
+ # If a parameters file exists with the current version number should that file overwritten?
+ reset_parameters: true
+ 
+ # Where will the Bacon core files go?
+ core_path: 'Cores'
+ 
+ #  For any records with assigned dates, what date should be used (either 'YYYY-MM-DD' or 'today')
+ date: 'today'
+ 
+ # Use modern hiatus break:
+ modern: true
+ 
+ # Prior thickness
+ thickness: data/paleon_thick.csv
+ 
+ # Settlement indicators
+ settlement: data/expert_assessment.csv
+ 
+ # In some work we have assignments for accumulation rates set as defauly.  Others may not.
+ accumulation: false
+ 
+ # How many processing cores should be used.
+ parallel: 3</code></pre>
 <p>A <code>yaml</code> file is a special kind of markup that uses a <code>key</code>: <code>value</code> pairing, with <code>#</code> to indicate a comment. We assign parameters to the various keys here so that we can define the behaviour of the model runs. In the following section we explain each parameter and its behaviour:</p>
+<div id="settings-defined" class="section level4">
+<h4>Settings Defined</h4>
 <ul>
 <li><p><code>clean_run</code>: (default <code>true</code>) Should we clear all the files and parameters and start from scratch? Can take either <code>true</code> or <code>false</code>.</p></li>
 <li><p><code>version</code>: (default <code>1</code>) The use of a version key allows you to keep track of your Bacon parameters if, over the course of a project, you make changes in your choices about how you want to run your analysis. If the version number changes a new parameter file will be generated. You can assign any value to this parameter.</p></li>
@@ -4276,11 +4293,14 @@ render('bulk_baconizing.Rmd')</code></pre>
 <li><p><code>accumulation</code>: (default <code>false</code>) Similar to thickness, if modifications have been made to accumulation rates, a file can be defined here.</p></li>
 <li><p><code>parallel</code>: (default <code>true</code>) Should the code try to run Bacon in parallel? This is either the value <code>false</code> or the maximum number of cores to attempt (e.g., <code>3</code>). This means it is possible to run your script on fewer cores than your system has available to allow you to continue work on other projects. The code used in this script uses the <code>mclapply()</code> function, which means that the parallel operations, which use <a href="https://garthtarr.com/parallel-computation-in-r/">parallel forking in R</a>, are not available for Windows systems.</p></li>
 </ul>
+</div>
 <div id="modifying-the-settings" class="section level4">
 <h4>Modifying the Settings</h4>
 <p>Throughout your workflow you will likely change some of these settings. For example, if you are changing the search parameters for your dataset search, you may want to keep some prior information, but increment the <code>version</code>, or set <code>clean_run</code> to <code>true</code>, however, as you begin fine tuning your results, you will want to set <code>clean_run</code> back to <code>false</code>, and <code>reset_parameters</code> to <code>false</code> as well. This will prevent unneccessary errors, and reduce the amount of time required for the runs to complete, since it will accept completed runs and not attempt to re-run them.</p>
 <pre class="r"><code>source('R/setup_runs.R', echo=FALSE, verbose=FALSE)</code></pre>
 <p>There are a number of libraries used in this project. It is likely that you may be missing one or several. If this is the case you might be interested in <a href="https://gist.github.com/SimonGoring/fe3b0bf6b4cb9b8f0a2aa6cdce10bb29">this bash script</a> for Mac or Linux. You may also be interested in the <a href="https://github.com/jimhester/autoinst">autoinst package for R</a>. Otherwise, take some time to look at <code>R/setup_runs.R</code> and ensure you install all packages listed.</p>
+</div>
+</div>
 </div>
 <div id="getting-core-data" class="section level2">
 <h2>Getting Core Data</h2>
@@ -4289,8 +4309,8 @@ render('bulk_baconizing.Rmd')</code></pre>
 #  dataset types. . .
 
 dataset_list &lt;- get_dataset(datasettype='pollen',
-                            gpid = c('Michigan', 'Wisconsin', 'Minnesota'),
-                            ageyoung=0)
+                            gpid = c('Utah'),
+                            ageyoung = 0)
 
 #  The load_downloads() function will download the datasets if either:
 #  there is not currently a downloaded object saved with the same dataset version
@@ -4300,242 +4320,10 @@ downloads &lt;- load_downloads(dataset_list,
                             version = settings$version,
                             setup = settings$clean_run)</code></pre>
 <pre><code>## Warning: 
-## There were multiple entries for Eucalyptus suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning in FUN(X[[i]], ...): This dataset has no defined default chronology.  Please use caution.
-## Using the first chronology, NAPD 1 as the default.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Eucalyptus suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Eucalyptus suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Unknown 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Unknown 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Eucalyptus suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Eucalyptus suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning in FUN(X[[i]], ...): This dataset has no defined default chronology.  Please use caution.
-## Using the first chronology, NAPD 1 as the default.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Eucalyptus tablets 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning in FUN(X[[i]], ...): This dataset has no defined default chronology.  Please use caution.
-## Using the first chronology, Almendinger 1992 as the default.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Eucalyptus suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Unknown 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Eucalyptus suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Eucalyptus suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Eucalyptus suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Eucalyptus suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Eucalyptus suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Unknown 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning in FUN(X[[i]], ...): This dataset has no defined default chronology.  Please use caution.
-## Using the first chronology, Almendinger 1992 as the default.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Eucalyptus suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Eucalyptus suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Unknown 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Eucalyptus tablets 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Unknown 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning in FUN(X[[i]], ...): This dataset has no defined default chronology.  Please use caution.
-## Using the first chronology, COHMAP chron 1 as the default.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Unknown 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning in FUN(X[[i]], ...): This dataset has no defined default chronology.  Please use caution.
-## Using the first chronology, Almendinger 1992 as the default.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Dinoflagellata 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-## There were multiple entries for Pollen concentration 
-## get_download has mapped aliases for the taxa in the taxon.list.
-## There were multiple entries for Eucalyptus tablets 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Lycopodium tablets 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Lycopodium suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
 ## There were multiple entries for Lycopodium tablets 
 ## get_download has mapped aliases for the taxa in the taxon.list.
 
 ## Warning: 
-## There were multiple entries for Lycopodium tablets 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Lycopodium tablets 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Lycopodium tablets 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Eucalyptus suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Microsphere suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
-## There were multiple entries for Lycopodium suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Lycopodium suspension 
-## get_download has mapped aliases for the taxa in the taxon.list.</code></pre>
-<pre><code>## Warning: 
 ## There were multiple entries for Lycopodium tablets 
 ## get_download has mapped aliases for the taxa in the taxon.list.
 
@@ -4584,88 +4372,88 @@ downloads &lt;- load_downloads(dataset_list,
 </thead>
 <tbody>
 <tr class="odd">
-<td>handle</td>
+<td><strong><code>handle</code></strong></td>
 <td>none</td>
 <td>The unique text identifer for the dataset collection unit.</td>
 </tr>
 <tr class="even">
-<td>datasetid</td>
+<td><strong>datasetid</strong></td>
 <td>none</td>
 <td>The unique dataset identifier.</td>
 </tr>
 <tr class="odd">
-<td>acc.mean.mod</td>
+<td><strong>acc.mean.mod</strong></td>
 <td>3.02</td>
 <td>Accumulation rate for <em>modern</em> sediment (above an identified Settlement Horizon). If the <code>settings.yaml</code> flag <code>modern</code> is set to <code>false</code> this will be the same as <code>acc.mean.old</code>.</td>
 </tr>
 <tr class="even">
-<td>acc.mean.old</td>
+<td><strong>acc.mean.old</strong></td>
 <td>15</td>
 <td>Accumulation rate for sediment if no horizon is identified, or the <code>modern</code> flag is set to <code>false</code>.</td>
 </tr>
 <tr class="odd">
-<td>acc.shape.mod</td>
+<td><strong>acc.shape.mod</strong></td>
 <td>0.53</td>
 <td>Shape parameter for modern sediment (as above).</td>
 </tr>
 <tr class="even">
-<td>acc.shape.old</td>
+<td><strong>acc.shape.old</strong></td>
 <td>0.9</td>
 <td>Shape parameter for sediement (as above).</td>
 </tr>
 <tr class="odd">
-<td>mem.strength</td>
+<td><strong>mem.strength</strong></td>
 <td>2</td>
 <td>Memory (accumulation autocorrelation parameter)</td>
 </tr>
 <tr class="even">
-<td>mem.mean</td>
+<td><strong>mem.mean</strong></td>
 <td>0.5</td>
 <td>Mean value for memory.</td>
 </tr>
 <tr class="odd">
-<td>hiatus</td>
+<td><strong><code>hiatus</code></strong></td>
 <td>NA</td>
 <td>Location of a hiatus, either set at settlement, or a known hiatus.</td>
 </tr>
 <tr class="even">
-<td>thick</td>
+<td><strong><code>thick</code></strong></td>
 <td>5</td>
 <td>Section thickness (cm) to be used by Bacon.</td>
 </tr>
 <tr class="odd">
-<td>age.type</td>
+<td><strong><code>age.type</code></strong></td>
 <td>NA</td>
 <td>From the dataset, what is the original age type for the core chronology.</td>
 </tr>
 <tr class="even">
-<td>run</td>
+<td><strong><code>run</code></strong></td>
 <td>NA</td>
 <td>Has the model been run by Bacon?</td>
 </tr>
 <tr class="odd">
-<td>suitable</td>
+<td><strong><code>suitable</code></strong></td>
 <td>NA</td>
 <td>Is the model suitable for a Bacon run?</td>
 </tr>
 <tr class="even">
-<td>ndates</td>
+<td><strong><code>ndates</code></strong></td>
 <td>NA</td>
 <td>How many dates are used in the chronology?</td>
 </tr>
 <tr class="odd">
-<td>success</td>
+<td><strong><code>success</code></strong></td>
 <td>NA</td>
 <td>Did Bacon run and return a result successfully?</td>
 </tr>
 <tr class="even">
-<td>notes</td>
+<td><strong><code>notes</code></strong></td>
 <td><code>.</code></td>
 <td>Any notes associated with the run.</td>
 </tr>
 </tbody>
 </table>
-<p>Any of these parameters can be changed simply by altering the values in the code below before running the document. If you have already run the document using a set of parameters and decide to change defaults, you can either change the <code>version</code> in <code>settings.yaml</code> or choose to set <code>reset_parameters</code> to <code>true</code>.</p>
+<p>Any of these parameters can be changed by altering the values in the code chunk below (in the Rmd file) before running the document. If you have already run the document using a set of parameters and decide to change defaults, you can either change the <code>version</code> in <code>settings.yaml</code> or choose to set <code>reset_parameters</code> to <code>true</code>. Once you have run the full script and you have produced Bacon files you can manually edit individual sites by opening the <code>data/params/bacon_params_version.csv</code> file.</p>
 <pre class="r"><code>existing_params &lt;- file.exists(paste0('data/params/bacon_params_v', settings$version, '.csv'))
 
 if ((!existing_params) | settings$reset_parameters == TRUE) {
@@ -4738,7 +4526,8 @@ if ((!existing_params) | settings$reset_parameters == TRUE) {
 ##   handle = col_character(),
 ##   thick = col_integer()
 ## )</code></pre>
-<pre><code>## Modifying 29 records to update thicknesses.</code></pre>
+<pre><code>## None of the dataset ids in the thickness file are in the parameter file.</code></pre>
+<pre><code>## Modifying 0 records to update thicknesses.</code></pre>
 </div>
 <div id="prior-accumulations" class="section level3">
 <h3>Prior accumulations</h3>
@@ -4776,25 +4565,15 @@ if ((!existing_params) | settings$reset_parameters == TRUE) {
 
 for (i in 1:nrow(params)) {
 
-  params[i, ] &lt;- build_agefiles(param = params[i,],
+  params[i, ] &lt;- build_agefiles(param = params[i, ],
                                 ageorder = ageorder,
                                 datasets = dataset_list,
                                 downloads = downloads,
                                 settings = settings)
   readr::write_csv(x = params,
-                 path = paste0('data/params/bacon_params_v', settings$version, '.csv'))
+                 path = paste0(&quot;data/params/bacon_params_v&quot;, settings$version, &quot;.csv&quot;))
 
 }</code></pre>
-<pre><code>## Annual laminations defined in the age models but ages and depths not aligned.</code></pre>
-<pre><code>## Annual laminations defined in the age models.
-## Annual laminations defined in the age models.</code></pre>
-<pre><code>## Annual laminations defined in the age models but ages and depths not aligned.
-## Annual laminations defined in the age models but ages and depths not aligned.
-## Annual laminations defined in the age models but ages and depths not aligned.
-## Annual laminations defined in the age models but ages and depths not aligned.</code></pre>
-<pre><code>## There are multiple default models defined for the &quot;best&quot; age type.</code></pre>
-<pre><code>## Annual laminations defined in the age models.</code></pre>
-<pre><code>## Annual laminations defined in the age models but ages and depths not aligned.</code></pre>
 </div>
 <div id="possible-warnings-raised" class="section level2">
 <h2>Possible warnings raised</h2>
@@ -4819,6 +4598,131 @@ for (i in 1:nrow(params)) {
 <h2>Running Bacon</h2>
 <p>The final step, once all the files have been written, is to run Bacon. Using the <code>rbacon</code> package we can simplify everything:</p>
 <pre class="r"><code>params &lt;- run_batch(params, settings = settings)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   X1 = col_integer()
+## )</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   X1 = col_character()
+## )</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   X1 = col_double(),
+##   X2 = col_double(),
+##   X3 = col_double(),
+##   X4 = col_double(),
+##   X5 = col_double(),
+##   X6 = col_double(),
+##   X7 = col_double(),
+##   X8 = col_double()
+## )</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   X1 = col_double()
+## )</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   X1 = col_character()
+## )</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_double()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   X1 = col_integer()
+## )</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   X1 = col_character()
+## )</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_double()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   X1 = col_integer()
+## )</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   X1 = col_character()
+## )</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_double()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   X1 = col_integer()
+## )</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   X1 = col_character()
+## )</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_double()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   X1 = col_integer()
+## )</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   X1 = col_character()
+## )</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_double()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   X1 = col_integer()
+## )</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   X1 = col_character()
+## )</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_double()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   X1 = col_double()
+## )</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   X1 = col_character()
+## )</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_double()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   X1 = col_integer()
+## )</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   X1 = col_character()
+## )</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_double()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<pre class="r"><code>readr::write_csv(x = params,
+              path = paste0(&quot;data/params/bacon_params_v&quot;, settings$version, &quot;.csv&quot;))</code></pre>
 <p>The ultimate product here is a Cores directory with a folder for each dataset that generates a suitable chronology for Bacon, a parameters file (in <code>data/params/</code>) that records the parameters used in the Bacon model, along with any notes about elements that may have been changed or were of note in the Bacon runs.</p>
 <p>A file has been added to the standard Bacon output. In each directory the file <strong><code>handle</code></strong><code>_XXX_posteriorout.csv</code> represents draws from the posterior provided by Bacon. You will see NAs in this result (but not in the Bacon <code>ages</code> file)</p>
 </div>
@@ -4826,28 +4730,28 @@ for (i in 1:nrow(params)) {
 <h2>Run Summary</h2>
 <div id="success-failure" class="section level3">
 <h3>Success / Failure</h3>
-<svg width="400" height="110">
- <rect y="0" x="0" width="325" height="100" style="fill:rgb(102,102,255);stroke-width:1;stroke:rgb(0,0,0)" />
- <rect y="0" x="325" width="75" height="100" style="fill:rgb(255,153,153);stroke-width:1;stroke:rgb(0,0,0)" />
-</svg>
+<p><svg width="400" height="110">
+ <rect y="0" x="0" width="360" height="100" style="fill:rgb(102,102,255);stroke-width:1;stroke:rgb(0,0,0)" />
+ <rect y="0" x="360" width="40" height="100" style="fill:rgb(255,153,153);stroke-width:1;stroke:rgb(0,0,0)" />
+</svg> <strong>Figure</strong>. Success (blue) and failure (pink) rate of the Bacon runs.</p>
 <p>Here we summarize some elements of the run that was conducted with this document:</p>
 <ul>
-<li>Number of datasets obtained from Neotoma: 283</li>
-<li>Number of sites with suitable chronologies: 267</li>
-<li>Number of sites with Bacon runs: 267</li>
-<li>Number of sites with successful Bacon runs: 230</li>
+<li>Number of datasets obtained from Neotoma: <strong>10</strong></li>
+<li>Number of sites with suitable chronologies: <strong>9</strong></li>
+<li>Number of sites with Bacon runs: <strong>9</strong></li>
+<li>Number of sites with successful Bacon runs: <strong>9</strong></li>
 </ul>
 </div>
 <div id="all-dataset-notes" class="section level3">
 <h3>All Dataset Notes</h3>
 <p>This interactive table allows you to page through your records for each site to examine the notes associated with each record. You can use the filters at the bottom of the table to search for individual records, or certain fields. The dataset IDs link to <a href="http://apps.neotomadb.org/Explorer">Neotoma Explorer</a> and can be used to investigate sites further.</p>
-<div id="htmlwidget-57decf5055a4dba82986" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-57decf5055a4dba82986">{"x":{"filter":"bottom","filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118"],["HELLSKIT","ANDRUSC2","BECKMNBG","BIGJOHN","BILLYS","BLUMOUND","BOGD","BROWNSBY","BURNTSDE","CAMP11LK","CHIPPEWA","CUB2","DARKLAKE","DEMONTLK","DEVILSWI","DOGFISH","FRAINSLK","FRENCH","GREENLK","HANSEN","IRVIN","JACOBSN2","KITCHNER","KOTIRANT","LAKE16","LAKE27","LAKEANNF","LILYLAKE","LITTBASS","LITTLPIN","LKCLDSA","LKCLDSH","LKCLDSSW","LOSTLAKE","MABEL","MCNRNY2A","MCNRNY3A","MCNRNY4A","MINNIEO","MYRTLE","NELSLK","NELSONPD","ONDRISPD","PGONIABG","PORTAGE","RUBYLAKE","RUTZLAKE","RYERSE","SHAGAWA","SPIRIT","TAMARACK","TERHELL","VESTABRG","WENTZEL","WILWRDPD","WINTERGR","WOLVERIN","YELLOWDG","CANYONMI","LTDOLLAR","IRWINSMT","ADELINE","ELEVENS","ESKALAKE","FALLISON","GLIMML1","BASSK","TOWER1","TOWER4","TOWER6","TOWER7","HELLHOLE","LILY","KELLYDUD","MARTHA","MINNREG","AMBER","CAMP","CRYSTAL","FISHL","FISHS","EAGLEL","EMILY_NE","FULLER","LAKEMINA","ELKGR-89","NELSONMI","MUDLKMI","LILYMI","MNCLEB","MNCLEC","MNCLEL","MNHBLS","MNHNLL","ESOLDIER","GUARD","TROUTLBG","MNHNWB","COWDEN","HICKSMI","MORRIMI","BUCKMI","WARNERWI","KERRMI","CROOKEDN","CROOKEDR","CROOKEDU","JAYLAKE","ITASCAMB","BEAVERWI","LORRAINE","PENEGOR","MADELIA","LONESTAR","LILY04","SRHODY","MINDEN","OTTERMI"],["<a href=http://apps.neotomadb.org/explorer/?datasetid=3131 target=\"_blank\">3131<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=205 target=\"_blank\">205<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3062 target=\"_blank\">3062<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=272 target=\"_blank\">272<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=275 target=\"_blank\">275<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=287 target=\"_blank\">287<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=298 target=\"_blank\">298<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=314 target=\"_blank\">314<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=325 target=\"_blank\">325<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=332 target=\"_blank\">332<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=369 target=\"_blank\">369<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=532 target=\"_blank\">532<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=546 target=\"_blank\">546<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=679 target=\"_blank\">679<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=684 target=\"_blank\">684<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=717 target=\"_blank\">717<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=847 target=\"_blank\">847<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=850 target=\"_blank\">850<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=982 target=\"_blank\">982<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1004 target=\"_blank\">1004<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1153 target=\"_blank\">1153<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3138 target=\"_blank\">3138<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1524 target=\"_blank\">1524<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1548 target=\"_blank\">1548<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1580 target=\"_blank\">1580<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1581 target=\"_blank\">1581<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3468 target=\"_blank\">3468<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1633 target=\"_blank\">1633<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1639 target=\"_blank\">1639<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1643 target=\"_blank\">1643<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1649 target=\"_blank\">1649<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3482 target=\"_blank\">3482<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3483 target=\"_blank\">3483<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1665 target=\"_blank\">1665<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1685 target=\"_blank\">1685<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1725 target=\"_blank\">1725<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3485 target=\"_blank\">3485<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3486 target=\"_blank\">3486<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3492 target=\"_blank\">3492<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1786 target=\"_blank\">1786<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1793 target=\"_blank\">1793<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1794 target=\"_blank\">1794<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1831 target=\"_blank\">1831<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3541 target=\"_blank\">3541<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1966 target=\"_blank\">1966<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2309 target=\"_blank\">2309<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2314 target=\"_blank\">2314<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2318 target=\"_blank\">2318<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2375 target=\"_blank\">2375<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2586 target=\"_blank\">2586<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2624 target=\"_blank\">2624<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2638 target=\"_blank\">2638<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3831 target=\"_blank\">3831<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2948 target=\"_blank\">2948<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2956 target=\"_blank\">2956<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2961 target=\"_blank\">2961<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3032 target=\"_blank\">3032<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3047 target=\"_blank\">3047<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15682 target=\"_blank\">15682<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=12001 target=\"_blank\">12001<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=13047 target=\"_blank\">13047<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=13060 target=\"_blank\">13060<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=13069 target=\"_blank\">13069<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=13071 target=\"_blank\">13071<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=13073 target=\"_blank\">13073<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=13097 target=\"_blank\">13097<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14270 target=\"_blank\">14270<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14410 target=\"_blank\">14410<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14443 target=\"_blank\">14443<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14889 target=\"_blank\">14889<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=17993 target=\"_blank\">17993<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14446 target=\"_blank\">14446<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14535 target=\"_blank\">14535<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14537 target=\"_blank\">14537<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14539 target=\"_blank\">14539<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14626 target=\"_blank\">14626<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14631 target=\"_blank\">14631<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14633 target=\"_blank\">14633<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14635 target=\"_blank\">14635<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14637 target=\"_blank\">14637<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14639 target=\"_blank\">14639<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14641 target=\"_blank\">14641<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14643 target=\"_blank\">14643<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14645 target=\"_blank\">14645<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14839 target=\"_blank\">14839<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=20311 target=\"_blank\">20311<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14933 target=\"_blank\">14933<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15032 target=\"_blank\">15032<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15035 target=\"_blank\">15035<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15167 target=\"_blank\">15167<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15168 target=\"_blank\">15168<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15269 target=\"_blank\">15269<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15270 target=\"_blank\">15270<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15294 target=\"_blank\">15294<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15309 target=\"_blank\">15309<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15311 target=\"_blank\">15311<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15316 target=\"_blank\">15316<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15318 target=\"_blank\">15318<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15487 target=\"_blank\">15487<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15492 target=\"_blank\">15492<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15511 target=\"_blank\">15511<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15660 target=\"_blank\">15660<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15882 target=\"_blank\">15882<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15916 target=\"_blank\">15916<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15919 target=\"_blank\">15919<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=20695 target=\"_blank\">20695<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=20697 target=\"_blank\">20697<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15922 target=\"_blank\">15922<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15989 target=\"_blank\">15989<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=17387 target=\"_blank\">17387<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=17404 target=\"_blank\">17404<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=17406 target=\"_blank\">17406<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=19812 target=\"_blank\">19812<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=19931 target=\"_blank\">19931<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=19933 target=\"_blank\">19933<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=20397 target=\"_blank\">20397<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=20512 target=\"_blank\">20512<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=25306 target=\"_blank\">25306<\/a>"],[0,1,1,1,null,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,null,1,1,null,1,1,null,null,1,1,0,0,0,1,null,1,1,1,null,null,1,1,1,1,1,0,null,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,null,1,1,1,1,1,1,1,1],[0,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,1,0,0,1,1,0,0,0,1,0,1,1,1,0,0,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1],[null,1,1,1,null,0,0,1,1,1,1,1,1,0,0,1,0,1,1,1,null,0,1,null,1,1,null,null,0,1,null,null,null,1,null,1,1,1,null,null,1,1,1,1,0,null,null,1,0,1,0,0,1,1,1,1,0,1,1,0,0,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,1,1,1,null,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,null,1,1,1,0,0,1,1,1],["Annual laminations defined as an age model but ages and depths not aligned.","Overwrote prior chronology file.","Thickness adjusted based on prior work.","There are no default models defined for the best age type: Age models have same preparation date.  Model with highest chron ID was selected","There are no default models defined for the best age type: Default assigned to best age-type by precedence.n Error processing the age file.","Core failed in Bacon run.","Core failed in Bacon run.","Thickness adjusted based on prior work.","Thickness adjusted based on prior work.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Annual laminations defined in the age models.","Overwrote prior chronology file.n Core failed in Bacon run.","Core failed in Bacon run.","Thickness adjusted based on prior work.","Overwrote prior chronology file.n Core failed in Bacon run.","There are no default models defined for the best age type: Most recently generated model chosen","Overwrote prior chronology file.","Thickness adjusted based on prior work.n High accumulation rates for the core detected: Assigning default accumulation rate to 100.","Error processing the age file.","Core failed in Bacon run.","Overwrote prior chronology file.","Error processing the age file.","Overwrote prior chronology file.","Thickness adjusted based on prior work.n Overwrote prior chronology file.","Error processing the age file.","Error processing the age file.","Core failed in Bacon run.","Annual laminations defined in the age models.","Thickness adjusted based on prior work.n Annual laminations defined as an age model but ages and depths not aligned.","Thickness adjusted based on prior work.n Annual laminations defined as an age model but ages and depths not aligned.","Annual laminations defined as an age model but ages and depths not aligned.","Thickness adjusted based on prior work.n Overwrote prior chronology file.","Only one age constraint exists for the record.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Error processing the age file.","Error processing the age file.","Thickness adjusted based on prior work.","Thickness adjusted based on prior work.","Thickness adjusted based on prior work.","Thickness adjusted based on prior work.","Core failed in Bacon run.","Annual laminations defined as an age model but ages and depths not aligned.","Error processing the age file.","High accumulation rates for the core detected: Assigning default accumulation rate to 100.n Overwrote prior chronology file.","Core failed in Bacon run.","Overwrote prior chronology file.","Core failed in Bacon run.","Core failed in Bacon run.","Thickness adjusted based on prior work.n Overwrote prior chronology file.","Thickness adjusted based on prior work.","Thickness adjusted based on prior work.","Overwrote prior chronology file.","Overwrote prior chronology file.n Core failed in Bacon run.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.n Core failed in Bacon run.","Overwrote prior chronology file.n Core failed in Bacon run.","There are multiple default models defined for the best age type: Default assigned to most recent modeln Core failed in Bacon run.","Core failed in Bacon run.","Core failed in Bacon run.","Core failed in Bacon run.","Overwrote prior chronology file.","Core failed in Bacon run.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Thickness adjusted based on prior work.n Overwrote prior chronology file.","Core failed in Bacon run.","Core failed in Bacon run.","Core failed in Bacon run.","Core failed in Bacon run.","Core failed in Bacon run.","Thickness adjusted based on prior work.n Core failed in Bacon run.","Thickness adjusted based on prior work.n Core failed in Bacon run.","Core failed in Bacon run.","Core failed in Bacon run.","Core failed in Bacon run.","Core failed in Bacon run.","Core failed in Bacon run.","Core failed in Bacon run.","Annual laminations defined in the age models.","Thickness adjusted based on prior work.","Overwrote prior chronology file.n Core failed in Bacon run.","Overwrote prior chronology file.","Overwrote prior chronology file.","Thickness adjusted based on prior work.","Thickness adjusted based on prior work.","Thickness adjusted based on prior work.","Thickness adjusted based on prior work.n Annual laminations defined as an age model but ages and depths not aligned.","Thickness adjusted based on prior work.","Overwrote prior chronology file.","High accumulation rates for the core detected: Assigning default accumulation rate to 100.n Overwrote prior chronology file.","Overwrote prior chronology file.","Thickness adjusted based on prior work.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.n Core failed in Bacon run.","Core failed in Bacon run.","High accumulation rates for the core detected: Assigning default accumulation rate to 100.n Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Thickness adjusted based on prior work.","Error processing the age file.","Overwrote prior chronology file.","Thickness adjusted based on prior work.n Overwrote prior chronology file.","Thickness adjusted based on prior work.n High accumulation rates for the core detected: Assigning default accumulation rate to 100.","Core failed in Bacon run.","Core failed in Bacon run.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file."]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>handle<\/th>\n      <th>datasetid<\/th>\n      <th>suitable<\/th>\n      <th>run<\/th>\n      <th>success<\/th>\n      <th>notes<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b026ab7cc2624f1aa74d" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b026ab7cc2624f1aa74d">{"x":{"filter":"bottom","filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["1","2","3","4"],["BECHAN1","BECHAN2M","FRYINGPN","NATBRIDG"],["<a href=http://apps.neotomadb.org/explorer/?datasetid=247 target='_blank'>247<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3060 target='_blank'>3060<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=853 target='_blank'>853<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=7829 target='_blank'>7829<\/a>"],[1,1,1,null],[1,1,1,0],[1,1,1,null],["High accumulation rates for the core detected: Assigning default accumulation rate to 100.","High accumulation rates for the core detected: Assigning default accumulation rate to 100.","High accumulation rates for the core detected: Assigning default accumulation rate to 100.","Error processing the age file."]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>handle<\/th>\n      <th>datasetid<\/th>\n      <th>suitable<\/th>\n      <th>run<\/th>\n      <th>success<\/th>\n      <th>notes<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data) {\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
 </div>
 <div id="successful-runs" class="section level3">
 <h3>Successful Runs</h3>
-<div id="htmlwidget-0ac87e7163e9b149bcc0" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0ac87e7163e9b149bcc0">{"x":{"filter":"bottom","filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"-914\" data-max=\"12020\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"-7\" data-max=\"18784\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150","151","152","153","154","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","171","172","173","174","175","176","177","178","179","180","181","182","183","184","185","186","187","188","189","190","191","192","193","194","195","196","197","198","199","200","201","202","203","204","205","206","207","208","209","210","211","212","213","214","215","216","217","218","219","220","221","222","223","224","225","226","227","228","229","230"],["ALLIE","ALMORA1","LAKEMARY","ANDERSLK","ANDREE","ANDRUSC2","BADMED","BBASS","BECKMAN","BECKMNBG","BIGJOHN","BLANDIN","BLKHOOF","BOBLAKE","BOSSUOT","BROWNC12","BROWNSBY","BURNTSDE","CAMP11LK","CAMP12LK","CAMPBELL","CEDARBLK","CHIPPEWA","CINDY","MNGRCL","CRAZY","CUB2","DALTON","DARKLAKE","DENTONLK","DISTER59","DISTRHFT","DOGFISH","DUNNIGAN","EASTTWIN","EGGERT","ERNSTPIT","FAITH","FARQUAR","FAWNLAKE","FOXPOND","FRENCH","GASS","GEORGE","MNBELG","GOLDSMTH","GREENLK","GRICE","HANSEN","HEMOPOND","HORSE","HORSHOHA","HOSTAGE","HUGLAKE","HUSTLER","IOLABOG","JACOBSN1","MNSHBL","KEGAN","KELLHOL1","KELLHOL2","KELLNERS","KIRCHNR1","KIRCHNR2","KITCHNER","KRYZ","KYLENLK","LAKE16","LAKE27","LAKEANN","LAKEANNH","LAKECARL","LEWISLK","LITTLPIN","LOSTLAKE","STWDARK2","MARTINPD","MCCRANEY","MCNRNY2A","MCNRNY3A","MCNRNY4A","MENDOTAC","MENDOTAD","MINNIEN","MUDLKMN1","MUDLKMN2","MURPHY","NELSLK","NELSONPD","ONAMIA","ONDRISPD","OTTOMLK","PGONIABG","POGONIA","THIRDLK","THRDBGN","THRDBGW","PENNINGT","PETERSL","PLEASAMN","RADTKE","REICHOW","REIDEL","RHOLL","RICEMNA","RICEMNB","ROSSBURG","RYERSE","SEDIVY","SEIDEL01","SEIDEL02","SILVERMN","SISEEBA","SOLUM","SOSTANCH","SPECTACL","SPIRIT","STCATHER","STONE","STONTAM1","STONTAM2","SUNFISH","THOMPSON","TOENJES","TWINMN1","UPGRAVEN","VESTABRG","WEBERLK","WENTZEL","WHITLIL1","WHITLILY","WILWRDPD","WINTERGR","WOLFCRK","WOLSFELD","WOODLAKE","YELLOWDG","CANYONMI","SOUHERON","OCHEDA","BLOMFORD","FAWNANMN","FROVOLD","GOOSEMN","OLSONMN","RNDGROVE","LASTLAKE","MNLYC2","MONSON","DEANS","EMILY","PERCHMN","CHUBLAKE","MNDLLR","ZIEBELL","MNDLML","LYBECK","UNION","MNFRAL","ALBERTL3","EVRHRTLK","SHARKEY","KIMBLE","WESTOLAF","OAKGLEN","CAMPLAKE","GLIMML1","SALLIE","TOWER1","TOWER4","TOWER6","TOWER7","MNPPJL","NORPOL","LAKEMINA","ELKGR-89","MUDLKMI","LILYMI","MNCLEB","MNCLEC","MNCLE4","MNCLED","MNCLEL","MNBCSC","MNCLSQ","MNCHLH","MNOTCL","MNCVTL","MNWSSO","WILLIAMJ","MNHNLL","EMRICK","ESOLDIER","GUARD","TROUTLBG","MNHNWB","DEEPLAKE","ADVENTUR","BENACH","BLUEJ","BROZIE","CAMPTWO","COWDEN","FERRY01","HICKSMI","MORRIMI","HEMLOCK","KERRMI","CROOKEDN","CROOKEDR","CROOKEDU","JAYLAKE","OPINES","QUALLY","ITASCALC","ITASCAMB","ITASCAMC","ITASCAMD","ITASCAT2","LIMABOG","CAPITOLA","STEELMN","LORRAINE","PENEGOR","FOXMN","LITSHING","MADELIA","SRHODY","MINDEN","OTTERMI"],["<a href=http://apps.neotomadb.org/explorer/?datasetid=29 target=\"_blank\">29<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=30 target=\"_blank\">30<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3473 target=\"_blank\">3473<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=202 target=\"_blank\">202<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=204 target=\"_blank\">204<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=205 target=\"_blank\">205<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=223 target=\"_blank\">223<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=241 target=\"_blank\">241<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=249 target=\"_blank\">249<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3062 target=\"_blank\">3062<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=272 target=\"_blank\">272<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=280 target=\"_blank\">280<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=282 target=\"_blank\">282<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=296 target=\"_blank\">296<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=305 target=\"_blank\">305<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=313 target=\"_blank\">313<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=314 target=\"_blank\">314<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=325 target=\"_blank\">325<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=332 target=\"_blank\">332<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=333 target=\"_blank\">333<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=334 target=\"_blank\">334<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=352 target=\"_blank\">352<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=369 target=\"_blank\">369<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=382 target=\"_blank\">382<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=515 target=\"_blank\">515<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=521 target=\"_blank\">521<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=532 target=\"_blank\">532<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=545 target=\"_blank\">545<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=546 target=\"_blank\">546<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=681 target=\"_blank\">681<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=700 target=\"_blank\">700<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3081 target=\"_blank\">3081<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=717 target=\"_blank\">717<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=774 target=\"_blank\">774<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=781 target=\"_blank\">781<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=786 target=\"_blank\">786<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=806 target=\"_blank\">806<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=817 target=\"_blank\">817<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=822 target=\"_blank\">822<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=824 target=\"_blank\">824<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=846 target=\"_blank\">846<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=850 target=\"_blank\">850<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=860 target=\"_blank\">860<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=869 target=\"_blank\">869<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15245 target=\"_blank\">15245<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=967 target=\"_blank\">967<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=982 target=\"_blank\">982<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=990 target=\"_blank\">990<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1004 target=\"_blank\">1004<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1032 target=\"_blank\">1032<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1109 target=\"_blank\">1109<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1110 target=\"_blank\">1110<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1111 target=\"_blank\">1111<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1134 target=\"_blank\">1134<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1138 target=\"_blank\">1138<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1151 target=\"_blank\">1151<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1163 target=\"_blank\">1163<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15274 target=\"_blank\">15274<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1446 target=\"_blank\">1446<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1447 target=\"_blank\">1447<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3452 target=\"_blank\">3452<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1448 target=\"_blank\">1448<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1520 target=\"_blank\">1520<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3455 target=\"_blank\">3455<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1524 target=\"_blank\">1524<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1552 target=\"_blank\">1552<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1564 target=\"_blank\">1564<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1580 target=\"_blank\">1580<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1581 target=\"_blank\">1581<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1584 target=\"_blank\">1584<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3469 target=\"_blank\">3469<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1588 target=\"_blank\">1588<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1629 target=\"_blank\">1629<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1643 target=\"_blank\">1643<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1665 target=\"_blank\">1665<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3781 target=\"_blank\">3781<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1708 target=\"_blank\">1708<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1720 target=\"_blank\">1720<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1725 target=\"_blank\">1725<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3485 target=\"_blank\">3485<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3486 target=\"_blank\">3486<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1735 target=\"_blank\">1735<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3488 target=\"_blank\">3488<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1757 target=\"_blank\">1757<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1777 target=\"_blank\">1777<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1778 target=\"_blank\">1778<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1781 target=\"_blank\">1781<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1793 target=\"_blank\">1793<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1794 target=\"_blank\">1794<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1830 target=\"_blank\">1830<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1831 target=\"_blank\">1831<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1840 target=\"_blank\">1840<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3541 target=\"_blank\">3541<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3558 target=\"_blank\">3558<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3784 target=\"_blank\">3784<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3786 target=\"_blank\">3786<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3788 target=\"_blank\">3788<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1884 target=\"_blank\">1884<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1891 target=\"_blank\">1891<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1955 target=\"_blank\">1955<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2011 target=\"_blank\">2011<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2051 target=\"_blank\">2051<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2053 target=\"_blank\">2053<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2062 target=\"_blank\">2062<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2066 target=\"_blank\">2066<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3568 target=\"_blank\">3568<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2290 target=\"_blank\">2290<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2318 target=\"_blank\">2318<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2354 target=\"_blank\">2354<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2355 target=\"_blank\">2355<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3620 target=\"_blank\">3620<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2383 target=\"_blank\">2383<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2394 target=\"_blank\">2394<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2581 target=\"_blank\">2581<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2584 target=\"_blank\">2584<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2585 target=\"_blank\">2585<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2586 target=\"_blank\">2586<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2600 target=\"_blank\">2600<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2605 target=\"_blank\">2605<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2607 target=\"_blank\">2607<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3780 target=\"_blank\">3780<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2613 target=\"_blank\">2613<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2640 target=\"_blank\">2640<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2648 target=\"_blank\">2648<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2881 target=\"_blank\">2881<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2888 target=\"_blank\">2888<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3831 target=\"_blank\">3831<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3837 target=\"_blank\">3837<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2948 target=\"_blank\">2948<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2952 target=\"_blank\">2952<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3841 target=\"_blank\">3841<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2956 target=\"_blank\">2956<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=2961 target=\"_blank\">2961<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3029 target=\"_blank\">3029<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3031 target=\"_blank\">3031<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3035 target=\"_blank\">3035<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3047 target=\"_blank\">3047<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15682 target=\"_blank\">15682<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=10970 target=\"_blank\">10970<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=10971 target=\"_blank\">10971<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=10973 target=\"_blank\">10973<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=10974 target=\"_blank\">10974<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=10975 target=\"_blank\">10975<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=10976 target=\"_blank\">10976<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=10977 target=\"_blank\">10977<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=10983 target=\"_blank\">10983<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=12004 target=\"_blank\">12004<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=12005 target=\"_blank\">12005<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=12006 target=\"_blank\">12006<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=12007 target=\"_blank\">12007<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=12008 target=\"_blank\">12008<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=12009 target=\"_blank\">12009<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=12010 target=\"_blank\">12010<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=12011 target=\"_blank\">12011<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=12012 target=\"_blank\">12012<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=12013 target=\"_blank\">12013<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=12014 target=\"_blank\">12014<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=12015 target=\"_blank\">12015<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=12016 target=\"_blank\">12016<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15248 target=\"_blank\">15248<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=12024 target=\"_blank\">12024<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=13029 target=\"_blank\">13029<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=13032 target=\"_blank\">13032<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=13051 target=\"_blank\">13051<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=13056 target=\"_blank\">13056<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=13057 target=\"_blank\">13057<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=13097 target=\"_blank\">13097<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14403 target=\"_blank\">14403<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14410 target=\"_blank\">14410<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14443 target=\"_blank\">14443<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14889 target=\"_blank\">14889<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=17993 target=\"_blank\">17993<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14435 target=\"_blank\">14435<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=19316 target=\"_blank\">19316<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14839 target=\"_blank\">14839<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=20311 target=\"_blank\">20311<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15032 target=\"_blank\">15032<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15035 target=\"_blank\">15035<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15167 target=\"_blank\">15167<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15168 target=\"_blank\">15168<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15169 target=\"_blank\">15169<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15219 target=\"_blank\">15219<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15269 target=\"_blank\">15269<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15228 target=\"_blank\">15228<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15252 target=\"_blank\">15252<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15254 target=\"_blank\">15254<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15256 target=\"_blank\">15256<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15266 target=\"_blank\">15266<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15273 target=\"_blank\">15273<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15281 target=\"_blank\">15281<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15294 target=\"_blank\">15294<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15302 target=\"_blank\">15302<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15309 target=\"_blank\">15309<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15311 target=\"_blank\">15311<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15316 target=\"_blank\">15316<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15318 target=\"_blank\">15318<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15403 target=\"_blank\">15403<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15460 target=\"_blank\">15460<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15463 target=\"_blank\">15463<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15477 target=\"_blank\">15477<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15478 target=\"_blank\">15478<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15479 target=\"_blank\">15479<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15487 target=\"_blank\">15487<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15489 target=\"_blank\">15489<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15492 target=\"_blank\">15492<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15511 target=\"_blank\">15511<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15740 target=\"_blank\">15740<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15916 target=\"_blank\">15916<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15919 target=\"_blank\">15919<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=20695 target=\"_blank\">20695<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=20697 target=\"_blank\">20697<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15922 target=\"_blank\">15922<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15925 target=\"_blank\">15925<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15965 target=\"_blank\">15965<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15985 target=\"_blank\">15985<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15989 target=\"_blank\">15989<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15992 target=\"_blank\">15992<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15998 target=\"_blank\">15998<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=16002 target=\"_blank\">16002<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=16129 target=\"_blank\">16129<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=17304 target=\"_blank\">17304<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=17396 target=\"_blank\">17396<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=17404 target=\"_blank\">17404<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=17406 target=\"_blank\">17406<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=19834 target=\"_blank\">19834<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=17947 target=\"_blank\">17947<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=19812 target=\"_blank\">19812<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=20397 target=\"_blank\">20397<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=20512 target=\"_blank\">20512<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=25306 target=\"_blank\">25306<\/a>"],[-6,6548.2,7003.44,10646,10543,-32,-3,-1,-0,-27,-23,-17,11456,-3,-7,-34,-58,-14,1,-25,-5.89999999999964,-6,734,-4,-5,-6,39,-6,10,-38,564,761,-19,-33,-4,-5,12020,-5,-5,-4,-7,11,1,-5,-4,-4,3619,-5,-7,-8,-6,9907.1,-41,-3,-33,231,8485,-2,-4,-19,-7,-21,205,13,-6.4399999999996,-4,9516,2454,209,-7,2237,16,-5,10,1,456,3,-5,-18,-14,-18,201,884,3,-4,-40,-9,-42,6374,-4,-11,-4,-21,-89,258,442,75,-6,-34,-5,0,-4.91999999999962,-62,-3,-7,-7,1609,529,-7,9520,33,-7,-15,-6,-3,-6,-10,20,-4,542,128,-5,4,-6,-5,94,1,13,-34,-5,10888,5836,-35,11269,-61,-0,1,-2,-3,-4,-12,-12,-7,3,-24,-9.79999999999973,-42,-2,-18,9,16,-23,2,-29,-35,-20,-36,-15,-24,137,-11,591.22,-914,-497,-31,-13,96,-14,1855,-8,558,2198,-20,null,-234,-49,-41,1075,-22,-27,-18,-14,-120,-10,-8,-28,-23,-22,-19,13,-47,-189.599999999999,43,592,-9,-14,194,-16,-2.67999999999984,-12,-24,-43,264,-95,143,159,-21,992.62,-6,-41,-43,70,-86,818,4261.12,10545,3380.12,2315,3906,-14,32,-109.2,-48,-14,-55,2540,10707.12,-46,10,227],[116,7125.6,10182.22,11798,11607,164,33,11,85,306,2360,73,11471,39,132,52,421,246,10914,123,116,16781.19,10113,38,79,84,6065,86,930,99,8004,12658,409,170,63,89,13010,61,116,65,103,4193,9625,88,75,37,9059,59,9162.83,117,80,12812,4027,43,44,8927.25,13068,37,60,4991.86,11110,14741.56,13718,13646,9359,63,17281,8477,2973,129,4162,148,91,690,11323.11,13262,145,61,100,90,61,13260,7636,109,88,3991.56,202,110,7919,68,916,144,230,12981,8597.59,2466,3846,116,3399,93,12260,61,15393,38,2703,1322,9577,9465,121,12422,117,159,71,89,64,89,11940.91,110,65,7875.55,573,93,87,140.49,115,10372,10642,11475,2271,88,7141.36,8171,14227,18784,14570,15298,10034,10770,71,68,74,71,42,63,230,84,175,47,152,179,324,149,62,331,423,131,454,85,429,454,60,11289,12267,8968,402,74,9152,335.99,8512,445,1645,2140,171,null,829,5142,9851,10599,113,156,182,196,58,89,628,271,295,173,771,8311,2868,11716,8857,2242,1941,780,10131,23,-7,11,47,109,2891,2137,3251,2608,10172,7944,10495,67,124,10284.47,12315,6077,9155,10677,3405.06,4500,4168,12321.61,6931,12314,10470,9560,9170,12122,14946,10332,3364,3865],[".",".",".",".",".","Overwrote prior chronology file.",".",".",".","Thickness adjusted based on prior work.","There are no default models defined for the best age type: Age models have same preparation date.  Model with highest chron ID was selected",".",".",".",".",".","Thickness adjusted based on prior work.","Thickness adjusted based on prior work.","Overwrote prior chronology file.",".",".",".","Overwrote prior chronology file.",".",".",".","Overwrote prior chronology file.",".","Annual laminations defined in the age models.",".",".",".","Thickness adjusted based on prior work.",".",".",".",".",".",".",".",".","There are no default models defined for the best age type: Most recently generated model chosen",".",".",".",".","Overwrote prior chronology file.",".","Thickness adjusted based on prior work.n High accumulation rates for the core detected: Assigning default accumulation rate to 100.",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".","Overwrote prior chronology file.",".",".","Overwrote prior chronology file.","Thickness adjusted based on prior work.n Overwrote prior chronology file.",".",".",".",".","Annual laminations defined in the age models.","Thickness adjusted based on prior work.n Overwrote prior chronology file.",".",".",".","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.",".",".",".",".",".",".","Thickness adjusted based on prior work.","Thickness adjusted based on prior work.",".","Thickness adjusted based on prior work.",".","Thickness adjusted based on prior work.",".",".",".",".",".",".",".",".",".",".",".",".",".",".","High accumulation rates for the core detected: Assigning default accumulation rate to 100.n Overwrote prior chronology file.",".",".",".",".",".",".",".",".","Overwrote prior chronology file.",".",".",".",".",".",".",".",".",".","Thickness adjusted based on prior work.n Overwrote prior chronology file.",".","Thickness adjusted based on prior work.",".",".","Thickness adjusted based on prior work.","Overwrote prior chronology file.",".",".",".","Overwrote prior chronology file.","Overwrote prior chronology file.",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".","Overwrote prior chronology file.",".","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Thickness adjusted based on prior work.n Overwrote prior chronology file.",".",".","Annual laminations defined in the age models.","Thickness adjusted based on prior work.","Overwrote prior chronology file.","Overwrote prior chronology file.","Thickness adjusted based on prior work.","Thickness adjusted based on prior work.",".",".","Thickness adjusted based on prior work.",".",".",".",".",".",".",".","Thickness adjusted based on prior work.",".","Overwrote prior chronology file.","High accumulation rates for the core detected: Assigning default accumulation rate to 100.n Overwrote prior chronology file.","Overwrote prior chronology file.","Thickness adjusted based on prior work.",".",".",".",".",".",".","Overwrote prior chronology file.",".","Overwrote prior chronology file.","Overwrote prior chronology file.",".","High accumulation rates for the core detected: Assigning default accumulation rate to 100.n Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.",".",".",".","Thickness adjusted based on prior work.",".",".",".",".",".",".","Overwrote prior chronology file.","Thickness adjusted based on prior work.n Overwrote prior chronology file.",".",".","Thickness adjusted based on prior work.n High accumulation rates for the core detected: Assigning default accumulation rate to 100.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file."]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>handle<\/th>\n      <th>datasetid<\/th>\n      <th>reliableyoung<\/th>\n      <th>reliableold<\/th>\n      <th>notes<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-dd8022a39be7502a2736" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-dd8022a39be7502a2736">{"x":{"filter":"bottom","filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"-54\" data-max=\"19304.56\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"739\" data-max=\"17168\" data-scale=\"12\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["1","2","3","4","5","6","7","8","9"],["BECHAN1","BECHAN2M","FRYINGPN","POSYLAKE","ALPINE12","ALPINE11","LOWDER","BLUEBONN","PURPLE"],["<a href=http://apps.neotomadb.org/explorer/?datasetid=247 target=\"_blank\">247<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3060 target=\"_blank\">3060<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=853 target=\"_blank\">853<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1970 target=\"_blank\">1970<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14517 target=\"_blank\">14517<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14547 target=\"_blank\">14547<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14549 target=\"_blank\">14549<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15368 target=\"_blank\">15368<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=20838 target=\"_blank\">20838<\/a>"],[19304.56,461,-0,-2,467,-20,-12,389.1,-54],[17168,17003.98,8868,7757,2903.58,739,13642.79,13497.1,8373],["High accumulation rates for the core detected: Assigning default accumulation rate to 100.","High accumulation rates for the core detected: Assigning default accumulation rate to 100.","High accumulation rates for the core detected: Assigning default accumulation rate to 100.",".",".",".",".",".","."]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>handle<\/th>\n      <th>datasetid<\/th>\n      <th>reliableyoung<\/th>\n      <th>reliableold<\/th>\n      <th>notes<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data) {\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
 </div>
 </div>
 <div id="references" class="section level2 unnumbered">
@@ -4867,7 +4771,6 @@ for (i in 1:nrow(params)) {
 </div>
 <div id="ref-williams2017neotoma">
 <p>Williams, J.W., Grimm, E.C., Blois, J., Charles, D.F., Davis, E., Goring, S.J., Graham, R.W., Smith, A.J., Anderson, M., Arroyo-Cabrales, J., Ashworth, A.C., Betancourt, J.L., Bills, B.W., Booth, R.K., Buckland, P., Curry, B.B., Giesecke, T., Jackson, S.T., Latorre, C., Nichols, J., Purdum, T., Roth, R.E., Stryker, M., Takahara, H., 2018. The Neotoma Paleoecology Database: A multi-proxy, international community-curated data resource. Quaternary Research 89, 156–177.</p>
-</div>
 </div>
 </div>
 </div>

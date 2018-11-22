@@ -367,6 +367,7 @@ htmltools::HTML(paste0('<svg width="400" height="110">
 </svg>'))
 
 ```
+
 **Figure**. Success (blue) and failure (pink) rate of the Bacon runs.
 
 Here we summarize some elements of the run that was conducted with this document:

@@ -6,7 +6,7 @@
 #'
 add_thickness <- function(file, id_col = 1, thick_col = 2, parameters, verbose = TRUE) {
 
-  thick_list <- readr::read_csv(file) %>% as.data.frame
+  thick_list <- suppressMessages(readr::read_csv(file)) %>% as.data.frame
   thicknesses <- data.frame(ids = thick_list[,id_col],
                             thick = thick_list[,thick_col])
 
@@ -23,11 +23,11 @@ add_thickness <- function(file, id_col = 1, thick_col = 2, parameters, verbose =
     filter(ids %in% parameters$datasetid)
 
   param_rows <- match(thicknesses$ids, params$datasetid)
-  
+
   if (verbose) {
-    
+
     changed <- !(parameters$thick[param_rows] == thicknesses$thick)
-    
+
     message(paste0("Modifying ", sum(changed), " records to update thicknesses."))
   }
 

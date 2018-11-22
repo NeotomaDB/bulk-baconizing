@@ -2,9 +2,9 @@ library(dplyr)
 
 call_bacon <- function(site_params, settings) {
 
-  bacon_chrons <- paste0(settings$core_path, '/', site_params$handle,
+  bacon_chrons <- paste0(settings$core_path, "/", site_params$handle,
                          "/", site_params$handle, ".csv")
-  bacon_depths <- paste0(settings$core_path, '/', site_params$handle,
+  bacon_depths <- paste0(settings$core_path, "/", site_params$handle,
                         "/", site_params$handle, "_depths.txt")
 
   # check for suitability
@@ -40,8 +40,10 @@ call_bacon <- function(site_params, settings) {
           site_params$hiatus <- 0
         } else {
           hiatus.depth <- geochron$depth[sett_layer]
-          acc.mean.val <- c(site_params$acc.mean.mod, site_params$acc.mean.old)
-          acc.shape.val <- c(site_params$acc.shape.mod, site_params$acc.shape.old)
+          acc.mean.val <- c(site_params$acc.mean.mod,
+            site_params$acc.mean.old)
+          acc.shape.val <- c(site_params$acc.shape.mod,
+            site_params$acc.shape.old)
           site_params$hiatus <- 1
         }
 
@@ -79,7 +81,7 @@ call_bacon <- function(site_params, settings) {
             "Core failed in Bacon plotting.")
         } else {
           # This function generates the posterior estimates for the record.
-          outputs <- bacon_age_posts(site_params$handle)
+          outputs <- bacon_age_posts(site_params$handle, settings)
           site_params$success <- 1
           test_outs <- outputs %>% na.omit()
           site_params$reliableold <- round(quantile(test_outs[nrow(test_outs),
@@ -97,7 +99,7 @@ call_bacon <- function(site_params, settings) {
       }
     }
   } else {
-    site_params$success = 0
+    site_params$success <- 0
   }
 
   return(site_params)

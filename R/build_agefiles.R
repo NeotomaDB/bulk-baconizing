@@ -1,4 +1,11 @@
-build_agefiles <- function(param, datasets, downloads, ageorder = NULL, settings, verbose = TRUE) {
+#' @title Build Bacon age-files
+#' @description
+
+build_agefiles <- function(param, datasets,
+                           downloads,
+                           ageorder = NULL,
+                           settings,
+                           verbose = TRUE) {
 
   age_file <- paste0(settings$core_path, "/", param$handle,
     "/", param$handle, ".csv")
@@ -10,13 +17,14 @@ build_agefiles <- function(param, datasets, downloads, ageorder = NULL, settings
      file.exists(age_file) &
      file.exists(depth_file)) {
     if (verbose == TRUE) {
-      message("Bacon core and depths files have already been written.  Set `suitable` to NA to rewrite files.")
+      message(paste0("Bacon core and depths files have already ",
+       "been written.  Set `suitable` to NA to rewrite files."))
     }
     return(param)
   }
 
   if (is.null(ageorder)) {
-    ageorder <- get_table("agetypes")
+    ageorder <- neotoma::get_table("agetypes")
   }
 
   url <- paste0("http://api-dev.neotomadb.org/v2.0/data/datasets/",
@@ -28,16 +36,22 @@ build_agefiles <- function(param, datasets, downloads, ageorder = NULL, settings
     purrr::map(function (x) {
       data.frame(agetype = x$agetype,
                  default = x$isdefault,
-                 stringsAsFactors = FALSE) }) %>%
+                 stringsAsFactors = FALSE)
+               }) %>%
     bind_rows()
 
-  modeldefault$order <- ageorder$Precedence[match(modeldefault$agetype, ageorder$AgeType)]
+  type_match <- match(modeldefault$agetype, ageorder$AgeType)
 
-  if (sum(modeldefault$order == min(modeldefault$order) & modeldefault$default) == 1) {
+  modeldefault$order <- ageorder$Precedence[type_match]
+
+  if (sum(modeldefault$order == min(modeldefault$order) &
+      modeldefault$default) == 1) {
     # This is the case that everything is good.
-    # The precendene is the lowest and it has only one defined default for that low model.
+    # The precendene is the lowest and it has only one defined
+    #  default for that low model.
   } else {
-    if (sum(modeldefault$order == min(modeldefault$order) & modeldefault$default) > 1) {
+    if (sum(modeldefault$order == min(modeldefault$order) &
+        modeldefault$default) > 1) {
       # There are multiple default models in the best age class:
 
       message("There are multiple default models defined for the best age type.")
@@ -52,7 +66,9 @@ build_agefiles <- function(param, datasets, downloads, ageorder = NULL, settings
 
       if (sum(new_default) == 1) {
         # Date of model preparation differs:
-        param$notes <- add_msg(param$notes, "There are multiple default models defined for the best age type: Default assigned to most recent model")
+        param$notes <- add_msg(param$notes,
+          paste0("There are multiple default models defined for the ",
+            "best age type: Default assigned to most recent model"))
         modeldefault$default <- new_default
       } else {
         # Date is the same, differentiate by chronology ID:
@@ -61,7 +77,10 @@ build_agefiles <- function(param, datasets, downloads, ageorder = NULL, settings
         modeldefault$default <- new_default &
           max_chron == max(chronid)
 
-        param$notes <- add_msg(param$notes, "There are multiple default models defined for the best age type: Default assigned to most model with highest chronologyid")
+        param$notes <- add_msg(param$notes,
+          paste0("There are multiple default models defined for the ",
+            "best age type: Default assigned to most model with ",
+            "highest chronologyid"))
       }
     } else {
       # Here there is no default defined:
@@ -134,8 +153,12 @@ build_agefiles <- function(param, datasets, downloads, ageorder = NULL, settings
       param$notes <- add_msg(param$notes, "Annual laminations defined in the age models.")
       param$suitable <- 1
 
-      readr::write_csv(x = ages, path = paste0("Cores/", handle, "/", handle, ".csv"), col_names = TRUE)
-      readr::write_csv(x = depths, path = paste0("Cores/", handle, "/", handle, "_depths.txt"), col_names = FALSE)
+      readr::write_csv(x = ages,
+        path = paste0("Cores/", handle, "/", handle, ".csv"),
+        col_names = TRUE)
+      readr::write_csv(x = depths,
+        path = paste0("Cores/", handle, "/", handle, "_depths.txt"),
+        col_names = FALSE)
 
     } else {
 

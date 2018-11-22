@@ -1,0 +1,36 @@
+Title: Running multiple age models with Bacon.
+Version: 1.6.2
+Date: 2016-09-21
+Author: Andria Dawson [aut, cre], Simon J. Goring [aut, cre]
+Authors@R: c(person(given = "Andria", family = "Dawson",
+    role = c("aut", "cre"), email = "andria.dawson@gmail.com"),
+    person(given = c("Simon", "J."), family = "Goring",
+    role = c("aut", "cre"), email = "goring@wisc.edu"))
+Maintainer: Simon J. Goring <goring@wisc.edu>
+Description: A paper in progress for understanding age model construction in paleoecology.
+License: MIT + file LICENSE
+URL: https://github.com/palEON-Project/stepps-baconizing
+BugReports: https://github.com/palEON-Project/stepps-baconizing/issues
+Depends:
+    R (>= 2.10)
+Imports:
+    yaml,
+    rbacon,
+    neotoma,
+    maps,
+    fields,
+    raster,
+    rgdal,
+    dplyr,
+    lubridate,
+    httr,
+    jsonlite,
+    rgdal,
+    lubridate,
+    parallel,
+    evaluate,
+    htmltools,
+    DT
+Suggests:
+
+RoxygenNote: 5.0.1

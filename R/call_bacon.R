@@ -82,10 +82,10 @@ call_bacon <- function(site_params, settings) {
           outputs <- bacon_age_posts(site_params$handle)
           site_params$success <- 1
           test_outs <- outputs %>% na.omit()
-          site_params$reliableold <- quantile(test_outs[nrow(test_outs),
-          ], 0.33, na.rm = TRUE)
-          site_params$reliableyoung <- quantile(test_outs[1, ],
-            0.66, na.rm = TRUE)
+          site_params$reliableold <- round(quantile(test_outs[nrow(test_outs),
+          ], 0.33, na.rm = TRUE), 0)
+          site_params$reliableyoung <- round(quantile(test_outs[1, ],
+            0.66, na.rm = TRUE), 0)
         }
 
       } else {

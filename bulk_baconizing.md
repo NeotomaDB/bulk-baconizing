@@ -1,6 +1,14 @@
 ---
 title: "Bulk Baconizing"
-author: "Simon Goring"
+author:
+  - affiliation: University of Wisconsin - Madison
+    name: Simon Goring
+  - affiliation: Mount Royal University
+    name: Andria Dawson
+  - affiliation: University of Wisconsin - Madison
+    name: Allison Stegner
+  - affiliation: Georgia Institute of Technology
+    name: Yue Wang
 date: "November 13, 2018"
 bibliography: styles/baconizing.bib
 output:
@@ -15,7 +23,7 @@ output:
 dev: svg
 highlight: tango
 keywords: chronology, geochronology, paleoecology, age-models,
-  Bacon, 210Pb, 14C, radiocarbon
+  Bacon, 210Pb, 14C, radiocarbon, biostratigraphy, Bayesian
 csl: styles/elsevier-harvard.csl
 ---
 
@@ -23,27 +31,38 @@ csl: styles/elsevier-harvard.csl
 
 ## Introduction
 
-Over the course of working with the Neotoma Paleoecology Database [@williams2017neotoma] and the age modeling software Bacon [@blaauw2011flexible] it has often become neccessary to run a large number of Bacon models in an itterative process (for example the [Stepps-Baconizing GitHub repository](https://github.com/PalEON-Project/stepps-baconizing)).  The process of building and re-building a large number of age models is often complicated and can result in a large amount of code.  This code might involve fine-tuning results for single sites, using information from multiple runs, the generation of multiple data files and a set of R code that can span hundreds of lines.
+Over the course of working with the Neotoma Paleoecology Database [@williams2017neotoma] and the age modeling software Bacon [@blaauw2011flexible] it has often become neccessary to run a large number of Bacon models in an itterative process (for example the [Stepps-Baconizing GitHub repository](https://github.com/PalEON-Project/stepps-baconizing)).  The process of building and re-building a large number of age models is often complicated and can result in a large amount of code.  This code might involve fine-tuning results for single sites, using information from multiple runs, the generation of multiple data files and a set of R code that can span hundreds of lines.  In addition, the complexities of the underlying data (for example, issues with existing chronologies and data structures within Neotoma) may mean that users might unintentionally introduce errors into their workflows.  Data repositories serve a unique position within the research community [@goring2018nexus], and one service they can provide is the distillation and distribution of best-practices documents such as this resource for generating a large number of Bacon age models from Neotoma data.
 
 This repository makes use of experience obtained in working through several projects [@kujawa2016theeffect;@dawson2016quantifying], and uses data from several projects as the basis for establishing certain prior values.  We make an effort in this document to clearly explain the steps neccessary to undertake such a project in a fairly straightforward manner.
 
-### The workflow
+### The Workflow
 
-The general workflow is encoded in this current document, which knits together descriptive text and R commands ([read more about RMarkdown documents](https://bookdown.org/yihui/rmarkdown/)).  This document is intended to provide context but to also operate as a stand-alone tool to generate a number of age records.  The R code embedded in the `Rmd` file does the following:
+The general workflow is encoded in the Rmd document that can be rendered to an HTML file.  Rmd documents *knit* together descriptive text and R commands ([read more about RMarkdown documents](https://bookdown.org/yihui/rmarkdown/)).  The Rmd document is intended to provide context and guide the user in some best practices for the generation of Bacon outputs in batch.  The Rmd is also intended to operate as a stand-alone tool to generate a number of age records, and output the PDF ghost plots, age files and posterior draws for the cores of interest.  The R code that is embedded in the `Rmd` file does the following:
 
-1.  Read a set of pre-defined settings and load the neccessary R libraries.
-2.  Fetch a set of datasets from Neotoma and download the relevant records.
-3.  Generate a table with default parameters for Bacon.
-4.  Given any prior information from the user, optionally adjust site-level default parameters for thickness, accumulation rates, etc.
-5.  For each dataset with sufficient chronological information, write the neccessary files to a core folder, along with relevant core depths.
-6.  For each core with a sufficient number of chronological controls, run Bacon.
-7.  Write the ghost plots to file and produce a table of posterior estimates for each depth.
+![](images/workflow.svg)
 
-This code is provided as an RMarkdown document, to help guide the user, and it can support extensive customization if a user chooses to make changes anywhere in the code.
+The key steps of the workflow:
+
+1.  Executing the Rmd file:  This will knit together the text and execute all the R code to generate an HTML file with embedded results, along with the output files from the Bacon runs.
+2.  Reading in the `settings.yaml` file.  See the text below for information about the settings that can be used for these runs.
+3.  Loading data from Neotoma using the [`neotoma` package](http://github.com/ropensci/neotoma).
+4.  Setting default parameters for the Bacon runs (accumulation rates, memory, etc.)
+5.  Updating parameters based on past runs (if you have files with alternate settings).
+6.  Building Bacon age files (the csv files used by Bacon to record the chronological controls) based on established chronological controls from Neotoma.
+7.  Running Bacon.
+8.  Revising parameters based on model outputs and re-running step 7.
+
+The final step in this process requires modifying the settings file after the first run of this workflow, and adjusting the the parameters in the parameters file generated by the run, to ensure that the Bacon runs for each core reflect the best possible age models.  When the Rmd is re-run with the `settings.yaml` and parameters file adjusted (see Rmd for details), it is possible to do the batch processing faster, since the script is set to run only cores that have not had successful runs. Since "good" chronologies are excluded from being re-run it is possible to efficiently modify the settings for one or a few cores, while leaving the rest unchanged.
+
+This code is provided as an RMarkdown document to help guide the user.  It can support extensive customization if a user chooses to make changes anywhere in the code, and individuals are welcome to make or suggest changes as they wish.
 
 ### Executing the code
 
-Many people working with R may choose to use RStudio.  If you are using RStudio you can customize elements of this document (for example, removing this header information) and then use the *knit* button to compile the document into an HTML document, while generating the neccessary output files.
+#### RStudio
+
+Many people working with R may choose to use [RStudio](http://rstudio.com).  If you are using RStudio you can customize elements of this document (for example, removing this header information) and then use the *knit* button to compile the code into an HTML document, while generating the neccessary output files (see the [README file](https://github.com/neotomadb/bulk-baconizing) in the GitHub repository).
+
+#### R Console
 
 Users who use the R Console without any other editor can move to the appropriate working directory (using `setwd()`) and then run the entire document using the following command:
 
@@ -52,13 +71,17 @@ library(rmarkdown)
 render('bulk_baconizing.Rmd')
 ```
 
-This can be shortened to: `rmarkdown::render('bulk_baconizing.Rmd')`.  Similarly, if you wish to execute the code from a console or terminal you can navigate to the working directory and execute the following:
+This can be shortened to: `rmarkdown::render('bulk_baconizing.Rmd')`.
+
+#### Terminal
+
+Similarly, if you wish to execute the code from a console or terminal you can navigate to the working directory and execute the following:
 
 ```bash
 Rscript -e "rmarkdown::render('bulk_baconizing.Rmd')"
 ```
 
-Note the use of two different quotations.  The inner and outer quotations must be different (e.g., double on the outside, single on the inside, or *vice versa*).  Whether you customize the code, or choose to run it as is (for just the US state of Michigan), these three methods of executing the code are your main options.
+Note that with the terminal you need to use two different quotation marks when executing.  The inner and outer quotations must be different (*e.g.*, double on the outside, single on the inside, or *vice versa*).  Whether you customize the code, or choose to run it as-is (for just the US state of Utah), these three methods of executing the code are your main options.
 
 ### Providing Feedback
 
@@ -66,15 +89,7 @@ If, in any place instructions are not clear or more details are required please 
 
 ## Setting up the System
 
-### Getting Started
-
-There are several ways of working with this code base. If you are not familiar with [Github](http://github.com) and wish to run the code locally, navigate to the [GitHub repository for this project](http://github.com/NeotomaDB/bulk_baconizing), and click the green **Clone or download** button.  From there, select **Download ZIP**.
-
-![](images/download_file.png)
-
-If you are familiar with GitHub and wish to use `git` as part of your workflow then you can also choose to clone the repository.  To do this, you can either [fork the repository](https://help.github.com/articles/fork-a-repo/), which would make a copy of it under your own personal GitHub account, or you can clone it directly and [make a new branch](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging).
-
-In either case, if you make changes to the repository that are specific to your application, that's great!  If you make changes that are possibly of note to all users, consider making a [pull request](https://help.github.com/articles/about-pull-requests/).  We welcome all contributions.
+This document is intended to be used as a template for users, and not as a solution in and of itself.  The process for generating chronologies is itterative, as such, the use of this Rmd script is intended to be an itterative process, whereby you select sites, run Bacon, revise parameters and run the script again.  Each itteration will involve modifying the parameters file (created in the `data/params` folder during your first run), and also the `settings.yaml` file.  Please be sure to check carefully as you do this.  Errors may result in long wait times, or runs that provide no new useful information.
 
 ### Defining Your Settings
 
@@ -148,7 +163,7 @@ source('R/setup_runs.R', echo=FALSE, verbose=FALSE)
 
 There are a number of libraries used in this project.  It is likely that you may be missing one or several.  If this is the case you might be interested in [this bash script](https://gist.github.com/SimonGoring/fe3b0bf6b4cb9b8f0a2aa6cdce10bb29) for Mac or Linux.  You may also be interested in the [autoinst package for R](https://github.com/jimhester/autoinst). Otherwise, take some time to look at `R/setup_runs.R` and ensure you install all packages listed.
 
-## Getting Core Data
+## Getting Core Data from Neotoma
 
 Here we download the sedimentary data.  The key component here is the `get_dataset()` function.  The newest version of `neotoma` (version >= 1.7.3) allows a user to pass in a vector of dataset IDs, so you can either get datasets using a set of parameters in the `get_dataset()` function (see [help for the `get_dataset()` function](https://www.rdocumentation.org/packages/neotoma/versions/1.7.0/topics/get_dataset)), or you can pass in a vector of dataset IDs (for example, if you've already picked a set of sites to be examined).  In this example I am using the state, Michigan, as my search parameter:
 
@@ -165,27 +180,9 @@ dataset_list <- get_dataset(datasettype='pollen',
 #  there is not currently a downloaded object saved with the same dataset version
 #  or the setup parameter is TRUE, which calls for the whole data file to be re-written.
 
-downloads <- load_downloads(dataset_list,
+downloads <- suppressWarnings(load_downloads(dataset_list,
                             version = settings$version,
-                            setup = settings$clean_run)
-```
-
-```
-## Warning: 
-## There were multiple entries for Lycopodium tablets 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Lycopodium tablets 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Lycopodium tablets 
-## get_download has mapped aliases for the taxa in the taxon.list.
-
-## Warning: 
-## There were multiple entries for Lycopodium tablets 
-## get_download has mapped aliases for the taxa in the taxon.list.
+                            setup = settings$clean_run))
 ```
 
 It might be the case that you want to do further validation on samples based on parameters in the `downloads` object (*e.g.*, only sites with a certain taxon).  The downloads are required for the generation of the core depths file used by Bacon.  If you want to further adjust the records, do so with the dataset object, not the `downloads`.  For example, you can remove elements of a list by setting them to `NULL`, so if you know you want to remove the dataset in the 5th position, you could assign `dataset_list[[5]] <- NULL`.  You would then need to re-run `load_downloads()` and ensure that `setup` was `TRUE` in `load_downloads()`:
@@ -210,7 +207,19 @@ downloads <- load_downloads(dataset_list,
                             setup = TRUE)
 ```
 
-## Parameters
+Using the `neotoma` R package's `plot_leaflet()` function we can generate an interactive map of the dowloaded sites that can be used to explore the data further.
+
+
+```r
+plot_leaflet(dataset_list)
+```
+
+<!--html_preserve--><div id="htmlwidget-7d897c7a9cb5e6c3a054" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7d897c7a9cb5e6c3a054">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["Stamen.TerrainBackground",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addCircleMarkers","args":[[37.3666666666667,37.3666666666667,38.616667,37.95,37.5,37.63632,37.63632,37.67214,40.49996,38.07438],[-110.866666666667,-110.866666666667,-111.666667,-111.7,-110,-112.82446,-112.82446,-112.792245,-114.031395,-111.57115],10,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":true,"riseOffset":250,"stroke":true,"color":"#03F","weight":5,"opacity.1":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2},{"showCoverageOnHover":true,"zoomToBoundsOnClick":true,"spiderfyOnMaxZoom":true,"removeOutsideVisibleBounds":true,"spiderLegPolylineOptions":{"weight":1.5,"color":"#222","opacity":0.5},"freezeAtZoom":false},null,["<b>Bechan Cave<\/b><br><b>Description:<\/b> Large sandstone cave. Physiography: canyon lands. Surrounding vegetation: open juniper woodland.<br><a href=http://apps.neotomadb.org/explorer/?siteids=244>Explorer Link<\/a>","<b>Bechan Cave<\/b><br><b>Description:<\/b> Large sandstone cave. Physiography: canyon lands. Surrounding vegetation: open juniper woodland.<br><a href=http://apps.neotomadb.org/explorer/?siteids=244>Explorer Link<\/a>","<b>Frying Pan Lake<\/b><br><b>Description:<\/b> Shallow lake behind Pleistocene moraine. Physiography: horst and graben plateau. Surrounding vegetation: Pinus/Pseudotsuga/Cercocarpus/Populus.<br><a href=http://apps.neotomadb.org/explorer/?siteids=827>Explorer Link<\/a>","<b>Posy Lake<\/b><br><b>Description:<\/b> Small lake on glacial till. Physiography: Aquarius plateau. Surrounding vegetation: Pinus/Pseudotsuga/Populus/Picea/Abies.<br><a href=http://apps.neotomadb.org/explorer/?siteids=1905>Explorer Link<\/a>","<b>Natural Bridges National Monument<\/b><br><b>Description:<\/b> NA<br><a href=http://apps.neotomadb.org/explorer/?siteids=4607>Explorer Link<\/a>","<b>Alpine Pond<\/b><br><b>Description:<\/b> Alpine Pond occupies a small basin formed during Holocene faulting along the edge of the 'Breaks'. Surrounding vegetation: Picea engelmannii-Abies lasiocarpa forest with Populus tremuloides. Juniperus communis and Ribes montigenum are understory shrub species.<br><a href=http://apps.neotomadb.org/explorer/?siteids=9814>Explorer Link<\/a>","<b>Alpine Pond<\/b><br><b>Description:<\/b> Alpine Pond occupies a small basin formed during Holocene faulting along the edge of the 'Breaks'. Surrounding vegetation: Picea engelmannii-Abies lasiocarpa forest with Populus tremuloides. Juniperus communis and Ribes montigenum are understory shrub species.<br><a href=http://apps.neotomadb.org/explorer/?siteids=9814>Explorer Link<\/a>","<b>Lowder Creek Bog<\/b><br><b>Description:<\/b> Fen sediments accumulated behind a well-developed Late Wisconsin moraine complex. Surrounding vegetation: Picea engelmannii - Abies lasiocarpa forest with Populus tremuloides. Members of the Cyperaceae family cover the bog surface. Dodecatheon pulchellum, Pedicularis groenlandica, and Gentiana are common.<br><a href=http://apps.neotomadb.org/explorer/?siteids=9830>Explorer Link<\/a>","<b>Blue Lake Wetlands<\/b><br><b>Description:<\/b> The Blue Lake wetland system is a large geothermal spring-fed system, ranking among the largest extant wetland habitats in the region. Surrounding vegetation: Dense marsh vegetation dominated by several species of bulrush (Schoenoplectus), sedges (Carex sp.), and spikerush (Eleocharis rostellata). Vegetation at the site consists of spongy peat currently vegetated in saltgrass.<br><a href=http://apps.neotomadb.org/explorer/?siteids=10195>Explorer Link<\/a>","<b>Purple Lake<\/b><br><b>Description:<\/b> Purple Lake is a small kettle lake on the Colorado Plateau, located within the subapline spruce-fir forest zone. Surrouding vegetation is dominated by Engelmann spruce (P. Engelmannii) and subalpine fir (A. lasiocarpa). Aspen are common in areas of disturbance\r\n(fire, windthrow, and avalanche) and on south-facing slopes.<br><a href=http://apps.neotomadb.org/explorer/?siteids=13683>Explorer Link<\/a>"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[37.3666666666667,40.49996],"lng":[-114.031395,-110]}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+
+Click on any point to obtain more information about the site.  Note that this rendering is only interactive when the document is knit to an HTML file.
+
+## Default Bacon Parameters
 
 The Baconizing tool records parameters in a parameter `data.frame` called `params`.  This `data.frame` is generated and the saved to file to ensure that errors in the Bacon run do not affect any information stored in the parameters.  The `data.frame` includes a number of columns.
 
@@ -236,6 +245,10 @@ One unique element in this workflow is the use of two accumulation rates, one id
 |  **`notes`**  | `.` | Any notes associated with the run. |
 
 Any of these parameters can be changed by altering the values in the code chunk below (in the Rmd file) before running the document.  If you have already run the document using a set of parameters and decide to change defaults, you can either change the `version` in `settings.yaml` or choose to set `reset_parameters` to `true`.  Once you have run the full script and you have produced Bacon files you can manually edit individual sites by opening the `data/params/bacon_params_version.csv` file.
+
+### Modifying the Parameters
+
+After your first run of the script you can open the file at data/params/bacon_params_v1.csv to change the settings if the Bacon model appears poorly suited to the default settings.  In this case you would change the appropriate setting (e.g., `thick`), and also change `run` to `NA` and `success` to `NA`.  This will
 
 
 ```r
@@ -277,8 +290,8 @@ if ((!existing_params) | settings$reset_parameters == TRUE) {
   readr::write_csv(x = params,
                    path = paste0('data/params/bacon_params_v', settings$version, '.csv'))
 } else {
-  params <- readr::read_csv(paste0('data/params/bacon_params_v', settings$version, '.csv'),
-                            col_types = paste0(c('c','i', rep('n',8),'c', 'l','l','i','l','c'), collapse=''))
+  params <- suppressMessages(readr::read_csv(paste0('data/params/bacon_params_v', settings$version, '.csv'),
+                            col_types = paste0(c('c','i', rep('n',8),'c', 'l','l','i','l','c'), collapse='')))
 }
 ```
 
@@ -312,16 +325,6 @@ if(is.null(settings$thickness) | settings$thickness == FALSE | "character" %in% 
 } else {
   stop("The setting for thickness in `settings.yaml` is not set correctly.")
 }
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   dataset_id = col_integer(),
-##   name = col_character(),
-##   handle = col_character(),
-##   thick = col_integer()
-## )
 ```
 
 ```
@@ -361,7 +364,7 @@ if(is.null(settings$accumulation) | settings$accumulation == FALSE | "character"
 ## No accumulation file is defined.
 ```
 
-## Add Core Files
+## Generate Core Age and Depth Files
 
 Here we begin to generate the `csv` files for the cores to allow Bacon to run.  This requires calling Neotoma's API and then resolving the return so that it is turned into a `csv`.  There are several decisions that go into the construction of the CSV file.  These decisions are documented both using the `notes` column of the parameter file, and also commented in the file `R/build_agefiles.R`.  The main decisions are:
 
@@ -414,234 +417,6 @@ The final step, once all the files have been written, is to run Bacon.  Using th
 params <- run_batch(params, settings = settings)
 ```
 
-```
-## Parsed with column specification:
-## cols(
-##   X1 = col_integer()
-## )
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   X1 = col_character()
-## )
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   X1 = col_double(),
-##   X2 = col_double(),
-##   X3 = col_double(),
-##   X4 = col_double(),
-##   X5 = col_double(),
-##   X6 = col_double(),
-##   X7 = col_double(),
-##   X8 = col_double()
-## )
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   X1 = col_double()
-## )
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   X1 = col_character()
-## )
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   .default = col_double()
-## )
-```
-
-```
-## See spec(...) for full column specifications.
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   X1 = col_integer()
-## )
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   X1 = col_character()
-## )
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   .default = col_double()
-## )
-```
-
-```
-## See spec(...) for full column specifications.
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   X1 = col_integer()
-## )
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   X1 = col_character()
-## )
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   .default = col_double()
-## )
-```
-
-```
-## See spec(...) for full column specifications.
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   X1 = col_integer()
-## )
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   X1 = col_character()
-## )
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   .default = col_double()
-## )
-```
-
-```
-## See spec(...) for full column specifications.
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   X1 = col_integer()
-## )
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   X1 = col_character()
-## )
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   .default = col_double()
-## )
-```
-
-```
-## See spec(...) for full column specifications.
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   X1 = col_integer()
-## )
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   X1 = col_character()
-## )
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   .default = col_double()
-## )
-```
-
-```
-## See spec(...) for full column specifications.
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   X1 = col_double()
-## )
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   X1 = col_character()
-## )
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   .default = col_double()
-## )
-```
-
-```
-## See spec(...) for full column specifications.
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   X1 = col_integer()
-## )
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   X1 = col_character()
-## )
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   .default = col_double()
-## )
-```
-
-```
-## See spec(...) for full column specifications.
-```
-
 ```r
 readr::write_csv(x = params,
               path = paste0("data/params/bacon_params_v", settings$version, ".csv"))
@@ -660,25 +435,25 @@ A file has been added to the standard Bacon output.  In each directory the file 
  <rect y="0" x="360" width="40" height="100" style="fill:rgb(255,153,153);stroke-width:1;stroke:rgb(0,0,0)" />
 </svg><!--/html_preserve-->
 
-**Figure**. Success (blue) and failure (pink) rate of the Bacon runs.
+**Figure**. Success (blue; *n* = **360**) and failure (pink; *n* = **40**) rate of the Bacon runs.
 
 Here we summarize some elements of the run that was conducted with this document:
 
-*   Number of datasets obtained from Neotoma: **10**
-*   Number of sites with suitable chronologies: **9**
-*   Number of sites with Bacon runs: **9**
-*   Number of sites with successful Bacon runs: **9**
+*   Datasets obtained from Neotoma: **10**
+*   Datasets with suitable chronologies: **9**
+*   Datasets with Bacon runs: **9**
+*   Datasets with successful Bacon runs: **9**
 
 ### All Dataset Notes
 
 This interactive table allows you to page through your records for each site to examine the notes associated with each record.  You can use the filters at the bottom of the table to search for individual records, or certain fields.  The dataset IDs link to [Neotoma Explorer](http://apps.neotomadb.org/Explorer) and can be used to investigate sites further.
 
-<!--html_preserve--><div id="htmlwidget-0b7f5ad13badb78b2661" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0b7f5ad13badb78b2661">{"x":{"filter":"bottom","filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["1","2","3","4","5","6","7","8","9","10"],["BECHAN1","BECHAN2M","FRYINGPN","POSYLAKE","NATBRIDG","ALPINE12","ALPINE11","LOWDER","BLUEBONN","PURPLE"],["<a href=http://apps.neotomadb.org/explorer/?datasetid=247 target='_blank'>247<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3060 target='_blank'>3060<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=853 target='_blank'>853<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1970 target='_blank'>1970<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=7829 target='_blank'>7829<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14517 target='_blank'>14517<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14547 target='_blank'>14547<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14549 target='_blank'>14549<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15368 target='_blank'>15368<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=20838 target='_blank'>20838<\/a>"],[1,1,1,1,null,1,1,1,1,1],[1,1,1,1,0,1,1,1,1,1],[1,1,1,1,null,1,1,1,1,1],["High accumulation rates for the core detected: Assigning default accumulation rate to 100.n Overwrote prior chronology file.","High accumulation rates for the core detected: Assigning default accumulation rate to 100.n Overwrote prior chronology file.","High accumulation rates for the core detected: Assigning default accumulation rate to 100.n Overwrote prior chronology file.","Overwrote prior chronology file.","Error processing the age file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file."]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>handle<\/th>\n      <th>datasetid<\/th>\n      <th>suitable<\/th>\n      <th>run<\/th>\n      <th>success<\/th>\n      <th>notes<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data) {\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script><!--/html_preserve-->
+<!--html_preserve--><div id="htmlwidget-b5b3dcda2d170ea40a8f" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b5b3dcda2d170ea40a8f">{"x":{"filter":"bottom","filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["1","2","3","4","5","6","7","8","9","10"],["BECHAN1","BECHAN2M","FRYINGPN","POSYLAKE","NATBRIDG","ALPINE12","ALPINE11","LOWDER","BLUEBONN","PURPLE"],["<a href=http://apps.neotomadb.org/explorer/?datasetid=247 target='_blank'>247<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3060 target='_blank'>3060<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=853 target='_blank'>853<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1970 target='_blank'>1970<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=7829 target='_blank'>7829<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14517 target='_blank'>14517<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14547 target='_blank'>14547<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14549 target='_blank'>14549<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15368 target='_blank'>15368<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=20838 target='_blank'>20838<\/a>"],[1,1,1,1,null,1,1,1,1,1],[1,1,1,1,0,1,1,1,1,1],[1,1,1,1,null,1,1,1,1,1],["High accumulation rates for the core detected: Assigning default accumulation rate to 100.n Overwrote prior chronology file.","High accumulation rates for the core detected: Assigning default accumulation rate to 100.n Overwrote prior chronology file.","High accumulation rates for the core detected: Assigning default accumulation rate to 100.n Overwrote prior chronology file.","Overwrote prior chronology file.","Error processing the age file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file."]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>handle<\/th>\n      <th>datasetid<\/th>\n      <th>suitable<\/th>\n      <th>run<\/th>\n      <th>success<\/th>\n      <th>notes<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data) {\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script><!--/html_preserve-->
 
 ### Successful Runs
 
-<!--html_preserve--><div id="htmlwidget-c63c09264362a6230cca" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c63c09264362a6230cca">{"x":{"filter":"bottom","filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"-54\" data-max=\"19504\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"743\" data-max=\"17396\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["1","2","3","4","5","6","7","8","9"],["BECHAN1","BECHAN2M","FRYINGPN","POSYLAKE","ALPINE12","ALPINE11","LOWDER","BLUEBONN","PURPLE"],["<a href=http://apps.neotomadb.org/explorer/?datasetid=247 target=\"_blank\">247<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3060 target=\"_blank\">3060<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=853 target=\"_blank\">853<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1970 target=\"_blank\">1970<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14517 target=\"_blank\">14517<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14547 target=\"_blank\">14547<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14549 target=\"_blank\">14549<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15368 target=\"_blank\">15368<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=20838 target=\"_blank\">20838<\/a>"],[19504,511,1,0,459,-20,-13,207,-54],[17396,17086,8868,7758,2905,743,13504,13378,8388],["High accumulation rates for the core detected: Assigning default accumulation rate to 100.n Overwrote prior chronology file.","High accumulation rates for the core detected: Assigning default accumulation rate to 100.n Overwrote prior chronology file.","High accumulation rates for the core detected: Assigning default accumulation rate to 100.n Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file."]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>handle<\/th>\n      <th>datasetid<\/th>\n      <th>reliableyoung<\/th>\n      <th>reliableold<\/th>\n      <th>notes<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data) {\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script><!--/html_preserve-->
+<!--html_preserve--><div id="htmlwidget-d923fee9d2cedfc47d76" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d923fee9d2cedfc47d76">{"x":{"filter":"bottom","filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"-54\" data-max=\"19520\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"739\" data-max=\"17195\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["1","2","3","4","5","6","7","8","9"],["BECHAN1","BECHAN2M","FRYINGPN","POSYLAKE","ALPINE12","ALPINE11","LOWDER","BLUEBONN","PURPLE"],["<a href=http://apps.neotomadb.org/explorer/?datasetid=247 target=\"_blank\">247<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=3060 target=\"_blank\">3060<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=853 target=\"_blank\">853<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=1970 target=\"_blank\">1970<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14517 target=\"_blank\">14517<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14547 target=\"_blank\">14547<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=14549 target=\"_blank\">14549<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=15368 target=\"_blank\">15368<\/a>","<a href=http://apps.neotomadb.org/explorer/?datasetid=20838 target=\"_blank\">20838<\/a>"],[19520,558,-0,-4,464,-20,-13,458,-54],[17195,17038,8868,7764,2903,739,13423,13464,8383],["High accumulation rates for the core detected: Assigning default accumulation rate to 100.n Overwrote prior chronology file.","High accumulation rates for the core detected: Assigning default accumulation rate to 100.n Overwrote prior chronology file.","High accumulation rates for the core detected: Assigning default accumulation rate to 100.n Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file.","Overwrote prior chronology file."]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>handle<\/th>\n      <th>datasetid<\/th>\n      <th>reliableyoung<\/th>\n      <th>reliableold<\/th>\n      <th>notes<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data) {\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script><!--/html_preserve-->
 
 ## References

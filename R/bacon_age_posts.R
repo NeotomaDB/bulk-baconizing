@@ -15,7 +15,7 @@ bacon_age_posts <- function(handle, settings) {
                           full.names = TRUE)
 
   assertthat::assert_that(length(out_files) > 0,
-    envmsg = list.files(paste0(settings$core_path, "/", handle)))
+    msg = list.files(paste0(settings$core_path, "/", handle)))
 
   depth <- suppressMessages(readr::read_csv(depth_file,
                                             col_names = FALSE)) %>%

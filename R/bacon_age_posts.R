@@ -21,9 +21,9 @@ bacon_age_posts <- function(handle, settings) {
                                             col_names = FALSE)) %>%
     as.data.frame()
 
-  bacon_settings <- readr::read_csv(settings_file,
-                                    col_names = FALSE, comment = "#") %>%
-    as.data.frame
+  bacon_settings <- suppressMessages(readr::read_csv(settings_file,
+                                    col_names = FALSE, comment = "#")) %>%
+    as.data.frame()
 
   if (length(out_files) > 1) {
     message("Multiple Bacon output files exist.")
@@ -31,8 +31,8 @@ bacon_age_posts <- function(handle, settings) {
 
   for (k in 1:length(out_files)) {
 
-    outer <- readr::read_delim(out_files[k],
-                               col_names = FALSE, delim = " ") %>%
+    outer <- suppressMessages(readr::read_delim(out_files[k],
+                               col_names = FALSE, delim = " ")) %>%
       as.data.frame
 
     # We can do this match because we know how Bacon writes out files.

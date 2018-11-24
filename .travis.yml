@@ -1,6 +1,6 @@
 language: r
 sudo: false
-script: make agegen
+script: travis_wait 30 make agegen
 cache: packages
 r_packages:
   - yaml

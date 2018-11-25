@@ -330,7 +330,7 @@ Bacon <- function(core="MSB2K", thick=5, coredir="", prob=0.95, d.min=NA, d.max=
     .PlotMemPrior(info$mem.strength, info$mem.mean, thick)
     if(!is.na(info$hiatus.depths)[1])
       if(is.na(info$boundary)[1])
-        .PlotHiatusPrior(info$hiatus.max, info$hiatus.depths)
+        .PlotHiatusPrior(info$hiatus.max, info$hiatus.depths, set = info)
     calib.plot(info, BCAD=BCAD)
     legend("topleft", core, bty="n", cex=1.5)
   }
@@ -1899,7 +1899,7 @@ AgesOfEvents <- function(window, move, set, plot.steps=FALSE, BCAD=set$BCAD, yr.
   plot(0, type="n", main="", xlab=xlab, xlim=xlim, ylab=ylab, ylim=c(0, max.y))
   polygon(cbind(c(min(gaps$x), gaps$x, max(gaps$x)), c(0,gaps$y,0)),
     col=grey(.8), border=grey(.4))
-  .PlotHiatusPrior(add=TRUE, xlab="", ylab=ylab, main=main)
+  .PlotHiatusPrior(add=TRUE, xlab="", ylab=ylab, main=main, set = set)
 }
 
 

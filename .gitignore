@@ -31,3 +31,4 @@ Rplots.pdf
 .Rproj.user
 data/params/*
 !data/params/README.md
+bulk_baconizing_files/*

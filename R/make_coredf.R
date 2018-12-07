@@ -24,17 +24,26 @@ make_coredf <- function(x, settings, core_param) {
           ",", "_"), age = z$age, error = abs(z$age - z$agelimityounger),
           depth = NA, cc = ifelse(z$chroncontroltype %in% uncal, 1,
           0), stringsAsFactors = FALSE)
-
+        core_param$notes <- add_msg(core_param$notes,
+                                    "A  (non-geochronological) chronological control was missing a depth.  Assigned NA")
+          
           return(out)
       }
       if (is.null(z$age) & z$chroncontroltype == "Core top") {
         core_param$notes <- add_msg(core_param$notes,
-          "A chroncontrol was missing an age.  Assigned -60.")
-        z$age <- -60
+          "The core top was missing a reported age.  Assigned -40.")
+        z$age <- -40
       }
-      if (is.null(z$ageyounger)) {
+      if (is.null(z$agelimityounger) & z$chroncontroltype == "Core top") {
         core_param$notes <- add_msg(core_param$notes,
-          paste0("A chroncontrol was missing an age range ",
+                                    paste0("Assigned uncertainty for core-top."))
+        
+        z$agelimityounger <- settings$core_top_err
+        z$agelimitolder <- settings$core_top_err
+      }
+      if (is.null(z$agelimityounger)) {
+        core_param$notes <- add_msg(core_param$notes,
+          paste0("A (non-geochronological) chroncontrol was missing an age range ",
           " (ageyounger, ageolder).  Assigned 0."))
 
         z$agelimityounger <- 0

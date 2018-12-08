@@ -1,5 +1,5 @@
 #  Should the program remove any existing files in the Cores directory and start again?
-clean_run: false
+clean_run: true
 bacon: true
 bchron: true
 
@@ -7,7 +7,7 @@ bchron: true
 version: 1
 
 # If a parameters file exists with the current version number should that file overwritten?
-reset_parameters: false
+reset_parameters: true
 
 # Where will the Bacon core files go?
 core_path: 'Cores'

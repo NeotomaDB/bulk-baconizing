@@ -115,6 +115,8 @@ A `yaml` file is a special kind of markup that uses a `key`: `value` pairing, wi
 
 *   `date`: (default `today`) In cases where files might be overwritten, the default is to overwrite but store the old file with a date-stamp.  The default is to use the current date, but it might be that you want to associate a date stamp with a particular version.  In that case you can change the setting from `today` (which will use the current date) to a date of format `YYYY-MM-DD`.
 
+*   `core_top_err`: (default `2`) An uncertainty to assign the core top age.  While, in principle we often know the date with absolute certainty, Bacon requires uncertainty for all age samples.
+
 *   `modern`: (default `true`) In Goring et al (2012) and elsewhere it is shown that modern sediment often has a higher accumulation rate than earlier sediment.  One solution is to initiate an instantaneous hiatus at an identified "settlement" horizon, and then set the accumulation rate of the upper sediment to a higher `acc.mean` rate.  If `modern` is set to `true`, the program will place a hiatus at the modern horizon.  If `false` it will not.
 
 *   `thickness`: (default `false`) There is a file included in the repository called `data/paleon_thick.csv`, however, it may be the case that in previous runs you have adjusted thickness values.  For example, in `version` 2 of your runs you could point to the `params` file generated in version 1 by pointing to `data/params/bacon_params_v1.csv`.  If you modify thicknesses you must also modify the content of the chunk `prior_thickness` below, so that you point to the correct thickness and dataset ID columns.
@@ -259,7 +261,7 @@ if ((!existing_params) | settings$reset_parameters == TRUE) {
                    path = paste0('data/params/bacon_params_v', settings$version, '.csv'))
 } else {
   params <- suppressMessages(readr::read_csv(paste0('data/params/bacon_params_v', settings$version, '.csv'),
-                            col_types = paste0(c('c','i', rep('n',8),'c', 'l','l','i','l','c'), collapse='')))
+                            col_types = paste0(c('c','i', rep('n',8),'c', 'l','l','i','l','c', 'c','c'), collapse='')))
 }
 
 ```
@@ -270,26 +272,26 @@ In the case that there has been a prior run or some prior assessment of thicknes
 
 ```{r prior_thickness, echo = TRUE, results = 'asis'}
 
-if(is.null(settings$thickness) | settings$thickness == FALSE | "character" %in% class(settings$thickness)) {
+  if(is.null(settings$thickness) | settings$thickness == FALSE | "character" %in% class(settings$thickness)) {
 
-  if ("character" %in% class(settings$thickness)) {
-    if (file.exists(settings$thickness)) {
-      params <- add_thickness(file = settings$thickness,
-                              id_col = 1,
-                              thick_col = 4,
-                              parameters = params)
-        readr::write_csv(x = params,
-                   path = paste0('data/params/bacon_params_v', settings$version, '.csv'))
+    if ("character" %in% class(settings$thickness)) {
+      if (file.exists(settings$thickness)) {
+        params <- add_thickness(file = settings$thickness,
+                                id_col = 1,
+                                thick_col = 4,
+                                parameters = params)
+          readr::write_csv(x = params,
+                     path = paste0('data/params/bacon_params_v', settings$version, '.csv'))
 
+      } else {
+        stop("The file defined in `settings.yaml` does not exist.")
+      }
     } else {
-      stop("The file defined in `settings.yaml` does not exist.")
+      message("No thickness file is defined.")
     }
   } else {
-    message("No thickness file is defined.")
+    stop("The setting for thickness in `settings.yaml` is not set correctly.")
   }
-} else {
-  stop("The setting for thickness in `settings.yaml` is not set correctly.")
-}
 
 ```
 

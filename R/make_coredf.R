@@ -16,17 +16,21 @@ make_coredf <- function(x, settings, core_param) {
   assertthat::assert_that(length(x$controls) > 1,
     msg = "Core has fewer than two chron controls.")
 
+test_empty <- function(x) ifelse(is.null(x), NA, x)
+
   build_row <- function(z) {
     if (is.null(unlist(z$geochron))) {
       # There is no 'geochron' data:
       if (is.null(z$depth)) {
         out <- data.frame(labid = stringr::str_replace_all(z$chroncontroltype,
-          ",", "_"), age = z$age, error = abs(z$age - z$agelimityounger),
+          ",", "_"),
+          age = test_empty(z$age),
+          error = abs(test_empty(z$age) - test_empty(z$agelimityounger)),
           depth = NA, cc = ifelse(z$chroncontroltype %in% uncal, 1,
           0), stringsAsFactors = FALSE)
         core_param$notes <- add_msg(core_param$notes,
                                     "A  (non-geochronological) chronological control was missing a depth.  Assigned NA")
-          
+
           return(out)
       }
       if (is.null(z$age) & z$chroncontroltype == "Core top") {
@@ -37,7 +41,7 @@ make_coredf <- function(x, settings, core_param) {
       if (is.null(z$agelimityounger) & z$chroncontroltype == "Core top") {
         core_param$notes <- add_msg(core_param$notes,
                                     paste0("Assigned uncertainty for core-top."))
-        
+
         z$agelimityounger <- settings$core_top_err
         z$agelimitolder <- settings$core_top_err
       }

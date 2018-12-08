@@ -40,8 +40,11 @@ run_batch <- function(x, settings){
         x$notes[i] <- add_msg(x$notes[i], "Bacon run attempted and failed.")
       }
 
+      readr::write_csv(x = data.frame(notes = strsplit(x$notes[i], split = ";")),
+        path = paste0(settings$core_path, "/", x$handle[i],
+                             "/", x$handle[i], "_notes.csv"))
       readr::write_csv(x = x,
-                       path = paste0("data/params/bacon_params_v",
+                      path = paste0("data/params/bacon_params_v",
                                      settings$version, ".csv"))
       cat("...")
     }

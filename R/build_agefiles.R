@@ -47,7 +47,7 @@ build_agefiles <- function(param, datasets,
   if (sum(modeldefault$order == min(modeldefault$order) &
       modeldefault$default) == 1) {
     # This is the case that everything is good.
-    # The precendene is the lowest and it has only one defined
+    # The precendence is the lowest and it has only one defined
     #  default for that low model.
   } else {
     if (sum(modeldefault$order == min(modeldefault$order) &
@@ -121,9 +121,9 @@ build_agefiles <- function(param, datasets,
 
   did_char <- as.character(param$datasetid)
 
-  handle <- datasets[[did_char]]$dataset.meta$collection.handle
-  depths <- data.frame(depths = downloads[[did_char]]$sample.meta$depth)
-  ages <- data.frame(ages = downloads[[did_char]]$sample.meta$age)
+  handle   <- datasets[[did_char]]$dataset.meta$collection.handle
+  depths   <- data.frame(depths = downloads[[did_char]]$sample.meta$depth)
+  ages     <- data.frame(ages = downloads[[did_char]]$sample.meta$age)
 
   agetypes <- sapply(chrons[[2]], function(x) x$agetype)
 
@@ -141,11 +141,11 @@ build_agefiles <- function(param, datasets,
       #  It's not clear what's happening here,
       #  but we identify the records for further investigation.
       ages <- data.frame(labid = "Annual laminations",
-                          age = ages,
-                          error = 0,
-                          depth = depths,
-                          cc = 0,
-                          stringsAsFactors = FALSE)
+                           age = ages,
+                         error = 0,
+                         depth = depths,
+                            cc = 0,
+              stringsAsFactors = FALSE)
       if (verbose == TRUE) {
         message("Annual laminations defined in the age models.")
       }
@@ -171,7 +171,7 @@ build_agefiles <- function(param, datasets,
     }
 
   } else {
-    out <- try(make_coredf(chrons[[2]][[good_row]],
+    out <- try(make_coredf(x = chrons[[2]][[good_row]],
                            core_param = param,
                            settings = settings))
 

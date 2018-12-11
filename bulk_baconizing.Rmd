@@ -146,7 +146,7 @@ Here we download the sedimentary data.  The key component here is the `get_datas
 #  dataset types. . .
 
 dataset_list <- get_dataset(datasettype='pollen',
-                            gpid = 'Utah',
+                            gpid = c('Michigan', 'Wisconsin', 'Minnesota'),
                             ageyoung = 0)
 
 #  The load_downloads() function will download the datasets if either:

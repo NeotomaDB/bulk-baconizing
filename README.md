@@ -79,8 +79,10 @@ Open the file using RStudio and click the `knit` button.
 Navigate to the working directory and execute the command:
 
 ```
-Rscript -e "rmarkdown::render('bulk_baconizing.Rmd')
+Rscript -e "rmarkdown::render('bulk_baconizing.Rmd')"
 ```
+
+This should run the code as it is written.  Be sure you have set the appropriate bounding box or geographic bounds for your region of interest.
 
 ## Feedback, Suggestions and Comments
 

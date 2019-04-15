@@ -58,11 +58,11 @@ Open the file using RStudio and click the `knit` button.
 Navigate to the working directory and execute the command:
 
 ```
-Rscript -e "rmarkdown::render('bulk_baconizing.Rmd')
+Rscript -e "rmarkdown::render('bulk_baconizing.Rmd')"
 ```
 
 ## Feedback, Suggestions and Comments
 
 Please use the [issue tracker](https://github.com/neotomadb/bulk-baconizing/issues) or email a package maintainer directly.
 
-![footer images Neotoma NSF and EarthCube](images/footer.svg)
+![footer images Neotoma NSF and EarthCube](images/footer.png)

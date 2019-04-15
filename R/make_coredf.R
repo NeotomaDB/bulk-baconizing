@@ -1,4 +1,4 @@
-make_coredf <- function(x, settings, core_param) {
+make_coredf <- function(x, settings, core_param, core_top = NULL) {
 
   corepath <- settings$core_path
 
@@ -16,7 +16,7 @@ make_coredf <- function(x, settings, core_param) {
   assertthat::assert_that(length(x$controls) > 1,
     msg = "Core has fewer than two chron controls.")
 
-test_empty <- function(x) ifelse(is.null(x), NA, x)
+  test_empty <- function(x) ifelse(is.null(x), NA, x)
 
   build_row <- function(z) {
     if (is.null(unlist(z$geochron))) {
@@ -52,6 +52,27 @@ test_empty <- function(x) ifelse(is.null(x), NA, x)
 
         z$agelimityounger <- 0
         z$agelimitolder <- 0
+      }
+      # Lead210 data is dealt with in our paper:
+      if (z$chroncontroltype == "Lead-210" & z$age > 500) {
+        z$age <- 1950 - z$age
+        core_param$notes <- add_msg(core_param$notes,
+                                    "A 210Pb age had an assigned age greater than 500ybp: Assumed age scale incorrect.")
+      }
+      # Lead210 data is dealt with in our paper:
+      if (z$chroncontroltype == "Lead-210" & (is.null(z$agelimitolder) | (z$agelimityounger == z$age))) {
+        age <- c(10, 100, 150)
+        error <- log10(c(1.5, 15, 85))
+        model <- lm(error ~ age)
+        
+        age_err <- z$age - core_top
+        
+        z$agelimitolder <-   ceiling(z$agelimitolder   + 10^predict(model, newdata = data.frame(age = age_err))) %>% unlist
+        z$agelimityounger <- floor(z$agelimityounger - 10^predict(model, newdata = data.frame(age = age_err))) %>% unlist
+        
+        core_param$notes <- add_msg(core_param$notes,
+                                    "A 210Pb age had no error assigned.  Used the Binford estimator to assign uncertainty.")
+        
       }
       if (z$chroncontroltype %in% c("Deglaciation", "Interpolated",
             "Core bottom", "Extrapolated", "Guess")) {
@@ -99,25 +120,6 @@ test_empty <- function(x) ifelse(is.null(x), NA, x)
         core_param$notes <- add_msg(core_param$notes, "Geochronological age was NULL.  Assigned the midpoint of ages.")
       }
 
-      # Lead210 data is dealt with in our paper:
-      if (z$geochron$geochrontype == "Lead-210" & z$geochron$age > 500) {
-        z$geochron$age <- 1950 - z$geochron$age
-        core_param$notes <- add_msg(core_param$notes,
-          "A 210Pb age had an assigned age greater than 500ybp: Assumed age scale incorrect.")
-      }
-
-      # Lead210 data is dealt with in our paper:
-      if (z$geochron$geochrontype == "Lead-210" & is.null(z$geochron$errorolder)) {
-        age <- c(10, 100, 150)
-        error <- c(1.5, 15, 85)
-        model <- lm(log(error) ~ age)
-
-        z$geochron$errorolder <- predict(model, newdata = data.frame(age = z$geochron$age)) %>%
-          exp
-        core_param$notes <- add_msg(core_param$notes,
-          "A 210Pb age had no error assigned.  Used the Binford estimator to assign uncertainty.")
-
-      }
 
       if (is.null(z$geochron$errorolder)) {
         z$geochron$errorolder <- 0

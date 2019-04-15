@@ -12,7 +12,7 @@ build_agefiles <- function(param, datasets,
   depth_file <- paste0(settings$core_path, "/", param$handle,
     "/", param$handle, "_depths.txt")
 
-  if (!(is.na(param$suitable)) &
+  if (!(is.na(param$suitable) | param$suitable == 1) &
      param$suitable == 1 &
      file.exists(age_file) &
      file.exists(depth_file)) {
@@ -171,9 +171,31 @@ build_agefiles <- function(param, datasets,
     }
 
   } else {
+    depths <- sapply(chrons[[2]][[good_row]]$controls, function(x) x$depth)
+    ages <-   sapply(chrons[[2]][[good_row]]$controls, function(x) x$age)
+    types <-  sapply(chrons[[2]][[good_row]]$controls, function(x) x$chroncontroltype)
+    
+    if (any(types == "Lead-210")) {
+      if (any(types == "Core top")) {
+        age_top <- ages[which(types == "Core top")]
+      } else {
+        if (!is.na(param$core_top)){
+          age_top <- param$core_top
+        } else if (any(depths < 2)) {
+          min_depth <- min(depths[depths > 0 & depths < 2])
+          age_top <- ages[which(depths == min_depth)]
+          param$notes <- add_msg(param$notes, paste0("No core top assigned in core but lead 210 dates used. Core top assigned to sample at depth ", min_depth))
+          param$core_top <- ages[which(depths == min_depth)]
+        } else {
+          age_top <- NULL
+        }
+      }
+    }
+    
     out <- try(make_coredf(x = chrons[[2]][[good_row]],
                            core_param = param,
-                           settings = settings))
+                           settings = settings,
+                           core_top = age_top))
 
     if (!"try-error" %in% class(out)) {
       ages <- out[[1]]
@@ -186,7 +208,7 @@ build_agefiles <- function(param, datasets,
       }
 
       readr::write_csv(x = ages, path = age_file, col_names = TRUE)
-      readr::write_csv(x = depths, path = depth_file, col_names = FALSE)
+      readr::write_csv(x = as.data.frame(depths), path = depth_file, col_names = FALSE)
 
     } else {
       param$notes <- add_msg(param$notes, "Error processing the age file.")

@@ -1,0 +1,186 @@
+datasetID,handle,site,long,lat,state,pi,pre1.d,pre1,pre2,pre3,pre4,un1,un2,un3,un4,notes1,notes2,notes3,notes4
+13060,ADELINE,Adeline,-91.194,45.302,wisconsin,R. Calcote,50 cm,16,9,4,7,,,1,1,It's where Ambrosia rises above background,big uncertantiy,tricky given early spike.   7 a possibility,"Or 9, 8 looks so weird."
+12016,ALBRTLEA,Albert Lea Lake,-93.2894,43.6582,minnesota,"Cushing, Edward J.",70 cm,6,7,5,6,1,1,,,"It's where Ambrosia rises above background, it would be really useful to have had more downcore data in order to figure out what is presettlement baseline Ambrosia",,,
+29,ALLIE,Lake Allie,-94.5675,44.8138,minnesota,"McAndrews, John H.",60 cm,7,6,5,5,,,,,It's just before Ambrosia rises above background,,,
+205,ANDRUSLK,Andrus Lake,-85.040278,46.7,michigan:north,"Shane, Linda C. K.",12.25 cm,8,8,9,9,,1,,1,It's just before Ambrosia rises above background,big UC!,possibly 8,
+223,BADMED,Bad Medicine Lake,-95.383333,47.133333,minnesota,"McAndrews, John H.",20 cm,3,3,3,3,1,1,,,"It's just before Ambrosia rises above background, low resolution, difficult",,Only 5 samples. Not confident.,
+241,BBASS,Black Bass Lake,-93.703889,46.128056,minnesota,"McAndrews, John H.",10 cm,2,5,2,2,,,,,It's just before Ambrosia rises above background,,,
+249,BECKMAN,Beckman Lake,-93.183333,45.425,minnesota,"Swain, Patricia C.",97 cm,5,-1,-1,4,,,1,,It's just before Ambrosia rises above background,,Can't tell,
+3062,BECKMNBG,Beckman Lake,-93.183333,45.425,minnesota,"Swain, Patricia C.",35 cm,8,8,8,9,,,,,"afterwards sharp Ambrosia rise, decline of Pinus",,,
+272,BIGJOHN,Big John Pond,-94.966667,47.558333,minnesota,"Almendinger, John C.",20 cm,3,4,3,4,,,1,,It's just before Ambrosia rises above background,,a bit iffy,
+275,BILLYS,Billy's Lake,-94.583333,46.283333,minnesota,"Jacobson, George L., Jr.",220 cm,9,8,8,9,,,,,It's just before Ambrosia rises above background,,,
+280,BLANDIN,Blandin Pond,-93.666667,47.133333,minnesota,"Cushing, Edward J.",41 cm,3,3,3,3,,1,,,"afterwards Ambrosia rise, decline of Pinus",high UC,,
+10973,BLOMFORD,Blomford Lake,-93.157,45.496,minnesota,"Cushing, Edward J.",40 cm,7,7,4,7,,,,,It's just before Ambrosia rises above background,,,
+287,BLUMOUND,Blue Mounds Creek,-89.866667,43.083333,wisconsin,"Davis, Anthony M.",41 cm,4,-1,2,2,1,1,1,1,"This one is very difficult, needed more downcore samples, not really sure",,Only 4 samples.  Not confident.,This core is not very good for assessing presett
+296,BOBLAKE,Bob Lake,-92.614722,46.633611,minnesota,"McAndrews, John H.",20 cm,3,3,3,3,,,,,It's just before Ambrosia rises above background,,,
+298,BOGD,Bog D,-95.166667,47.183333,minnesota,"McAndrews, John H.",100 cm,9,8,6,7,1,1,1,,"It's just before Ambrosia rises above background, low resolution, difficult","7 or 8, AED assigned as 8 because that's more likely to  be presett",Tricky one.  Rise in Ambrosia is very gradual.  Pegged to peak in Pinus,
+305,BOSSUOT,Bossuot Lake,-93.734167,44.296111,minnesota,"McAndrews, John H.",70 cm,8,7,5,7,,,1,,It's just before Ambrosia rises above background,,Good case for  anywhere between 4 and  8,
+313,BROWNLK,Brown Lake (US:Wisconsin),-89.483333,45.783333,wisconsin,"Shane, Linda C. K.",14.2 cm,9,6,8,9,,,,,It's just before Ambrosia rises above background,,,
+314,BROWNSBY,"Brown's Bay, Lake Minnetonka",-93.55,44.966667,minnesota,"Shane, Linda C. K.",59.5 cm,8,8,8,8,,,,,afterwards sharp Ambrosia rise,,high confidence,
+325,BURNTSDE,Burntside Lake,-91.994722,47.924167,minnesota,"Wright, Herbert E., Jr.",19 cm,6,8,6,7,,1,,,It's just before Ambrosia rises above background,"7 or 8, AED assigned as 8 because that's more likely to  be presett",subtle,
+332,CAMP11LK,Camp 11 Lake,-88.016667,46.666667,michigan:north,"Brubaker, Linda B.",10 cm,2,2,2,3,,,,,Low sedimentation rate typical of area,,,
+333,CAMP12LK,Camp 12 Lake,-89.375,45.986111,wisconsin,"Shane, Linda C. K.",17.25 cm,14,13,14,15,1,,,,"Wish there were more samples below, but ambrosia rise clear and well defined.",,,
+334,CAMPBELL,Campbell Lake,-93.5,44.705833,minnesota,"McAndrews, John H.",50 cm,6,6,6,6,,,,,"It's just before Ambrosia rises above background, clear call",,,
+13057,CAMPLAKE,Camp Lake,-95.398,45.4133,minnesota,"Cushing, Edward J.",40 cm,4,4,4,4,,,,,"It's just before Ambrosia rises above background, clear call",,,
+3055,CANYON,Canyon Lake,-87.921389,46.833333,michigan:north,"Davis, Margaret B.",,-1,6,4,9,1,,1,,"I don't see an Ambrosia rise, did she conserve coretop at all? Some old studies did not.",,"Extremely subtle. Is Canyon in Sylvania Wilderness?  If so, it may not have any signal of Euro land use",
+352,CEDARBLK,Cedar Bog Lake,-93.197222,45.411111,minnesota,"Cushing, Edward J.",190 cm,3,3,3,3,1,1,1,,"It's just before Ambrosia rises above background, low resolution",probably use #3,Only 5 samples,
+369,CHIPPEWA,Chippewa Bog,-83.241111,43.123889,michigan:south,"Bailey, Robert E.",,-1,-1,4,12,1,1,1,,"I don't see an Ambrosia rise, did he conserve coretop at all? Some old studies did not.",,"Iffy.  No ambrosia signal.  Basing this on Pinus crash,  which could be logging or could  be natural.",
+12010,CHUBLAKE,Chub Lake,-93.2224,44.5748,minnesota,"Cushing, Edward J.",195 cm,5,5,5,5,,,,,"It's just before Ambrosia rises above background, clear call",,,
+382,CINDY,Cindy Pond,-94.916667,47.183333,minnesota,"McAndrews, John H.",20 cm,3,-1,3,3,,1,1,,"It's just before Ambrosia rises above background, clear call",,Subtle,
+12005,COTTONW2,Cottonwood Lake,-95.6919,44.6243,minnesota,"Cushing, Edward J.",25 cm,6,6,6,6,,,,,"Clear Ambrosia raise, but high Ambrosia downcore, still I'd call this as just before settlement.",,,
+515,COTWDMN,Cottonwood Lake (US:Minnesota),-96.016667,45.761111,minnesota,"McAndrews, John H.",50 cm,6,5,5,5,1,1,,,"Wish there were more samples below, but ambrosia rise clear and well defined.",maybe 3 or 4….,,
+521,CRAZY,Crazy Pond,-95.733333,47.183333,minnesota,"McAndrews, John H.",40 cm,5,5,3,5,,,1,,"afterwards Ambrosia rise, decline of Pinus",,Subtle.  Based more on Poaceae than Ambrosia,
+532,CUB2,Cub Lake,-84.958333,44.7,michigan:south,"Rasmussen, Jack B.",24 cm,5,5,5,10,,,,,"It's just before Ambrosia rises above background, clear call",,,
+545,DALTON,Dalton Lake,-95.915278,46.173889,minnesota,"McAndrews, John H.",40 cm,5,5,5,5,,,,,"It's just before Ambrosia rises above background, clear call",,,
+546,DARKLAKE,Dark Lake,-91.475,45.275,wisconsin,"Winkler, Marjorie Green",150 cm,15,15,15,15,,,,,"Great pollen diagram, enough of downcore shown, clear call",,Nice record!,
+12007,DEANS,Deans Lake,-93.4546,44.7783,minnesota,"Shane, Linda C. K.",50 cm,3,4,3,4,,,,,"It's just before Ambrosia rises above background, clear call",,,
+679,DEMONTLK,Demont Lake,-85,43.48,michigan:south,"Kapp, Ronald O.",60 cm,4,4,4,4,,,,,"It's just before Ambrosia rises above background, clear call",,,
+681,DENTONLK,Denton Lake,-89.316667,45.85,wisconsin,"Shane, Linda C. K.",24.25 cm,14,13,5,13,1,1,1,1,"Abit of a slow ambrosia rise, would have liked more downcore",maybe #7,"Very subtle, perhaps non-existent.  Basedon Poaceae",No real obvious sign of Settlement
+684,DEVILSWI,Devils Lake (US:Wisconsin),-89.7385,43.4273,wisconsin,"Maher, Louis J., Jr.",31 cm,7,6,6,6,1,,,,"Uncertain, could also be 69 cm if initial Ambrosia rise was slow.",,A classic.,
+700,DISTER59,Disterhaft Farm Bog,-89.166944,43.916944,wisconsin,"Maher, Louis J., Jr.",,-1,-1,-1,-1,1,1,1,1,Can't tell,,Can't tell - only 4 samples,None
+3081,DISTRHFT,Disterhaft Farm Bog,-89.166944,43.916944,wisconsin,"Baker, Richard G.",80 cm,5,5,5,-1,1,1,1,1,Could also be 70 cm,,Very subtle.  Possibly no detectable signal.,None
+717,DOGFISH,Dogfish Lake,-92.183333,48.183333,minnesota,"Waddington, Jean C.B.",25 cm,8,8,8,11,1,,,1,"Think this one is correct, Ambrosia rise struggles abit, that's okay",,,Hard to tell
+774,DUNNIGAN,Dunnigan Lake,-91.641667,47.708333,minnesota,"Shane, Linda C. K.",17.25 cm,12,12,14,13,1,,1,,"Think this one is correct, Ambrosia rise struggles abit, that's okay",,Tricky - a case couold  be made for 9,
+781,EASTTWIN,East Twin Lake (US:Minnesota),-93.508333,45.333333,minnesota,"McAndrews, John H.",30 cm,4,4,4,4,1,,,,"unsure, would have liked more downcore samples",,,
+786,EGGERT,Eggert Lake,-93.619722,44.470556,minnesota,"McAndrews, John H.",40 cm,5,5,5,5,1,,,,"unsure, could also be 90 cm",,,
+13069,ELEVENSES,Elevenses,-91.496,46.382,wisconsin,R. Calcote,26.5 cm,6,4,6,6,,,,,Clear Ambrosia rise,,,
+12008,EMILY,Lake Emily,-93.9262,44.3135,minnesota,"Shane, Linda C. K.",153 cm,6,6,6,7,,,,,,,,
+13071,ESKA,Eska,-90.60789,45.1915,wisconsin,R. Calcote,29.5 cm,6,4,4,4,,,,,"Clear Ambrosia rise, wonder what taxa declines at the top?",,,
+12024,EVRHRTLK,Everhart Lake,-93.4424,43.6198,minnesota,"Cushing, Edward J.",35 cm,6,6,6,6,1,,,,"But I wish there were more downcore, wonder if it isn't 80 cm",,,
+817,FAITH,Faith Pond,-95.1,47.283333,minnesota,"McAndrews, John H.",40 cm,5,4,4,4,,,,,seems clear,,,
+13073,FALLISON,Fallison,-89.61883,45.9939,wisconsin,R. Calcote,23.5 cm,8,8,8,8,,,,,Clear Ambrosia rise,,,
+822,FARQUAR,Farquar Lake,-93.166667,44.757778,minnesota,"McAndrews, John H.",50 cm,6,6,6,6,,,,,,,,
+10974,FAWNANMN,Fawn Lake,-93.057,45.4099,minnesota,"Cushing, Edward J.",40 cm,4,4,3,4,,,,,,,,
+824,FAWNLAKE,Fawn Lake,-94.753333,46.218889,minnesota,"McAndrews, John H.",30 cm,4,4,4,6,1,,,,"Would have liked to see more of downcore, alittle uncertain",,,
+CLH2,FERR01X,Ferr01X,-92.125,46.013,wisconsin,R. Calcote,44.5 cm,5,-1,-1,-1,1,,1,1,"Guessing here, funny Ambrosia rise",,Can't tell,nothing
+846,FOXPOND,Fox Pond,-95.558333,47.165,minnesota,"McAndrews, John H.",50 cm,6,6,6,6,,,,1,seems okay,,,tough to say
+847,FRAINSLK,Frains Lake,-83.63,42.33,michigan:south,"Kerfoot, Wilson Charles",410 cm,6,7,7,7,,,,,"Extremely high sedimentation rate, if my Ambrosia rise is correct",,,
+850,FRENCH,French Lake,-94.416667,44.95,minnesota,"Grimm, Eric Christopher",680 cm,9,7,7,7,1,,,,660 cm is also a possibility,,,
+10975,FROVOLD,Frovold Lake,-95.568,45.38,minnesota,"Cushing, Edward J.",30 cm,4,4,4,5,1,1,,,Low resolution a bit worrisome,,,
+860,GASS,Gass Lake,-87.733333,44.05,wisconsin,"Webb, Sara L.",60 cm,5,5,5,5,,,,,clear,,,
+869,GEORGE,George Lake,-93.870833,44.233333,minnesota,"McAndrews, John H.",40 cm,5,5,5,5,,,,,Just going on when Ambrosia exceeds baseline.,,,
+967,GOLDSMTH,Goldsmith Lake,-92.466667,46.583333,minnesota,"McAndrews, John H.",20 cm,3,3,3,3,,,,,Just going on when Ambrosia exceeds baseline.,,,
+10976,GOOSEMN,Goose Lake,-94.596,44.995,minnesota,"Cushing, Edward J.",60 cm,11,-1,5,6,1,1,1,1,"Could also be 30 cm, but 60 cm meets sediment rate of the area better, would have liked to see more of the core if it exists",,Tricky.  Possibly 11.,tough
+982,GREENLK,Green Lake,-85.116667,44.883333,michigan:south,"Lawrenz, Ronald W.",25 cm,4,4,4,-1,,,1,1,Just going on when Ambrosia exceeds baseline.,,Subtle.  Possibly no signal.  Only 7 samples,tough
+990,GRICE,Grice Pond,-95.75,47.2,minnesota,"McAndrews, John H.",30 cm,4,-1,4,3,,1,1,,"After this, pinus starts declining while Ambrosia rises.",,Subtle.  1 also possible.,
+1004,HANSON,Hanson Marsh,-89.675,43.433056,wisconsin,"Maher, Louis J., Jr.",12 cm,2,2,-1,-1,,1,1,1,Not much choice in this low resolution core,,Discard this  site - it has only 2 samples,none
+CLH3,HELLHOLE,HellHole,-92.219,45.7865,wisconsin,R. Calcote,16.5 cm,4,4,4,5,,,,,"Sharp Ambrosia rise, but what taxa declines?",,,
+3131,HELLSKIT,Hell's Kitchen Lake,-89.7,46.183333,wisconsin,"Swain, Albert M.",90 cm,9,8,9,10,,,,,"Really helpful core, certain of call",,Beautiful  record!,or 9
+1032,HEMOPOND,Hemo Pond,-95.783333,47.216667,minnesota,"McAndrews, John H.",60 cm,7,7,7,-1,,,1,,Just going on when Ambrosia exceeds baseline.,,Unclear.  Anywhere between 2 and 7,none
+1109,HORSE,Horse Pond,-95.872222,47.190278,minnesota,"McAndrews, John H.",50 cm,6,5,4,-1,,,1,1,Just going on when Ambrosia exceeds baseline.,,"Anywhere between 3 and  6, based on Ambrosia, Rumex, Poaceae ",none
+1111,HOSTAGE,Hostage Lake,-94.133333,46.55,minnesota,"Almendinger, John C.",40 cm,3,3,3,3,,1,,,Just going on when Ambrosia exceeds baseline.,not easy,,
+1134,HUGLAKE,Hug Lake,-90.933333,47.958333,minnesota,"Swain, Albert M.",22 cm,12,13,14,12,,,,1,"Just going on when Ambrosia exceeds baseline, not surprised by low sedimentation rate in that area.",,,tough
+1138,HUSTLER,Hustler Lake,-92.158333,48.233333,minnesota,"Shane, Linda C. K.",26.75 cm,11,-1,11,10,,1,,,"Just going on when Ambrosia exceeds baseline, not surprised by low sedimentation rate in that area.",,,
+1151,IOLABOG,Iola Bog,-89.116944,44.5,wisconsin,"Maher, Louis J., Jr.",90 cm,2,2,2,2,,,,,Not much choice with this low resolution,,,
+1153,IRVIN,Irvin Lake,-93.643611,47.135556,minnesota,"Cushing, Edward J.",20 cm,4,4,5,6,,,,,pretty clear,,,
+13047,IRWINSMT,Irwin Smith Bog,-83.64,45.035,michigan:south,"Jackson, Steven T.",13.5 cm,4,4,5,5,,,,,"Clear, great having all the down core baseline material",,,
+3138,JACOBSN2,Jacobson Lake,-92.716944,46.416944,minnesota,"Watts, William A.",125 cm,3,3,3,4,,,,,Clear,,,
+1394,JONESMN,Jones Lake (US:Minnesota),-93.983333,45.429167,minnesota,"McAndrews, John H.",30 cm,4,3,3,3,1,,,,slight chance of it being 40 cm,,,
+1446,KEGAN,Kegan Lake,-93.116667,44.758333,minnesota,"McAndrews, John H.",30 cm,4,4,4,4,,,,,Clear,,,
+1447,KELLHOL1,Kellys Hollow,-90.35,45.3,wisconsin,"Heide, Kathleen M.",20 cm,3,-1,-1,3,,1,1,1,not much choice at this low resolution,,Discard? Only 3 samples.  Possibly 3.,not good
+3452,KELLHOL2,Kellys Hollow,-90.35,45.3,wisconsin,"Heide, Kathleen M.",60 cm,4,2,2,2,1,,1,1,Not completely sure,,Possibly 4.  Only 5 samples.,not good
+1448,KELLNERS,Kellners Lake,-87.848056,44.238056,wisconsin,"Maher, Louis J., Jr.",60 cm,5,5,5,5,,,,,Clear,,,
+13032,KIMBLE,Kimble Pond,-93.842,44.2201,minnesota,"Umbanhowar, Charles E., Jr.",1910.5 cm,12,12,12,13,,,,,awfully high sedimentation rate if correct,,,
+1520,KIRCHNR1,Kirchner Marsh,-93.1249,44.7724,minnesota,"Wright, Herbert E., Jr.",,-1,-1,-1,-1,1,1,1,1,"can't tell, Ambrosia declines at top?",,Discard and use KIRCHNR2.  This record is too low-resolution and swamped by Cyperaceae increase as  site shifted from lake to marsh.,nothing
+3455,KIRCHNR2,Kirchner Marsh,-93.1249,44.7724,minnesota,"Wright, Herbert E., Jr.",22 cm,4,4,4,4,,,,,clear,,,but 5 looks wonky
+1524,KITCHNER,Kitchner Lake,-87.455,45.666667,michigan:north,"Davis, Margaret B.",60 cm,8,7,8,8,,,1,,Just going on when Ambrosia exceeds baseline.,,Possibly 7.,
+1548,KOTIRANT,Kotiranta Lake,-92.62,46.72,minnesota,"Wright, Herbert E., Jr.",,-1,-1,4,4,1,1,,,"no Ambrosia, I give up",high UC,"No Ambrosia?  Pegging this  to Artemisia rise,  but could be wrong.",
+1552,KRYZ,Kryzewinski Lake,-92.870278,46.353333,minnesota,"McAndrews, John H.",30 cm,4,4,2,4,1,,1,,"Uncertain, wondering if coretop was lost",,Uncertain.  Possibly 4.  Possibly no signal.,
+1581,LAKE27,Lake 27,-84.783333,45.066667,michigan:south,"Bernabo, J. Christopher",,-1,3,3,9,1,,,,"No Ambrosia rise, can't tell",,"Weak signal, uncertain.",tough
+1584,LAKEANN,Lake Ann,-93.6875,45.425,minnesota,"McAndrews, John H.",780 cm,3,3,-1,-1,1,1,1,1,"Very poor resolution, I'd be tempted to discard",,Discard.  Only 3 samples.  Can't tell.,nothing
+3468,LAKEANNF,Lake Ann,-93.6875,45.425,minnesota,"Shane, Linda C. K.",60 cm,6,5,6,6,1,,1,,"Some might pick 50 cm, uncertain abit here",,Possibly 5,
+1588,LAKECARL,Lake Carlson,-93.1617,44.8009,minnesota,"Wright, Herbert E., Jr.",45 cm,4,5,5,5,,,,,Clear,,A classic,
+3473,LAKEMARY,Lake Mary,-89.9,46.25,wisconsin,"Webb, Thompson III",10 cm,2,-1,-1,-1,1,1,1,1,"Very poor resolution, I'd be tempted to discard",,Discard.  Only 3 samples.  Can't tell.,nothing
+12004,LASTLAKE,Last Lake,-95.2438,45.4519,minnesota,"Alwin, Baird C.",40 cm,5,4,5,8,1,,1,1,check numerically not 30 cm by when Ambrosia exceeds its baseline?,,Gradual - could be anywhere  from 4 to 7,tough
+1629,LEWISLK,Lewis Lake,-93.364167,45.749444,minnesota,"McAndrews, John H.",30 cm,4,4,5,5,,,,,clear,,,
+19933,LILY,Lily,-92.272,45.901,wisconsin,R. Calcote,34.5 cm,5,5,5,5,,1,,,clear,,,
+1633,LILYLAKE,Lily Lake (US:Minnesota),-92.825,45.05,minnesota,"Eyster-Smith, Nancy M.",1325 cm,5,-1,6,6,,1,,,clear,,,
+1639,LITTBASS,Little Bass Lake,-93.6,47.283333,minnesota,"Swain, Patricia C.",1300 cm,2,2,2,2,1,,,,Could also be 1350 cm,,,
+1643,LITTLPIN,Little Pine Lake,-91.483333,45.283333,wisconsin,"Gajewski, Konrad J.",140 cm,14,14,16,15,,,,,clear,,,
+3482,LKCLDSH,Lake of the Clouds (US:Minnesota),-91.116667,48,minnesota,"Craig, Alan J.",42 cm,2,-1,3,4,1,1,1,1,"Very poor resolution, I'd be tempted to discard",,Discard. Very  subtle.  Use other record from this  lake,tough
+3483,LKCLDSSW,Lake of the Clouds (US:Minnesota),-91.116667,48,minnesota,"Swain, Albert M.",9 cm,9,8,8,9,,,,,"Just low sedimentation here, I think",,,
+19931,LONE02,Lone02,-92.2359,45.932,wisconsin,R. Calcote,17.5 cm,5,5,5,6,,,,,"Clear Ambrosia rise, would have liked more downcore points. Hard to tell where the rise actually begins",,,
+1665,LOSTLAKE,Lost Lake (US:Michigan),-87.97,46.72,michigan:north,"Brubaker, Linda B.",10 cm,2,2,2,3,,,1,,"Just low sedimentation here, I think",,Possibly  4,
+12001,LTDOLLAR,Little Dollar Lake,-85.3096,46.1872,michigan:north,"Futyma, Richard P.",12 cm,4,4,4,4,1,,,,"Such poor resolution, not sure my guess has much meaning but here it is.",,,
+12014,LYBECK,Lybeck Lake,-95.717,45.679,minnesota,"Cushing, Edward J.",55 cm,10,10,10,11,,,,,Clear Ambrosia rise.,,,
+1685,MABEL,Lake Mabel,-93.613056,44.45,minnesota,"McAndrews, John H.",,-1,-1,7,-1,1,,1,1,"Can't tell, Ambrosia declining????!!!",,? A weird site - Ambrosia is declining over this period.  Based this on Rumex.,nothing
+1708,MARTINPD,Martin Pond,-94.933333,47.183333,minnesota,"McAndrews, John H.",50 cm,6,3,3,9,,1,1,1,Just going on when Ambrosia exceeds baseline.,,Possibly 7,maybe?
+1720,MCCRANEY,McCraney Pond,-95.698056,47.178056,minnesota,"McAndrews, John H.",30 cm,4,4,4,4,,,,,Clear Ambrosia rise.,,,
+1725,MCNRNY2A,McNearny Lake,-84.958333,46.427222,michigan:north,"Shane, Linda C. K.",5.75 cm,6,6,10,6,,,,,"Just low sedimentation here, I think",,Nice example of early slow rise  then later  acceleration,
+3485,MCNRNY3A,McNearny Lake,-84.958333,46.427222,michigan:north,"Shane, Linda C. K.",7.75 cm,8,8,8,8,,,,,,,,
+3486,MCNRNY4A,McNearny Lake,-84.958333,46.427222,michigan:north,"Shane, Linda C. K.",8.75 cm,9,4,9,9,,,,,Really low sedimentation rate if I've picked the right point.,,,
+1735,MENDOTAC,Lake Mendota,-89.416667,43.1,wisconsin,"Winkler, Marjorie Green",65.5 cm,3,3,3,3,,,1,,"Would have liked more resolution, but clear Ambrosia rise.",,Possibly 2,
+3488,MENDOTAD,Lake Mendota,-89.416667,43.1,wisconsin,"Winkler, Marjorie Green",25.5 cm,2,-1,-1,-1,1,1,1,1,Resolution bad.,,Discard.  Use MendotaC,nope
+1757,MINNIEN,Lake Minnie,-95.01,47.24,minnesota,"McAndrews, John H.",40 cm,5,-1,5,5,,1,,1,"Clear Ambrosia rise, would have liked more downcore points.",,,maybe 6
+3492,MINNIEO,Lake Minnie,-95.01,47.24,minnesota,"McAndrews, John H.",60 cm,6,6,6,6,,,,,Clear Ambrosia rise.,,,
+12006,MONSON,Monson Lake,-95.2897,45.33,minnesota,"Cushing, Edward J.",80 cm,5,5,5,5,,,,,Clear Ambrosia rise.,,,
+12013,MUDDLMN,Mud Lake,-95.4657,45.8607,minnesota,"Cushing, Edward J.",60 cm,10,11,11,11,,,,,"Much better resolution, much happier than below lake.",,,
+1777,MUDLKMN1,Mud Lake (US:Minnesota:Blue Earth),-93.830833,44.227222,minnesota,"McAndrews, John H.",40 cm,5,5,5,5,1,,,,"Not happy, but best guess.",,,
+1778,MUDLKMN2,Mud Lake (US:Minnesota:Hubbard),-94.75,46.866667,minnesota,"Almendinger, John C.",50 cm,2,2,2,2,1,1,1,1,Bad resolution.,,Possibly 4.,tough
+1781,MURPHY,Murphy Lake,-93.340556,44.711111,minnesota,"McAndrews, John H.",70 cm,8,10,10,10,,,1,,"Clear Ambrosia rise, would have liked more downcore points.",,Possibly between 8 and 11,
+1786,MYRTLE,Myrtle Lake,-93.383333,47.983333,minnesota,"Janssen, C. Roel",235 cm,7,4,4,4,1,1,,,"Not so sure, really need more downcore points.",very ambiguous,Based on rises in Ambrosia & Poaceae,
+1793,NELSLK,Nels Lake,-91.9,48.033333,minnesota,"Shane, Linda C. K.",20.75 cm,13,-1,15,-1,1,1,,1,"Not so sure, really need more downcore points.",,,
+13056,OAKGLEN,Oak Glen Lake,-93.0876,43.9343,minnesota,"Cushing, Edward J.",225 cm,9,6,12,13,,,,,Just following Ambrosia,,,
+10971,OCHEDA,Ocheda Lake,-95.64,43.59,minnesota,"Cushing, Edward J.",35 cm,7,7,7,6,,,,,Just following Ambrosia,,Possibly 6,
+10977,OLSONMN,Olson Lake,-93.6619,46.5137,minnesota,"Cushing, Edward J.",1060 cm,3,4,4,4,,,,,Just following Ambrosia,,,
+1830,ONAMIA,Lake Onamia,-93.68,46.068333,minnesota,"McAndrews, John H.",30 cm,4,3,4,3,1,,,,"Not so sure, another Zizania lake",,Anywhere between 3 and 5,
+1831,ONDRISPD,Ondris Pond,-94.4,46.35,minnesota,"Jacobson, George L., Jr.",210 cm,8,8,8,9,,,,,"After this, pinus starts declining while Ambrosia rises.",,,
+1840,OTTOMLK,Otto Mielke Lake,-89.625,45.933333,wisconsin,"Shane, Linda C. K.",22.25 cm,11,11,11,12,1,,,1,"Not so sure, really need more downcore points.",,,tough
+1884,PENNINGT,Pennington Lake,-93.273056,45.780556,minnesota,"McAndrews, John H.",30 cm,4,5,6,7,,,,,Pretty clear.,,,
+12009,PERCHMN,Perch Lake,-95.4724,46.1959,minnesota,"Cushing, Edward J.",80 cm,8,8,7,13,,,1,,Pretty clear.,,Possibly 8,
+1891,PETERSL,Peterson Slough,-95.316667,46.966667,minnesota,"Almendinger, John C.",,-1,6,6,7,1,,,,I don't see an Ambrosia rise period.,,,
+3541,PGONIABG,Pogonia Bog Pond,-93.633333,45.033333,minnesota,"Cushing, Edward J.",35 cm,13,13,12,6,,,,1,A lot of changes occur sharply after this point.,,,this looks like terrestrialization on top of settlement.  Tough.
+1955,PLEASAMN,Pleasant Lake (US:Minnesota),-93.566667,44.588889,minnesota,"McAndrews, John H.",60 cm,7,3,3,5,1,,1,1,"Could also be 20 cm, unclear where change in Ambrosia really occurs.",,Tricky.   Could be  7,"tough, I put it earlier"
+3558,POGONIA,Pogonia Bog Pond,-93.633333,45.033333,minnesota,"Cushing, Edward J.",320 cm,8,9,9,9,,,,,"Clear, no hesitation.",,,
+1966,PORTAGE,Portage Lake,-94.113333,47.081389,minnesota,"McAndrews, John H.",35 cm,6,6,6,6,,,,,"Ambrosia and Poaceae rises, Pinus declines.",,,
+12011,RACHEL,Lake Rachel,-95.5616,45.8078,minnesota,"Cushing, Edward J.",35 cm,8,8,8,8,,,,,"Clear, no hesitation.",,,
+2011,RADTKE,Radtke Lake,-88.1,43.4,wisconsin,"Webb, Sara L.",52 cm,5,5,5,5,,,,,"Clear, no hesitation.",,,
+2051,REICHOW,Reichow,-95.775,47.187778,minnesota,"McAndrews, John H.",20 cm,5,7,8,6,,,1,,Just going on when Ambrosia exceeds baseline.,,Could be 4,
+2053,REIDEL,Reidel Lake,-95.284167,46.211944,minnesota,"Almquist-Jacobson, Heather",462 cm,5,5,4,4,,,1,,This looks like where the Ambrosia takes off.,,Could be 7,
+2062,RHOLL,Rholl Lake,-96.166667,47.6,minnesota,"McAndrews, John H.",20 cm,3,3,3,3,1,,,1,"I am also tempted by 70 cm, but its at 20 cm that aftwards there are big changes in the trees.",,,tough
+2066,RICEMNA,Rice Lake,-95.575,46.922222,minnesota,"McAndrews, John H.",,-1,-1,-1,-1,1,1,1,1,"I deleted this one from my calibration set as there's too much Zizania to do anything with it, in my opinion.",,Discard.  This is all grass and a likely wild rice site.,"nothing, these are rice lakes, I assume the poaceae signal erases everything"
+3568,RICEMNB,Rice Lake,-95.575,46.922222,minnesota,"McAndrews, John H.",,-1,-1,-1,-1,1,1,1,1,"I deleted this one from my calibration set as there's too much Zizania to do anything with it, in my opinion.",,Discard.  This is all grass and a likely wild rice site.,"nothing, these are rice lakes, I assume the poaceae signal erases everything"
+10983,RNDGROVE,Round Grove Lake,-94.5,44.718,minnesota,"Cushing, Edward J.",45 cm,5,5,5,6,,,,,Clear Ambrosia rise.,,,
+2290,ROSSBURG,Rossburg Bog,-93.6,46.583333,minnesota,"Wright, Herbert E., Jr.",,-1,-1,-1,-1,1,1,1,1,missing,,Missing from PDF of pollen diagrams,
+2309,RUBYLAKE,Ruby Lake,-91.458333,45.283333,wisconsin,"Winkler, Marjorie Green",150 cm,15,15,15,16,,,,,"This one is lovely, no doubt with good sampling",,,
+2314,RUTZLAKE,Rutz Lake,-93.87,44.87,minnesota,"Waddington, Jean C.B.",560 cm,9,9,5,-1,,1,1,1,Ambrosia rise,,Uncertain.,nothing
+2318,RYERSE,Ryerse Lake,-85.179167,46.131944,michigan:north,"Futyma, Richard P.",4.5 cm,2,2,-1,4,1,1,,1,Wonder if they blew coretop - this Ambrosia rise is very faint.,,No signal seen.  Possibly  no land clearance in area.,tough
+2354,SEDIVY,Sedivy Lake,-95.833333,47.208889,minnesota,"McAndrews, John H.",60 cm,7,7,7,7,,,,,"Rise of Ambrosia, decline of Pinus",,,
+3620,SEIDEL02,Seidel,-87.515556,44.45,wisconsin,"Maher, Louis J., Jr.",40 cm,3,3,3,3,1,,,,Not a lot of data here,,,
+2375,SHAGAWA,Shagawa Lake,-91.866667,47.916667,minnesota,"Bradbury, J. Platt",40 cm,13,12,13,14,,,,,Major disturbance starts afterward,,,
+13029,SHARKEY,Sharkey Lake,-93.4148,44.5939,minnesota,"Umbanhowar, Charles E., Jr.",1610.5 cm,9,-1,9,-1,1,,,1,Resolutions confusing.,,,nothing
+2383,SILVERMN,Silver Lake (US:Minnesota),-94.2,44.9,minnesota,"McAndrews, John H.",60 cm,6,7,7,7,1,,,,"Also tempted by 70 cm, hard to call.",,,
+2394,SISEEBA,Siseebakwet South,-93.683333,47.133333,minnesota,"Cushing, Edward J.",40 cm,3,2,3,-1,1,,,1,Low resolution.,,,nothing
+2581,SOLUM,Solum Lake,-96.25,46.662222,minnesota,"McAndrews, John H.",40 cm,5,5,5,5,,,1,,"Ambrosia rise, decline of sedges, poa and pinus, rise off chenopods.",,Possibly 3,
+2584,SOSTANCH,South Stanchfield Lake,-93.466667,45.725,minnesota,"McAndrews, John H.",20 cm,3,3,4,4,1,1,1,,I am also tempted by 50 cm.,high UC,Pegged to Pinus decline and Poaceae rise,
+10970,SOUHERON,South Heron Lake,-95.27,43.75,minnesota,"Cushing, Edward J.",30 cm,2,3,3,-1,1,,,1,not a lot of data here,,,nothing
+2585,SPECTACL,Spectacle Lake,-93.408333,45.572222,minnesota,"McAndrews, John H.",40 cm,5,5,5,5,,,,,Basing this on Ambrosia rise. Declines in Betula and Ostrya.,,,
+2586,SPIRIT,Spirit Lake (US:Michigan),-86.958333,46.47,michigan:north,"Davis, Margaret B.",20 cm,10,9,9,10,1,,1,,Basing this on Ambrosia rise. I wish there were more data points in this area as I think the exact rise might have been missed.,,Possibly 8 - 11,
+2600,STCATHER,St. Catherines Lake,-93.4325,44.626944,minnesota,"McAndrews, John H.",50 cm,5,5,5,6,,,,,"Basing this on Ambrosia, Poaceae and Cheno rise. Decline in Quercus ",,,
+2605,STONE,Stone Lake,-93.522222,45.4,minnesota,"McAndrews, John H.",20 cm,3,3,4,4,,,,,Basing this on Ambrosia rise.,,,
+2607,STONTAM1,Stone Lake Tamarack Swamp,-93.691667,44.891667,minnesota,"Swain, Patricia C.",120 cm,6,-1,5,-1,,1,1,1,"Basing this on Ambrosia rise. Also big changes in Poa, sedges and Quercus",,"Discard?   Heavy abundances of Poaceae, Cyperaceae suggest that this is a swamp.",nothing
+3780,STONTAM2,Stone Lake Tamarack Swamp,-93.691667,44.891667,minnesota,"Swain, Patricia C.",,-1,-1,3,-1,1,1,1,1,Don't see any Ambrosia rise here. I give up. Have discusion about whether need clear Ambrosia rise to be included?,,"Could  be 6.  Lots of Cyperaceae, presubmably because of  marsh",nothing
+3781,STWDARK2,Stewart's Dark Lake,-91.45,45.3,wisconsin,"Peters, M. A.",,-1,-1,-1,-1,1,1,1,1,Don't see any Ambrosia rise here. I give up.,,No settlement signal seen.,nothing
+2613,SUNFISH,Sunfish Lake,-93.1,44.874722,minnesota,"McAndrews, John H.",40 cm,5,5,5,5,,,,,"Basing this on Ambrosia, Rumex and Poaceae rises. Decline of Pinus",,,
+2624,TAMARACK,Tamarack Creek,-91.45,44.15,wisconsin,"Davis, Anthony M.",13 cm,3,3,3,3,,,,,Basing this on Ambrosia rise.,,,
+2638,TERHELL,Terhell Pond,-95.770556,47.187778,minnesota,"McAndrews, John H.",40 cm,4,4,4,5,,,1,,Basing this on Ambrosia rise.,,Possibly 7,
+3784,THIRDLK,Third Lake,-92.016667,48.108333,minnesota,"Swain, Patricia C.",184 cm,4,4,3,4,,,1,,Basing this on Ambrosia rise.,,Possibly 7,
+2640,THOMPSON,Thompson,-96.083333,47.2,minnesota,"McAndrews, John H.",30 cm,4,3,4,4,1,,,,Basing this on Ambrosia rise. Tempted by 20 cm as well. Biased because McAndrews discarded coretops,,,
+3786,THRDBGN,Third Lake,-92.016667,48.108333,minnesota,"Swain, Patricia C.",40 cm,7,7,7,7,1,,,,"Basing this on Ambrosia rise. But this is tricky because of the wild shifts in Ericaceae, sphagnum and pine.",,,
+3788,THRDBGW,Third Lake,-92.016667,48.108333,minnesota,"Swain, Patricia C.",60 cm,10,10,10,11,,,1,,Basing this on Ambrosia rise.,,This  record is a little crazy - bounces all over the place.,
+2648,TOENJES,Toenjes Lake,-93.981389,45.409722,minnesota,"McAndrews, John H.",60 cm,7,7,7,7,,,,,Basing this on Ambrosia and Poaceae rises.,,,
+2881,TWINMN1,Twin Lakes,-93.167778,45.848889,minnesota,"McAndrews, John H.",50 cm,6,5,6,7,,,,,Basing this on Ambrosia rise. Could also be 30 cm but seem to have exceeded downcore variability by here.,,,
+12015,UNION,Union Lake,-95.3484,45.8207,minnesota,"Cushing, Edward J.",45 cm,7,7,7,8,,,,,Based on Ambrosia rise and Ostrya decline.,,,
+2888,UPGRAVEN,Upper Graven Lake,-95.306944,46.184444,minnesota,"Almquist-Jacobson, Heather",160 cm,3,3,3,3,,,,1,Basing this on Ambrosia rise.,,,pretty rough record
+3831,VESTABRG,Vestaburg Bog,-84.883333,43.416667,michigan:south,"Gilliam, Jeanne A.",618 cm,9,9,9,9,,,,,Basing this on Ambrosia rise. Very clear.,,,
+15882,WARNER,Warner,-92.039,46.121,wisconsin,M. Tweiten,38.5 cm,9,6,9,7,1,,,,I am also tempted by 29.5 but it looks to me that the Ambrosia rise is exceeding natural variability earlier.,,,
+3837,WEBERLK,Weber Lake,-91.66,47.471667,minnesota,"Fries, Magnus",60 cm,4,-1,4,-1,1,1,1,,"Basing this on Ambrosia rise and decline of Pinus. Not hugely confident, don't know this area.",,I've seen better.,nothing
+2948,WENTZEL,Wentzel's Pond,-94.95,46.95,minnesota,"Almendinger, John C.",55 cm,5,5,5,5,,,,,Basing this on Ambrosia rise.,,,
+13051,WESTOLAF,West Olaf Lake,-96.198,46.6043,minnesota,"Nelson, David M.",120 cm,4,-1,5,5,,1,1,,"Basing this on Ambrosia rise. After running on instinct for awhile, I realize that I'm picking the last point in the Ambrosia rise that's still within downcore variability and picking that as presettlement.",,Possibly 7,
+2952,WHITLIL1,White Lily Lake,-93.102778,46.086111,minnesota,"McAndrews, John H.",30 cm,4,4,7,5,,,,,"Basing this on Ambrosia, Rumex and Poaceae rises. McAndrews discarded much of coretop usually.",,,
+2961,WINTERGR,Wintergreen Lake,-85.383333,42.4,michigan:south,"Bailey, Robert E.",63 cm,14,15,15,15,,,,,Basing this on Ambrosia rise.,,Really nice Rumex signal.  Possibly 17,
+3031,WOLSFELD,Wolsfeld Lake,-93.577,45.008,minnesota,"Grimm, Eric Christopher",710 cm,7,8,8,9,,,1,,Basing this on Ambrosia rise.,,7 to 9,
+3032,WOLVERIN,Wolverine Lake,-85.661111,46.429167,michigan:north,"Futyma, Richard P.",15 cm,4,4,4,4,,1,1,,"Basing this on Ambrosia, Rumex and Poaceae rises.",,Only 5 samples,
+3035,WOODLAKE,Wood Lake,-90.083333,45.333333,wisconsin,"Heide, Kathleen M.",100 cm,4,4,4,4,,,,,Confident given the few samples there is no choice here really.,,,
+3047,YELLOWDG,Yellow Dog Pond,-87.95,46.75,michigan:north,"Brubaker, Linda B.",,-1,2,-1,-1,1,1,1,1,Too little data to use in my opinion.,,"Discard?  Can't tell - no clear signal, only 3 samples.",nothing
+12012,ZIEBELL,Ziebell Lake,-95.2663,46.0572,minnesota,"Cushing, Edward J.",50 cm,9,9,7,10,1,,,,"I'm hesitating between 35 and 50, but after 50 ulmus increases and betula and ostrya decline which also go on this immediate region with settlement",,,

@@ -64,15 +64,15 @@ make_coredf <- function(x, settings, core_param, core_top = NULL) {
         age <- c(10, 100, 150)
         error <- log10(c(1.5, 15, 85))
         model <- lm(error ~ age)
-        
+
         age_err <- z$age - core_top
-        
+
         z$agelimitolder <-   ceiling(z$agelimitolder   + 10^predict(model, newdata = data.frame(age = age_err))) %>% unlist
         z$agelimityounger <- floor(z$agelimityounger - 10^predict(model, newdata = data.frame(age = age_err))) %>% unlist
-        
+
         core_param$notes <- add_msg(core_param$notes,
                                     "A 210Pb age had no error assigned.  Used the Binford estimator to assign uncertainty.")
-        
+
       }
       if (z$chroncontroltype %in% c("Deglaciation", "Interpolated",
             "Core bottom", "Extrapolated", "Guess")) {
@@ -151,9 +151,13 @@ make_coredf <- function(x, settings, core_param, core_top = NULL) {
     }
   }
 
-  if (!is.null(settings$settlement) & exists(settings$settlement)) {
+  if (!is.null(settings$settlement) & !file.exists(settings$settlement)) {
+    stop("The user is requesting a settlement file that does not exist. Check your settings.yaml file.")
+  }
+  
+  if (!is.null(settings$settlement) & file.exists(settings$settlement)) {
     # Reassign settlement ages if they are present:
-    sett <- suppressMessages(readr::read_csv("data/expert_assessment.csv")) %>%
+    sett <- suppressMessages(readr::read_csv(settings$settlement)) %>%
       filter(!is.na(pre1.d))
 
     if (core_param$handle %in% sett$handle) {
@@ -163,15 +167,15 @@ make_coredf <- function(x, settings, core_param, core_top = NULL) {
 
       coord <- sett %>%
         filter(sett$handle == core_param$handle) %>%
-        select(long, lat)
+        dplyr::select(long, lat)
 
       state <- sett %>%
         filter(sett$handle == core_param$handle) %>%
-        select(state)
+        dplyr::select(state)
 
       horizons <- c("Pre-EuroAmerican settlement horizon",
                     "European settlement horizon",
-                     "Ambrosia rise")
+                    "Ambrosia rise")
 
       if (any(output$labid %in% horizons)) {
 
@@ -182,15 +186,21 @@ make_coredf <- function(x, settings, core_param, core_top = NULL) {
 
         output$age[geo_row] <- 1950 - as.numeric(get_survey_year(coord, state))
         output$error[geo_row] <- 50
+        core_param$hiatus <- depth
+        core_param$hiatus_age <- 1950 - get_survey_year(coord, state)
         core_param$notes <- add_msg(core_param$notes,
           "Adjusted settlement horizon based on expert elicitation.")
 
       } else {
         new_row <- data.frame(labid = "Expert assigned settlement horizon",
-          age = 1950 - get_survey_year(coord, state), error = 50, depth = depth,
-          cc = 0)
+                              age = 1950 - get_survey_year(coord, state),
+                              error = 50,
+                              depth = depth,
+                              cc = 0)
         output <- rbind(output, new_row)
         output <- output[order(output$depth), ]
+        core_param$hiatus <- depth
+        core_param$hiatus_age <- 1950 - get_survey_year(coord, state)
         core_param$notes <- add_msg(core_param$notes,
           "Added settlement horizon based on expert elicitation.")
       }

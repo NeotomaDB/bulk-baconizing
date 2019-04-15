@@ -60,6 +60,8 @@ This code is provided as an RMarkdown document to help guide the user.  It can s
 
 ### Executing the code
 
+Before you run the code, ensure that all packages are up to date and that you have all the packages that are required for the proper execution of this code.  Some errors that may arise may simply be the result of missing packages or out-of-date packages.  There is [a script for MacOS and Linux computers posted on github](https://gist.github.com/SimonGoring/fe3b0bf6b4cb9b8f0a2aa6cdce10bb29) that will install all packages required.  Otherwise a user can check their local packages and install and update manually.
+
 #### RStudio
 
 Many people working with R may choose to use [RStudio](http://rstudio.com).  If you are using RStudio you can customize elements of this document (for example, removing this header information) and then use the *knit* button to compile the code into an HTML document, while generating the neccessary output files (see the [README file](https://github.com/neotomadb/bulk-baconizing) in the GitHub repository).
@@ -146,7 +148,8 @@ Here we download the sedimentary data.  The key component here is the `get_datas
 #  dataset types. . .
 
 dataset_list <- get_dataset(datasettype='pollen',
-                            gpid = c('Michigan', 'Wisconsin', 'Minnesota'),
+                            gpid = c('Michigan', 'Wisconsin', 'Minnesota',
+                                     'Indiana', 'Ohio', 'North Dakota'),
                             ageyoung = 0)
 
 #  The load_downloads() function will download the datasets if either:
@@ -205,7 +208,8 @@ One unique element in this workflow is the use of two accumulation rates, one id
 |  **acc.shape.old**  | 0.9 | Shape parameter for sediement (as above). |
 |  **mem.strength**  | 2 | Memory (accumulation autocorrelation parameter) |
 |  **mem.mean**  | 0.5 | Mean value for memory. |
-|  **`hiatus`**  | NA | Location of a hiatus, either set at settlement, or a known hiatus. |
+|  **`hiatus`**  | NA | Location of a hiatus (depth in *cm*), either set at settlement, or a known hiatus. |
+|  **`hiatus_age`**  | NA | Estimated age of the hiatus. |
 |  **`thick`**  | 5 | Section thickness (cm) to be used by Bacon. |
 |  **`age.type`**  | NA | From the dataset, what is the original age type for the core chronology. |
 |  **`run`**  |  NA | Has the model been run by Bacon? |
@@ -237,6 +241,7 @@ if ((!existing_params) | settings$reset_parameters == TRUE) {
 
   params <- data.frame(handle = ds_handles,
                        datasetid = ds_ids,
+                       core_top = NA,
                        acc.mean.mod = 3.02,
                        acc.mean.old = 15.,
                        acc.shape.mod = 0.53,
@@ -244,6 +249,7 @@ if ((!existing_params) | settings$reset_parameters == TRUE) {
                        mem.strength = 2.,
                        mem.mean = 0.5,
                        hiatus = as.numeric(NA),
+                       hiatus_age = as.numeric(NA),
                        thick = 5.,
                        age.type = as.character(NA),
                        run = FALSE,
@@ -261,7 +267,7 @@ if ((!existing_params) | settings$reset_parameters == TRUE) {
                    path = paste0('data/params/bacon_params_v', settings$version, '.csv'))
 } else {
   params <- suppressMessages(readr::read_csv(paste0('data/params/bacon_params_v', settings$version, '.csv'),
-                            col_types = paste0(c('c','i', rep('n',8),'c', 'l','l','i','l','c', 'c','c'), collapse='')))
+                            col_types = paste0(c('c','i', rep('n',10),'c', 'l','l','i','l','c', 'c','c'), collapse='')))
 }
 
 ```

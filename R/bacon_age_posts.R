@@ -48,10 +48,11 @@ bacon_age_posts <- function(handle, settings) {
                  length.out = sections + 1)
         y <- c(outer[j, 1],
                outer[j, 1] +
-                 cumsum((diff(x) * outer[j, 2:(ncol(outer) - 2)]) %>%
+                 cumsum( ( diff(x) * outer[j, 2:(ncol(outer) - 2)]) %>%
                                                  as.numeric))
-        posteriors[, j] <- round(approx(x = x, y = y,
-                                       xout = depth %>% unlist())$y, 0)
+        posteriors[, j] <- bacon_extrap(x,
+                                        y = y,
+                                        xout = depth %>% unlist())
       }
 
       posterior_file <- paste0(settings$core_path, "/",

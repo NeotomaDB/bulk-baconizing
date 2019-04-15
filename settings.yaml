@@ -1,7 +1,7 @@
 #  Should the program remove any existing files in the Cores directory and start again?
 clean_run: true
 bacon: true
-bchron: true
+bchron: false
 
 #  What version of the run is this?  This will create a new parameters file if none exists.
 version: 1
@@ -25,7 +25,7 @@ modern: true
 thickness: data/paleon_thick.csv
 
 # Settlement indicators
-settlement: data/expert_assessment.csv
+settlement: data/input/expert_assessment.csv
 
 # In some work we have assignments for accumulation rates set as defauly.  Others may not.
 accumulation: false

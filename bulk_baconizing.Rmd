@@ -149,7 +149,7 @@ Here we download the sedimentary data.  The key component here is the `get_datas
 
 dataset_list <- get_dataset(datasettype='pollen',
                             gpid = c('Michigan', 'Wisconsin', 'Minnesota',
-                                     'Indiana', 'Ohio', 'North Dakota'),
+                                     'Indiana', 'Ohio', 'North Dakota', 'South Dakota'),
                             ageyoung = 0)
 
 #  The load_downloads() function will download the datasets if either:
@@ -347,6 +347,7 @@ for (i in 1:nrow(params)) {
                                 datasets = dataset_list,
                                 downloads = downloads,
                                 settings = settings)
+
   readr::write_csv(x = params,
                  path = paste0("data/params/bacon_params_v", settings$version, ".csv"))
 

@@ -171,30 +171,30 @@ build_agefiles <- function(param, datasets,
     }
 
   } else {
-    depths <- sapply(chrons[[2]][[good_row]]$controls, function(x) x$depth)
+    co_depths <- sapply(chrons[[2]][[good_row]]$controls, function(x) x$depth)
     ages <-   sapply(chrons[[2]][[good_row]]$controls, function(x) x$age)
     types <-  sapply(chrons[[2]][[good_row]]$controls, function(x) x$chroncontroltype)
-    
+
     if (any(types == "Core top")) {
       age_top <- ages[which(types == "Core top")]
       param$core_top <- age_top
     } else {
       if (!is.na(param$core_top)){
         age_top <- param$core_top
-      } else if (any(depths < 2)) {
-        min_depth <- min(depths[depths >= 0 & depths < 2])
-        age_top <- ages[which(depths == min_depth)]
+      } else if (any(co_depths < 2)) {
+        min_depth <- min(co_depths[co_depths >= 0 & co_depths < 2])
+        age_top <- ages[which(co_depths == min_depth)]
         if (any(types == "Lead-210")) {
-          param$notes <- add_msg(param$notes, paste0("No core top assigned in core but lead210 used. Core top assigned to sample at depth ", min_depth)) 
+          param$notes <- add_msg(param$notes, paste0("No core top assigned in core but lead210 used. Core top assigned to sample at depth ", min_depth))
         } else {
           param$notes <- add_msg(param$notes, paste0("No core top assigned in core but a depth/age seems to relate. Core top assigned to sample at depth ", min_depth))
         }
-        param$core_top <- ages[which(depths == min_depth)]
+        param$core_top <- ages[which(co_depths == min_depth)]
       } else {
         age_top <- NULL
       }
     }
-    
+
     out <- try(make_coredf(x = chrons[[2]][[good_row]],
                            core_param = param,
                            settings = settings,

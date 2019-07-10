@@ -8,3 +8,7 @@ agegen: bulk_baconizing.Rmd
 
 clean:
 	rm -rf *.html *.md *.docx figure/ cache/
+
+localbuild: bulk_baconizing.Rmd
+	Rscript -e 'rmarkdown::render(c("$<"))' || Rscript -e 'knitr::purl(c("$<"))'
+

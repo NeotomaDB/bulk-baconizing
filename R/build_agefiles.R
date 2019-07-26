@@ -1,11 +1,14 @@
 #' @title Build Bacon age-files
 #' @description
 
-build_agefiles <- function(param, datasets,
+build_agefiles <- function(param,
+                           datasets,
                            downloads,
                            ageorder = NULL,
                            settings,
                            verbose = TRUE) {
+
+  parm <- param
 
   age_file <- paste0(settings$core_path, "/", param$handle,
     "/", param$handle, ".csv")
@@ -175,9 +178,15 @@ build_agefiles <- function(param, datasets,
     ages <-   sapply(chrons[[2]][[good_row]]$controls, function(x) x$age)
     types <-  sapply(chrons[[2]][[good_row]]$controls, function(x) x$chroncontroltype)
 
+    if("list" %in% class(co_depths)) { co_depths <- unlist(co_depths) }
+
     if (any(types == "Core top")) {
       age_top <- ages[which(types == "Core top")]
-      param$core_top <- age_top
+      if (length(age_top) == 0) {
+          param$core_top <- NA
+      } else {
+          param$core_top <- age_top
+      }
     } else {
       if (!is.na(param$core_top)){
         age_top <- param$core_top
@@ -191,10 +200,12 @@ build_agefiles <- function(param, datasets,
         }
         param$core_top <- ages[which(co_depths == min_depth)]
       } else {
-        age_top <- NULL
+        age_top <- NA
+        param$core_top <- NA
       }
     }
-
+    cat(param$handle, '\n')
+    cat("  *\t", unlist(age_top), "\n")
     out <- try(make_coredf(x = chrons[[2]][[good_row]],
                            core_param = param,
                            settings = settings,
@@ -217,5 +228,8 @@ build_agefiles <- function(param, datasets,
       param$notes <- add_msg(param$notes, "Error processing the age file.")
     }
   }
+
+  if (is.null(unlist(param$core_top))) { param$core_top <- NA }
+
   return(param)
 }

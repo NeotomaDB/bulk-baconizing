@@ -60,7 +60,7 @@ make_coredf <- function(x, settings, core_param, core_top = NA) {
 
         z$agelimityounger <- 0
         z$agelimitolder <- 0
-      }age
+      }
       # Lead210 data is dealt with in our paper:
       if (z$chroncontroltype == "Lead-210" & z$age > 500) {
         z$age <- 1950 - z$age

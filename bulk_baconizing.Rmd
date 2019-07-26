@@ -336,7 +336,7 @@ Here we begin to generate the `csv` files for the cores to allow Bacon to run.  
 3.  In cases where a chronology exists for the best age type, but there is no assigned default model, choose the chonology that is most recent, based either on creation date or chronology id. **Raises a message in `notes`**
 4.  In cases where a chronology exists for the best age type, but there are multiple assigned default model, choose the chonology that is most recent, based either on creation date or chronology id. **Raises a message in `notes`**
 
-```{r write_agefiles, echo = TRUE, results='hide'}
+```{r write_agefiles, echo = TRUE, results='hide', warnings=FALSE, message=FALSE}
 
 ageorder <- get_table('agetypes')
 

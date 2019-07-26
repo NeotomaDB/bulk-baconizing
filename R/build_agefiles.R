@@ -231,5 +231,9 @@ build_agefiles <- function(param,
 
   if (is.null(unlist(param$core_top))) { param$core_top <- NA }
 
+  if(all(unlist(apply(param, 2, class)) == "list")) {
+    param <- unlist(param)
+  }
+
   return(param)
 }

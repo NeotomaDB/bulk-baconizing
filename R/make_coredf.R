@@ -60,15 +60,18 @@ make_coredf <- function(x, settings, core_param, core_top = NA) {
 
         z$agelimityounger <- 0
         z$agelimitolder <- 0
-      }
+      }age
       # Lead210 data is dealt with in our paper:
-      if (z$chroncontroltype == "Lead-210" & ifelse(is.null(z$age), NA, z$age) > 500) {
+      if (z$chroncontroltype == "Lead-210" & z$age > 500) {
         z$age <- 1950 - z$age
         core_param$notes <- add_msg(core_param$notes,
                                     "A 210Pb age had an assigned age greater than 500ybp: Assumed age scale incorrect.")
       }
       # Lead210 data is dealt with in our paper:
-      if (z$chroncontroltype == "Lead-210" & (is.null(z$agelimitolder) | (ifelse(is.null(z$agelimityounger), NA, z$agelimityounger) == ifelse(is.null(z$age), NA, z$age)))) {
+      if(is.null(z$age)) { z$age <- NA }
+      if(is.null(z$agelimityounger)) { z$agelimityounger <- NA }
+
+      if (z$chroncontroltype == "Lead-210" & (is.na(z$agelimitolder) | (z$agelimityounger == z$age))) {
         age <- c(10, 100, 150)
         error <- log10(c(1.5, 15, 85))
         model <- lm(error ~ age)

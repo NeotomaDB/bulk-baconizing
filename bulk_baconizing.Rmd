@@ -340,16 +340,22 @@ Here we begin to generate the `csv` files for the cores to allow Bacon to run.  
 
 ageorder <- get_table('agetypes')
 
-for (i in 1:nrow(params)) {
+for (i in i:nrow(params)) {
 
-  params[i, ] <- build_agefiles(param = params[i, ],
-                                ageorder = ageorder,
-                                datasets = dataset_list,
-                                downloads = downloads,
-                                settings = settings)
+    tester <- try(build_agefiles(param = params[i, ],
+                                  ageorder = ageorder,
+                                  datasets = dataset_list,
+                                  downloads = downloads,
+                                  settings = settings))
 
-  readr::write_csv(x = params,
-                 path = paste0("data/params/bacon_params_v", settings$version, ".csv"))
+    if(!"try-error" %in% class(tester)) {
+      params[i,] <- tester
+    } else {
+      params$notes[i] <- add_msg(params$notes[i], "Age file build error.")
+    }
+
+    readr::write_csv(x = params,
+                   path = paste0("data/params/bacon_params_v", settings$version, ".csv"))
 
 }
 

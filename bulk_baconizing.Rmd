@@ -340,7 +340,7 @@ Here we begin to generate the `csv` files for the cores to allow Bacon to run.  
 
 ageorder <- get_table('agetypes')
 
-for (i in i:nrow(params)) {
+for (i in 1:nrow(params)) {
 
     tester <- try(build_agefiles(param = params[i, ],
                                   ageorder = ageorder,

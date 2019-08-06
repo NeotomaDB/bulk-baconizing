@@ -27,6 +27,12 @@ thickness: data/paleon_thick.csv
 # Settlement indicators
 settlement: data/input/expert_assessment.csv
 
+# Core top adjustments
+coretop: data/input/coretop_adjust.csv
+
+# Settlement era adjustments
+settlement_adjust: data/input/settlement_adjust.csv
+
 # In some work we have assignments for accumulation rates set as defauly.  Others may not.
 accumulation: false
 

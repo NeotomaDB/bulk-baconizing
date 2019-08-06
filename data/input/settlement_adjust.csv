@@ -1,0 +1,8 @@
+datasetid, handle, sitename, age, reason
+1725,MCNRNY2A,McNearny Lake, 1899, local historical records assign late logging https://github.com/PalEON-Project/stepps-baconizing/issues/12
+3485,MCNRNY3A,McNearny Lake, 1899, local historical records assign late logging https://github.com/PalEON-Project/stepps-baconizing/issues/12
+3486,MCNRNY4A,McNearny Lake, 1899, local historical records assign late logging https://github.com/PalEON-Project/stepps-baconizing/issues/12
+3473,LAKEMARY, Lake Mary, NA, Dropping pre-settlement based on historical knowledge of COHMAP coring (loss of core top) https://github.com/PalEON-Project/stepps-baconizing/issues/8
+1548,KOTIRANT,Kotiranta Lake,NA, Dropping pre-settlement based on historical knowledge of COHMAP coring (loss of core top) https://github.com/PalEON-Project/stepps-baconizing/issues/7
+369,CHIPPEWA,Chippewa Bog,NA,Dropping pre-settlement, there was no core top: https://github.com/PalEON-Project/stepps-baconizing/issues/5
+982,GREENLK,Green Lake,NA,Commentary by Grimm: https://github.com/PalEON-Project/stepps-baconizing/issues/4

@@ -31,7 +31,10 @@ Rplots.pdf
 .Rproj.user
 data/params/*
 !data/params/README.md
+
 bulk_baconizing_files/*
 TODO.txt
 data/pollen_v1.rds
+
+bulk_baconizing.R
 

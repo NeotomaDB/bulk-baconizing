@@ -1,11 +1,14 @@
 #' @title Build Bacon age-files
 #' @description
 
-build_agefiles <- function(param, datasets,
+build_agefiles <- function(param,
+                           datasets,
                            downloads,
                            ageorder = NULL,
                            settings,
                            verbose = TRUE) {
+
+  parm <- param
 
   age_file <- paste0(settings$core_path, "/", param$handle,
     "/", param$handle, ".csv")
@@ -127,6 +130,9 @@ build_agefiles <- function(param, datasets,
 
   agetypes <- sapply(chrons[[2]], function(x) x$agetype)
 
+  coretops <- sapply(chrons[[2]], function(x) sapply(x$chronologies, function(y) y$controls$chroncontroltype))
+
+
   ## Here we check to see if we're dealing with varved data:
 
   if ("Varve years BP" %in% agetypes) {
@@ -171,30 +177,38 @@ build_agefiles <- function(param, datasets,
     }
 
   } else {
-    depths <- sapply(chrons[[2]][[good_row]]$controls, function(x) x$depth)
+    co_depths <- sapply(chrons[[2]][[good_row]]$controls, function(x) x$depth)
     ages <-   sapply(chrons[[2]][[good_row]]$controls, function(x) x$age)
     types <-  sapply(chrons[[2]][[good_row]]$controls, function(x) x$chroncontroltype)
-    
+
+    if("list" %in% class(co_depths)) { co_depths <- unlist(co_depths) }
+
     if (any(types == "Core top")) {
       age_top <- ages[which(types == "Core top")]
-      param$core_top <- age_top
+      if (length(age_top) == 0) {
+          param$core_top <- NA
+      } else {
+          param$core_top <- age_top
+      }
     } else {
       if (!is.na(param$core_top)){
         age_top <- param$core_top
-      } else if (any(depths < 2)) {
-        min_depth <- min(depths[depths >= 0 & depths < 2])
-        age_top <- ages[which(depths == min_depth)]
+      } else if (any(co_depths < 2)) {
+        min_depth <- min(co_depths[co_depths >= 0 & co_depths < 2])
+        age_top <- ages[which(co_depths == min_depth)]
         if (any(types == "Lead-210")) {
-          param$notes <- add_msg(param$notes, paste0("No core top assigned in core but lead210 used. Core top assigned to sample at depth ", min_depth)) 
+          param$notes <- add_msg(param$notes, paste0("No core top assigned in core but lead210 used. Core top assigned to sample at depth ", min_depth))
         } else {
           param$notes <- add_msg(param$notes, paste0("No core top assigned in core but a depth/age seems to relate. Core top assigned to sample at depth ", min_depth))
         }
-        param$core_top <- ages[which(depths == min_depth)]
+        param$core_top <- ages[which(co_depths == min_depth)]
       } else {
-        age_top <- NULL
+        age_top <- NA
+        param$core_top <- NA
       }
     }
-    
+    cat(param$handle, '\n')
+    cat("  *\t", unlist(age_top), "\n")
     out <- try(make_coredf(x = chrons[[2]][[good_row]],
                            core_param = param,
                            settings = settings,
@@ -217,5 +231,12 @@ build_agefiles <- function(param, datasets,
       param$notes <- add_msg(param$notes, "Error processing the age file.")
     }
   }
+
+  if (is.null(unlist(param$core_top))) { param$core_top <- NA }
+
+  if(all(unlist(apply(param, 2, class)) == "list")) {
+    param <- unlist(param)
+  }
+
   return(param)
 }

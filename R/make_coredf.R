@@ -1,6 +1,8 @@
-make_coredf <- function(x, settings, core_param, core_top = NULL) {
+make_coredf <- function(x, settings, core_param, core_top = NA) {
 
   corepath <- settings$core_path
+
+  core_param$core_top <- core_top
 
   assertthat::assert_that(file.exists(corepath),
     msg = "Core directory must exist.")
@@ -16,9 +18,15 @@ make_coredf <- function(x, settings, core_param, core_top = NULL) {
   assertthat::assert_that(length(x$controls) > 1,
     msg = "Core has fewer than two chron controls.")
 
-  test_empty <- function(x) ifelse(is.null(x), NA, x)
+  test_empty <- function(x) ifelse(is.null(x) | (length(x) == 0), NA, x)
 
   build_row <- function(z) {
+
+    z$age <- test_empty(z$age)
+    z$thickness <- test_empty(z$thickness)
+    z$agelimityounger <- test_empty(z$agelimityounger)
+    z$agelimitolder <- test_empty(z$agelimitolder)
+
     if (is.null(unlist(z$geochron))) {
       # There is no 'geochron' data:
       if (is.null(z$depth)) {
@@ -60,7 +68,10 @@ make_coredf <- function(x, settings, core_param, core_top = NULL) {
                                     "A 210Pb age had an assigned age greater than 500ybp: Assumed age scale incorrect.")
       }
       # Lead210 data is dealt with in our paper:
-      if (z$chroncontroltype == "Lead-210" & (is.null(z$agelimitolder) | (z$agelimityounger == z$age))) {
+      if(is.null(z$age)) { z$age <- NA }
+      if(is.null(z$agelimityounger)) { z$agelimityounger <- NA }
+
+      if (z$chroncontroltype == "Lead-210" & (is.na(z$agelimitolder) | (z$agelimityounger == z$age))) {
         age <- c(10, 100, 150)
         error <- log10(c(1.5, 15, 85))
         model <- lm(error ~ age)
@@ -129,8 +140,12 @@ make_coredf <- function(x, settings, core_param, core_top = NULL) {
 
       # Made a decision here to modify the lead210 errors to 0.
       out <- data.frame(labid = stringr::str_replace_all(z$geochron$labnumber,
-        ",", "_"), age = z$geochron$age, error = z$geochron$errorolder, depth = z$depth,
-        cc = ifelse(z$geochron$geochrontype %in% uncal, 1, 0), stringsAsFactors = FALSE)
+        ",", "_"),
+                        age = z$geochron$age,
+                        error = z$geochron$errorolder,
+                        depth = ifelse(is.null(z$depth), NA, z$depth),
+                        cc = ifelse(z$geochron$geochrontype %in% uncal, 1, 0),
+                        stringsAsFactors = FALSE)
     }
     return(out)
   }
@@ -154,7 +169,7 @@ make_coredf <- function(x, settings, core_param, core_top = NULL) {
   if (!is.null(settings$settlement) & !file.exists(settings$settlement)) {
     stop("The user is requesting a settlement file that does not exist. Check your settings.yaml file.")
   }
-  
+
   if (!is.null(settings$settlement) & file.exists(settings$settlement)) {
     # Reassign settlement ages if they are present:
     sett <- suppressMessages(readr::read_csv(settings$settlement)) %>%

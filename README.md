@@ -1,3 +1,4 @@
+[![DOI](https://zenodo.org/badge/156887009.svg)](https://zenodo.org/badge/latestdoi/156887009)
 ![DUB](https://img.shields.io/dub/l/vibe-d.svg)
  [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)  [![Build Status](https://travis-ci.org/NeotomaDB/bulk-baconizing.svg?branch=master)](https://travis-ci.org/NeotomaDB/bulk-baconizing) [![NSF-1550707](https://img.shields.io/badge/NSF-1550707-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1550707) [![NSF-1241868](https://img.shields.io/badge/NSF-1241868-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1241868) [![NSF-1740694](https://img.shields.io/badge/NSF-1740694-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1740694)
 
@@ -5,6 +6,26 @@
 # Bulk Baconizing
 
 For cases where a large number of records need to be processed using Bacon, this repository serves as a template to generate the required age files in an organized fashion.  It provides default parameters for initial runs, and provides a tracking module to indicate whether any issues were encountered in the construction of the geochronological table.
+
+## Citation
+
+Please cite your use of this repository as software:
+
+Goring SJ, Dawson A, Stegner MA, Wang Y. 2019. Bulk Baconizing. Gitub Repository. DOI: 10.5281/zenodo.2545891
+
+Or import with BibTeX:
+
+```
+@misc{Goring2019,
+  author = {Goring, S.J.},
+  title = {Project Title},
+  year = {2019},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{https://github.com/NeotomaDB/bulk-baconizing}},
+  doi = {10.5281/zenodo.2545891}
+}
+```
 
 ## Contributions
 
@@ -60,6 +81,8 @@ Navigate to the working directory and execute the command:
 ```
 Rscript -e "rmarkdown::render('bulk_baconizing.Rmd')"
 ```
+
+This should run the code as it is written.  Be sure you have set the appropriate bounding box or geographic bounds for your region of interest.
 
 ## Feedback, Suggestions and Comments
 

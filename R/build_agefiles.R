@@ -130,6 +130,9 @@ build_agefiles <- function(param,
 
   agetypes <- sapply(chrons[[2]], function(x) x$agetype)
 
+  coretops <- sapply(chrons[[2]], function(x) sapply(x$chronologies, function(y) y$controls$chroncontroltype))
+
+
   ## Here we check to see if we're dealing with varved data:
 
   if ("Varve years BP" %in% agetypes) {

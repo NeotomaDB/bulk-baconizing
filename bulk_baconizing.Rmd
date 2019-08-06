@@ -125,6 +125,10 @@ A `yaml` file is a special kind of markup that uses a `key`: `value` pairing, wi
 
 *   `settlement`: (default `false`) In Kujawa et al (2017) and in Dawson et al (2018) an expert-assessment exercise was undertaken to evaluate the presence and location of biostratigraphic markers for Euro-American settlement in the Upper Midwestern United States.  This file is included for reference.  With columns indicating `datasetid` and `depth`, if the parameter is set to a file location, such as `data/expert_assessment.csv`, then any indicator of Settlement will be revised, otherwise (e.g., `settlement: false`) the chronological controls for the records will remain as-is.
 
+*   `coretop`: This points to a file that contains adjustments to recorded core top ages for records based on additional information from external sources.  Requires a `datasetid` column and an `age` and `depth` column. In cases where a reported core top should be removed, place an `NA` in the file for `age`.
+
+*   `settlement_adjust`: This points to a file that contains adjustments to recorded settlement ages for records based on additional information from external sources.  Requires a `datasetid` column and an `age` and `depth` column.  In cases where a reported settlement age should be removed, place an `NA` in the file for `age`.
+
 *   `accumulation`: (default `false`) Similar to thickness, if modifications have been made to accumulation rates, a file can be defined here.
 
 *   `parallel`: (default `true`) Should the code try to run Bacon in parallel?  This is either the value `false` or the maximum number of cores to attempt (e.g., `3`).  This means it is possible to run your script on fewer cores than your system has available to allow you to continue work on other projects.  The code used in this script uses the `mclapply()` function, which means that the parallel operations, which use [parallel forking in R](https://garthtarr.com/parallel-computation-in-r/), are not available for Windows systems.
@@ -278,26 +282,26 @@ In the case that there has been a prior run or some prior assessment of thicknes
 
 ```{r prior_thickness, echo = TRUE, results = 'asis'}
 
-  if(is.null(settings$thickness) | settings$thickness == FALSE | "character" %in% class(settings$thickness)) {
+if(is.null(settings$thickness) | settings$thickness == FALSE | "character" %in% class(settings$thickness)) {
 
-    if ("character" %in% class(settings$thickness)) {
-      if (file.exists(settings$thickness)) {
-        params <- add_thickness(file = settings$thickness,
-                                id_col = 1,
-                                thick_col = 4,
-                                parameters = params)
-          readr::write_csv(x = params,
-                     path = paste0('data/params/bacon_params_v', settings$version, '.csv'))
+  if ("character" %in% class(settings$thickness)) {
+    if (file.exists(settings$thickness)) {
+      params <- add_thickness(file = settings$thickness,
+                              id_col = 1,
+                              thick_col = 4,
+                              parameters = params)
+        readr::write_csv(x = params,
+                   path = paste0('data/params/bacon_params_v', settings$version, '.csv'))
 
-      } else {
-        stop("The file defined in `settings.yaml` does not exist.")
-      }
     } else {
-      message("No thickness file is defined.")
+      stop("The file defined in `settings.yaml` does not exist.")
     }
   } else {
-    stop("The setting for thickness in `settings.yaml` is not set correctly.")
+    message("No thickness file is defined.")
   }
+} else {
+  stop("The setting for thickness in `settings.yaml` is not set correctly.")
+}
 
 ```
 

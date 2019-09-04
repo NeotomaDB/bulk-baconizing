@@ -18,7 +18,7 @@ Or import with BibTeX:
 ```
 @misc{Goring2019,
   author = {Goring, S.J.},
-  title = {Project Title},
+  title = {Bulk Baconizing},
   year = {2019},
   publisher = {GitHub},
   journal = {GitHub repository},

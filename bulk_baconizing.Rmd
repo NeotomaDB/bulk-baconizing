@@ -206,6 +206,8 @@ One unique element in this workflow is the use of two accumulation rates, one id
 | -------- | -------- | ---------------------------------------------------- |
 |  **`handle`**  | none | The unique text identifer for the dataset collection unit. |
 |  **datasetid**  | none | The unique dataset identifier. |
+|  **chronid** | none | The chronology used for the model. |
+|  **allchronids** | none | All chronologies available for the model. |
 |  **acc.mean.mod**  | 3.02 | Accumulation rate for *modern* sediment (above an identified Settlement Horizon).  If the `settings.yaml` flag `modern` is set to `false` this will be the same as `acc.mean.old`. |
 |  **acc.mean.old**  | 15 | Accumulation rate for sediment if no horizon is identified, or the `modern` flag is set to `false`. |
 |  **acc.shape.mod**  | 0.53 | Shape parameter for modern sediment (as above). |
@@ -233,18 +235,36 @@ After your first run of the script you can open the file at `r paste0('data/para
 existing_params <- file.exists(paste0('data/params/bacon_params_v', settings$version, '.csv'))
 
 if ((!existing_params) | settings$reset_parameters == TRUE) {
-
+  # If we can't find a parameters file, or the user asked to reset 
+  # the bulk-baconizing parameters:
+  
   message("Writing a new parameters file.")
 
   if (existing_params) {
-    file.copy(paste0('data/params/bacon_params_v', settings$version, '.csv'),
-              paste0('data/params/bacon_params_v', settings$version, '_', lubridate::round_date(lubridate::now("UTC"), unit="day"),'.csv'))
+    # There is an existing parameters file.  We're just going to
+    # move it over and add the current date to it.
+    
+    origin <- paste0('data/params/bacon_params_v', 
+                     settings$version, '.csv')
+    destination <- paste0('data/params/bacon_params_v', 
+                     settings$version, '_',
+                     lubridate::round_date(lubridate::now("UTC"), 
+                                           unit="day"),
+                     '.csv')
+    file.copy(origin, destination)
   }
-  ds_handles <- sapply(dataset_list, function(x) { x$dataset.meta$collection.handle })
-  ds_ids <- as.integer(sapply(dataset_list, function(x) { x$dataset.meta$dataset.id }))
+  
+  # Get dataset handles and IDs from the datasets:
+  ds_handles <- sapply(dataset_list, 
+                       function(x) { x$dataset.meta$collection.handle })
+  ds_ids <- as.integer(sapply(dataset_list, 
+                              function(x) { x$dataset.meta$dataset.id }))
 
+  # Build the big `params` data.frame
   params <- data.frame(handle = ds_handles,
                        datasetid = ds_ids,
+                       chronid = NA,
+                       allchronids = NA,
                        core_top = NA,
                        acc.mean.mod = 3.02,
                        acc.mean.old = 15.,
@@ -270,8 +290,15 @@ if ((!existing_params) | settings$reset_parameters == TRUE) {
   readr::write_csv(x = params,
                    path = paste0('data/params/bacon_params_v', settings$version, '.csv'))
 } else {
-  params <- suppressMessages(readr::read_csv(paste0('data/params/bacon_params_v', settings$version, '.csv'),
-                            col_types = paste0(c('c','i', rep('n',10),'c', 'l','l','i','l','c', 'c','c'), collapse='')))
+  
+  p_file <- paste0('data/params/bacon_params_v', settings$version, '.csv')
+  
+  params <- suppressMessages(readr::read_csv(p_file,
+                            col_types = paste0(c('c','i', 'i', 
+                                                 'c', rep('n',10),
+                                                 'c', 'l','l','i',
+                                                 'l','c', 'c','c'), 
+                                               collapse='')))
 }
 
 ```
@@ -352,10 +379,12 @@ for (i in 1:nrow(params)) {
                                   downloads = downloads,
                                   settings = settings))
 
-    if(!"try-error" %in% class(tester)) {
+    if (!"try-error" %in% class(tester)) {
       params[i,] <- tester
     } else {
-      params$notes[i] <- add_msg(params$notes[i], "Age file build error.")
+      
+      params$notes[i] <- add_msg(params$notes[i], 
+                                 "Age file build error.")
     }
 
     readr::write_csv(x = params,

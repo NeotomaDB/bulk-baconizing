@@ -8,8 +8,6 @@ build_agefiles <- function(param,
                            settings,
                            verbose = TRUE) {
 
-  parm <- param
-
   age_file <- paste0(settings$core_path, "/", param$handle,
     "/", param$handle, ".csv")
   depth_file <- paste0(settings$core_path, "/", param$handle,
@@ -35,6 +33,15 @@ build_agefiles <- function(param,
 
   chrons <- jsonlite::fromJSON(url, simplifyVector = FALSE)$data[[1]]
 
+  chronids <- try(toJSON(sapply(chrons$chronologies, function(x) x$chronologyid)))
+  
+  # Add the chronology ids to the parameters file:
+  if ("try-error" %in% class(chronids)) {
+    chronids <- "[]"
+  }
+  param$allchronids <- chronids
+  
+  
   modeldefault <- chrons$chronologies %>%
     purrr::map(function (x) {
       data.frame(agetype = x$agetype,
@@ -132,7 +139,6 @@ build_agefiles <- function(param,
 
   coretops <- sapply(chrons[[2]], function(x) sapply(x$chronologies, function(y) y$controls$chroncontroltype))
 
-
   ## Here we check to see if we're dealing with varved data:
 
   if ("Varve years BP" %in% agetypes) {
@@ -177,6 +183,9 @@ build_agefiles <- function(param,
     }
 
   } else {
+    
+    param$chronid <- chrons[[2]][[good_row]]$chronologyid
+    
     co_depths <- sapply(chrons[[2]][[good_row]]$controls, function(x) x$depth)
     ages <-   sapply(chrons[[2]][[good_row]]$controls, function(x) x$age)
     types <-  sapply(chrons[[2]][[good_row]]$controls, function(x) x$chroncontroltype)
@@ -194,8 +203,10 @@ build_agefiles <- function(param,
       if (!is.na(param$core_top)){
         age_top <- param$core_top
       } else if (any(co_depths < 2)) {
+        
         min_depth <- min(co_depths[co_depths >= 0 & co_depths < 2])
         age_top <- ages[which(co_depths == min_depth)]
+        
         if (any(types == "Lead-210")) {
           param$notes <- add_msg(param$notes, paste0("No core top assigned in core but lead210 used. Core top assigned to sample at depth ", min_depth))
         } else {

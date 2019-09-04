@@ -1,5 +1,6 @@
 #' @title Run Bacon on a set of sites
 #' @param x A data frame of parameters.
+#' @param settings The global settings for the analysis.
 
 run_batch <- function(x, settings){
 

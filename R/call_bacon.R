@@ -62,13 +62,18 @@ call_bacon <- function(site_params, settings) {
         site_params$hiatus <- 0
       }
 
-      out <- try(Bacon(core = site_params$handle, coredir = settings$core_path,
-        acc.mean = acc.mean.val, acc.shape = acc.shape.val,
-        mem.strength = site_params$mem.strength,
-        mem.mean = site_params$mem.mean,
-        thick = site_params$thick, ask = FALSE,
-        suggest = FALSE, depths.file = TRUE,
-        hiatus.max = 10, hiatus.depths = hiatus.depth))
+      out <- try(Bacon(core = site_params$handle, 
+                       coredir = settings$core_path,
+                       acc.mean = as.numeric(acc.mean.val), 
+                       acc.shape = as.numeric(acc.shape.val),
+                       mem.strength = as.numeric(site_params$mem.strength),
+                       mem.mean = as.numeric(site_params$mem.mean),
+                       thick = as.numeric(site_params$thick),
+                       ask = FALSE,
+                       suggest = FALSE, 
+                       depths.file = TRUE,
+                       hiatus.max = 10, 
+                       hiatus.depths = hiatus.depth))
 
       if (!(class(out) == "try-error")) {
         site_params$run <- 1

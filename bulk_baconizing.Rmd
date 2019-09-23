@@ -235,29 +235,29 @@ After your first run of the script you can open the file at `r paste0('data/para
 existing_params <- file.exists(paste0('data/params/bacon_params_v', settings$version, '.csv'))
 
 if ((!existing_params) | settings$reset_parameters == TRUE) {
-  # If we can't find a parameters file, or the user asked to reset 
+  # If we can't find a parameters file, or the user asked to reset
   # the bulk-baconizing parameters:
-  
+
   message("Writing a new parameters file.")
 
   if (existing_params) {
     # There is an existing parameters file.  We're just going to
     # move it over and add the current date to it.
-    
-    origin <- paste0('data/params/bacon_params_v', 
+
+    origin <- paste0('data/params/bacon_params_v',
                      settings$version, '.csv')
-    destination <- paste0('data/params/bacon_params_v', 
+    destination <- paste0('data/params/bacon_params_v',
                      settings$version, '_',
-                     lubridate::round_date(lubridate::now("UTC"), 
+                     lubridate::round_date(lubridate::now("UTC"),
                                            unit="day"),
                      '.csv')
     file.copy(origin, destination)
   }
-  
+
   # Get dataset handles and IDs from the datasets:
-  ds_handles <- sapply(dataset_list, 
+  ds_handles <- sapply(dataset_list,
                        function(x) { x$dataset.meta$collection.handle })
-  ds_ids <- as.integer(sapply(dataset_list, 
+  ds_ids <- as.integer(sapply(dataset_list,
                               function(x) { x$dataset.meta$dataset.id }))
 
   # Build the big `params` data.frame
@@ -290,14 +290,14 @@ if ((!existing_params) | settings$reset_parameters == TRUE) {
   readr::write_csv(x = params,
                    path = paste0('data/params/bacon_params_v', settings$version, '.csv'))
 } else {
-  
+
   p_file <- paste0('data/params/bacon_params_v', settings$version, '.csv')
-  
+
   params <- suppressMessages(readr::read_csv(p_file,
-                            col_types = paste0(c('c','i', 'i', 
+                            col_types = paste0(c('c','i', 'i',
                                                  'c', rep('n',10),
                                                  'c', 'l','l','i',
-                                                 'l','c', 'c','c'), 
+                                                 'l','c', 'c','c'),
                                                collapse='')))
 }
 
@@ -382,8 +382,8 @@ for (i in 1:nrow(params)) {
     if (!"try-error" %in% class(tester)) {
       params[i,] <- tester
     } else {
-      
-      params$notes[i] <- add_msg(params$notes[i], 
+
+      params$notes[i] <- add_msg(params$notes[i],
                                  "Age file build error.")
     }
 

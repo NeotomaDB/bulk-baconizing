@@ -223,8 +223,9 @@ One unique element in this workflow is the use of two accumulation rates, one id
 |  **`ndates`**  | NA | How many dates are used in the chronology? |
 |  **`success`**  | NA | Did Bacon run and return a result successfully? |
 |  **`notes`**  | `.` | Any notes associated with the run. |
+|  **`user_notes`**   | `.`  | Notes by the user for subsequent runs.  |
 
-Any of these parameters can be changed by altering the values in the code chunk below (in the Rmd file) before running the document.  If you have already run the document using a set of parameters and decide to change defaults, you can either change the `version` in `settings.yaml` or choose to set `reset_parameters` to `true`.  Once you have run the full script and you have produced Bacon files you can manually edit individual sites by opening the `data/params/bacon_params_version.csv` file.
+Any of these parameters can be changed by altering the values in the code chunk below (in the `.Rmd` file) before running the document.  If you have already run the document using a set of parameters and decide to change defaults, you can either change the `version` in `settings.yaml` or choose to set `reset_parameters` to `true`.  Once you have run the full script and you have produced Bacon files you can manually edit individual sites by opening the `data/params/bacon_params_version.csv` file.
 
 ### Modifying the Parameters
 
@@ -283,6 +284,7 @@ if ((!existing_params) | settings$reset_parameters == TRUE) {
                        reliableold = NA,
                        reliableyoung = NA,
                        notes = ".",
+                       user_notes = ".",
                        stringsAsFactors = FALSE)
 
   default <- params
@@ -297,8 +299,11 @@ if ((!existing_params) | settings$reset_parameters == TRUE) {
                             col_types = paste0(c('c','i', 'i',
                                                  'c', rep('n',10),
                                                  'c', 'l','l','i',
-                                                 'l','c', 'c','c'),
+                                                 'l','c','c','c','c'),
                                                collapse='')))
+  params$success[is.na(params$success)] <- 0
+  params$run[is.na(params$run)] <- 0
+  params$suitable[is.na(params$suitable)] <- 0
 }
 
 ```
@@ -309,25 +314,27 @@ In the case that there has been a prior run or some prior assessment of thicknes
 
 ```{r prior_thickness, echo = TRUE, results = 'asis'}
 
-if(is.null(settings$thickness) | settings$thickness == FALSE | "character" %in% class(settings$thickness)) {
+# We only modify thicknesses if we're doing new parameters,
+# if we're loading the old parameters, then we expect that they've
+# already been set.
 
-  if ("character" %in% class(settings$thickness)) {
-    if (file.exists(settings$thickness)) {
-      params <- add_thickness(file = settings$thickness,
-                              id_col = 1,
-                              thick_col = 4,
-                              parameters = params)
-        readr::write_csv(x = params,
-                   path = paste0('data/params/bacon_params_v', settings$version, '.csv'))
+assertthat::assert_that(!is.null(settings$thickness),
+  msg = "The thickness setting must be a file name or `FALSE`")
 
-    } else {
-      stop("The file defined in `settings.yaml` does not exist.")
-    }
-  } else {
-    message("No thickness file is defined.")
-  }
-} else {
-  stop("The setting for thickness in `settings.yaml` is not set correctly.")
+assertthat::assert_that(settings$thickness == FALSE |
+                        "character" %in% class(settings$thickness),
+   msg = "The setting for thickness in `settings.yaml` is not set correctly.")
+
+modify_thick <- file.exists(as.character(settings$thickness)) &
+               settings$reset_parameters == TRUE
+
+if (modify_thick) {
+  params <- add_thickness(file = settings$thickness,
+                          id_col = 1,
+                          thick_col = 4,
+                          parameters = params)
+  readr::write_csv(x = params,
+             path = paste0('data/params/bacon_params_v', settings$version, '.csv'))
 }
 
 ```
@@ -338,22 +345,23 @@ In the case that there has been a prior run or some prior assessment of accumula
 
 ```{r prior_accumulation, echo = TRUE, results = 'asis'}
 
-if(is.null(settings$accumulation) | settings$accumulation == FALSE | "character" %in% class(settings$accumulation)) {
+assertthat::assert_that(!is.null(settings$accumulation),
+  msg = "The accumulation setting must be a file name or `FALSE`")
 
-  if ("character" %in% class(settings$accumulation)) {
-    if (file.exists(settings$accumulation)) {
-      params <- add_accumulation(file = settings$accumulation,
-                              id_col = 1,
-                              accum_col = 4,
-                              parameters = params)
-    } else {
-      stop("The file defined in `settings.yaml` does not exist.")
-    }
-  } else {
-    message("No accumulation file is defined.")
-  }
-} else {
-  stop("The setting for accumulations in `settings.yaml` is not set correctly.")
+assertthat::assert_that(settings$accumulation == FALSE |
+                        "character" %in% class(settings$accumulation),
+   msg = "The setting for accumulation in `settings.yaml` is not set correctly.")
+
+modify_acc <- file.exists(as.character(settings$accumulation)) &
+                settings$reset_parameters == TRUE
+
+if (modify_acc) {
+  params <- add_accumulation(file = settings$accumulation,
+                          id_col = 1,
+                          accum_col = 4,
+                          parameters = params)
+  readr::write_csv(x = params,
+             path = paste0('data/params/bacon_params_v', settings$version, '.csv'))
 }
 
 ```
@@ -373,11 +381,14 @@ ageorder <- get_table('agetypes')
 
 for (i in 1:nrow(params)) {
 
+  good_run <- (params$run[i] ==  1 & params$success[i] == 1)
+
+  if(!good_run & params$suitable[i] == 1) {
     tester <- try(build_agefiles(param = params[i, ],
-                                  ageorder = ageorder,
-                                  datasets = dataset_list,
-                                  downloads = downloads,
-                                  settings = settings))
+                                 ageorder = ageorder,
+                                 datasets = dataset_list,
+                                 downloads = downloads,
+                                 settings = settings))
 
     if (!"try-error" %in% class(tester)) {
       params[i,] <- tester
@@ -389,6 +400,9 @@ for (i in 1:nrow(params)) {
 
     readr::write_csv(x = params,
                    path = paste0("data/params/bacon_params_v", settings$version, ".csv"))
+  } else {
+    cat("Skipping", params$handle[i], "\n")
+  }
 
 }
 
@@ -416,7 +430,8 @@ The script is set up so that places where there is an objective choice, a clear 
 
 The final step, once all the files have been written, is to run Bacon.  Using the `rbacon` package we can simplify everything:
 
-```{r baconruns, eval=TRUE, results="hide", messages = FALSE, warning=FALSE, fig.show="hide"}
+```{r baconruns, eval=TRUE, results="hide", message=FALSE, warning=FALSE, fig.show="hide"}
+
 params <- run_batch(params, settings = settings)
 readr::write_csv(x = params,
               path = paste0("data/params/bacon_params_v", settings$version, ".csv"))

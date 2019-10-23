@@ -3,7 +3,7 @@
 #' @param id_col
 #' @param accum_col
 #' @param parameters
-#'
+
 add_accumulation <- function(file, id_col = 1, accum_col = 2, parameters, verbose = TRUE) {
 
   accum_list <- readr::read_csv(file) %>% as.data.frame
@@ -19,10 +19,17 @@ add_accumulation <- function(file, id_col = 1, accum_col = 2, parameters, verbos
                           msg = "None of the dataset ids in the accumulation file are in the parameter file.")
 
   accumulations <- accumulations %>%
-    filter(ids %in% parameters$datasetid & accum %in% parameters$acc.shape.old)
+    filter(ids %in% parameters$datasetid &
+           accum %in% parameters$acc.shape.old)
+  updates <- accumulations %>%
+    filter(ids %in% parameters$datasetid)
 
   if (verbose) {
-    message(paste0("Modifying ", nrow(accumulations), " records to update accumulations."))
+
+    message(paste0("Modifying ",
+                   nrow(changed),
+                   " records to update thicknesses. ",
+                   nrow(updates), " records already changed."))
   }
 
   param_rows <- match(accumulations$ids, params$datasetid)

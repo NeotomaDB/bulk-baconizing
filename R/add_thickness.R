@@ -32,10 +32,12 @@ add_thickness <- function(file,
   if (verbose) {
 
     changed <- !(parameters$thick[param_rows] == thicknesses$thick)
+    updates <- (parameters$thick[param_rows] == thicknesses$thick)
 
     message(paste0("Modifying ",
                    sum(changed),
-                   " records to update thicknesses."))
+                   " records to update thicknesses. ",
+                   sum(updates), " records already changed."))
   }
 
   parameters$thick[param_rows] <- thicknesses$thick

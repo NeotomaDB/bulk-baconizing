@@ -2,23 +2,37 @@
 #' @param x A data frame of parameters.
 #' @param settings The global settings for the analysis.
 
-run_batch <- function(x, settings){
+run_batch <- function(x, settings, limit = nrow(x), offset = 1){
 
   check_params(x)
 
+  x_out <- x
+
   if (!settings$parallel == FALSE) {
+    # Currently not implemented
     cores <- parallel::detectCores()
     max_cores <- min(settings$parallel, cores, na.rm = TRUE)
   }
 
-  x_out <- lapply(1:nrow(x), function(i, x, settings){
+  for (i in offset:limit) {
 
-    if ( (!is.na(x$success[i])) & x$success[i] == 1 ) {
-      message(paste0(x$handle, " has already been run. Skipping.\n"))
-      return(x[i, ])
+    done_run <- (!is.na(x$success[i])  & x$success[i] == TRUE) &
+                (!is.na(x$run[i])  & x$run[i] == TRUE)
+    is_okay  <- !is.na(x$suitable[i]) & x$suitable[i] == TRUE
+
+    if (done_run) {
+      message(paste0(x$handle[i], " has already been run. Skipping.\n"))
+      next
     }
+
+    if (!is_okay) {
+      message(paste0(x$handle[i], " is not suitable for reconstruction. Skipping.\n"))
+      next
+    }
+
     if (is.na(x$thick[i])) {
-      return(x[i, ])
+      message(paste0(x$handle[i], " has no preferred thickness in the parameter file. Skipping.\n"))
+      next
     }
 
     # This fails in linux if libgsl.so.0 cannot be found.  To fix this I ran:
@@ -29,33 +43,27 @@ run_batch <- function(x, settings){
     # ./usr/lib/x86_64-linux-gnu/libgsl.so.0
     # This allows things to work.
 
-    if (!is.na(x$suitable[i]) & x$suitable[i] == 1) {
+    if (is_okay) {
       run_out <- try(call_bacon(x[i, ], settings))
 
       if (!"try-error" %in% class(run_out)) {
-        x[i, ] <- run_out
+        x_out[i, ] <- run_out
 
       } else {
-        x$success[i] <- 0
-        x$run[i] <- 1
-        x$notes[i] <- add_msg(x$notes[i], "Bacon run attempted and failed.")
+        x_out$success[i] <- FALSE
+        x_out$run[i] <- TRUE
+        x_out$notes[i] <- add_msg(x_out$notes[i], "Bacon run attempted and failed.")
       }
 
-      readr::write_csv(x = data.frame(notes = strsplit(x$notes[i], split = ";")),
-        path = paste0(settings$core_path, "/", x$handle[i],
-                             "/", x$handle[i], "_notes.csv"))
-      readr::write_csv(x = x,
-                      path = paste0("data/params/bacon_params_v",
-                                     settings$version, ".csv"))
-      cat("...")
+      readr::write_csv(x = data.frame(notes = strsplit(x_out$notes[i], split = ";")),
+        path = paste0(settings$core_path, "/", x_out$handle[i],
+                             "/", x_out$handle[i], "_notes.csv"))
+      readr::write_csv(x = x_out,
+                    path = paste0("data/params/bacon_params_v",
+                                   settings$version, "_temp.csv"))
+      cat("...\n")
     }
-    return(x[i, ])
-  },
-  x = x, settings = settings)
+  }
 
-  x_out <- do.call(rbind.data.frame, x_out)
-
-  x[match(x_out$datasetid, x$datasetid), ] <- x_out
-
-  return(x)
+  return(x_out)
 }

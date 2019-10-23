@@ -4,6 +4,7 @@ call_bacon <- function(site_params, settings) {
 
   bacon_chrons <- paste0(settings$core_path, "/", site_params$handle,
                          "/", site_params$handle, ".csv")
+
   bacon_depths <- paste0(settings$core_path, "/", site_params$handle,
                         "/", site_params$handle, "_depths.txt")
 
@@ -22,12 +23,16 @@ call_bacon <- function(site_params, settings) {
       # find hiatus depth
       geochron <- suppressMessages(readr::read_csv(bacon_chrons))
 
+      if (any(diff(geochron$depth) < 0)) {
+        geochron <- geochron %>% arrange(depth)
+        readr::write_csv(geochron, bacon_chrons)
+      }
+
       gcol <- which(tolower(colnames(geochron)) == 'labid')
 
       sett_layer <- stringr::str_detect(unlist(geochron[,gcol]), "sett")
 
-      if (any(sett_layer) & nrow(geochron) >
-        2) {
+      if (any(sett_layer) & nrow(geochron) > 2) {
 
         # determine which bacon parameters to input if preset is the last sample
         if (which(sett_layer) == nrow(geochron)) {

@@ -9,7 +9,8 @@ call_bacon <- function(site_params, settings) {
 
   # check for suitability
   if (site_params$suitable == 1) {
-    if (is.na(site_params$success) | (!site_params$success == 1)) {
+    if (is.na(site_params$success) |
+        !(site_params$success == 1 & site_params$run == 1)) {
 
       if (!(file.exists(bacon_chrons) &  file.exists(bacon_depths))) {
         message("Files needed for Bacon do not exist.")
@@ -21,7 +22,9 @@ call_bacon <- function(site_params, settings) {
       # find hiatus depth
       geochron <- suppressMessages(readr::read_csv(bacon_chrons))
 
-      sett_layer <- stringr::str_detect(geochron$labid, "sett")
+      gcol <- which(tolower(colnames(geochron)) == 'labid')
+
+      sett_layer <- stringr::str_detect(unlist(geochron[,gcol]), "sett")
 
       if (any(sett_layer) & nrow(geochron) >
         2) {
@@ -62,17 +65,17 @@ call_bacon <- function(site_params, settings) {
         site_params$hiatus <- 0
       }
 
-      out <- try(Bacon(core = site_params$handle, 
+      out <- try(Bacon(core = site_params$handle,
                        coredir = settings$core_path,
-                       acc.mean = as.numeric(acc.mean.val), 
+                       acc.mean = as.numeric(acc.mean.val),
                        acc.shape = as.numeric(acc.shape.val),
                        mem.strength = as.numeric(site_params$mem.strength),
                        mem.mean = as.numeric(site_params$mem.mean),
                        thick = as.numeric(site_params$thick),
                        ask = FALSE,
-                       suggest = FALSE, 
+                       suggest = FALSE,
                        depths.file = TRUE,
-                       hiatus.max = 10, 
+                       hiatus.max = 10,
                        hiatus.depths = hiatus.depth))
 
       if (!(class(out) == "try-error")) {
@@ -88,6 +91,7 @@ call_bacon <- function(site_params, settings) {
           # This function generates the posterior estimates for the record.
           outputs <- bacon_age_posts(site_params$handle, settings)
           site_params$success <- 1
+          site_params$run <- 1
           test_outs <- outputs %>% na.omit()
           site_params$reliableold <- round(quantile(test_outs[nrow(test_outs),
           ], 0.33, na.rm = TRUE), 0)
@@ -98,13 +102,13 @@ call_bacon <- function(site_params, settings) {
       } else {
         site_params$notes <- add_msg(site_params$notes,
           "Core failed in Bacon run.")
-        site_params$run <- 1
-        site_params$success <- 0
+        site_params$run <- TRUE
+        site_params$success <- FALSE
 
       }
     }
   } else {
-    site_params$success <- 0
+    site_params$success <- FALSE
   }
 
   return(site_params)

@@ -1,5 +1,12 @@
 #' @title Build Bacon age-files
-#' @description
+#' @description From a given dataset ID and a set of established
+#' parameters, build an age file for a Bacon record.
+#' @param param A one row \code{data.frame()} corresponding to the parameters
+#' provided in the parameters for the Bacon age-generation program.
+#' @param datasets A \code{dataset_list} object from the \code{neotoma} R package.
+#' @param downloads A \code{download_list} object.
+#' @param ageorder A \code{data.frame} returned from the Neotoma \code{AgeOrder} table.  The \code{NULL} default means the function will download the table.
+#' @param settings The \code{settings} table for the Bacon bulk runs.
 
 build_agefiles <- function(param,
                            datasets,
@@ -14,9 +21,10 @@ build_agefiles <- function(param,
     "/", param$handle, "_depths.txt")
 
   if (!(is.na(param$suitable) | param$suitable == 1) &
-     param$suitable == 1 &
-     file.exists(age_file) &
-     file.exists(depth_file)) {
+      param$suitable == 1 &
+      file.exists(age_file) &
+      file.exists(depth_file)
+    ) {
     if (verbose == TRUE) {
       message(paste0("Bacon core and depths files have already ",
        "been written.  Set `suitable` to NA to rewrite files."))
@@ -34,14 +42,14 @@ build_agefiles <- function(param,
   chrons <- jsonlite::fromJSON(url, simplifyVector = FALSE)$data[[1]]
 
   chronids <- try(toJSON(sapply(chrons$chronologies, function(x) x$chronologyid)))
-  
+
   # Add the chronology ids to the parameters file:
   if ("try-error" %in% class(chronids)) {
     chronids <- "[]"
   }
+
   param$allchronids <- chronids
-  
-  
+
   modeldefault <- chrons$chronologies %>%
     purrr::map(function (x) {
       data.frame(agetype = x$agetype,
@@ -183,12 +191,25 @@ build_agefiles <- function(param,
     }
 
   } else {
-    
+
     param$chronid <- chrons[[2]][[good_row]]$chronologyid
-    
+
     co_depths <- sapply(chrons[[2]][[good_row]]$controls, function(x) x$depth)
     ages <-   sapply(chrons[[2]][[good_row]]$controls, function(x) x$age)
     types <-  sapply(chrons[[2]][[good_row]]$controls, function(x) x$chroncontroltype)
+
+    if(any(types == "Lead-210" & ages > 500)) {
+      # When 210-lead ages have incorrect date entries.
+      flipped_age <- (types == "Lead-210" & ages > 500)
+      flip_top <- which(ages[flipped_age] == param$core_top)
+
+      ages[flipped_age] <- 1950 - ages[flipped_age]
+
+      if (length(flip_top) == 1) {
+        param$core_top <- ages[flip_top]
+      }
+
+    }
 
     if("list" %in% class(co_depths)) { co_depths <- unlist(co_depths) }
 
@@ -203,10 +224,9 @@ build_agefiles <- function(param,
       if (!is.na(param$core_top)){
         age_top <- param$core_top
       } else if (any(co_depths < 2)) {
-        
         min_depth <- min(co_depths[co_depths >= 0 & co_depths < 2])
         age_top <- ages[which(co_depths == min_depth)]
-        
+
         if (any(types == "Lead-210")) {
           param$notes <- add_msg(param$notes, paste0("No core top assigned in core but lead210 used. Core top assigned to sample at depth ", min_depth))
         } else {
@@ -218,6 +238,7 @@ build_agefiles <- function(param,
         param$core_top <- NA
       }
     }
+
     cat(param$handle, '\n')
     cat("  *\t", unlist(age_top), "\n")
     out <- try(make_coredf(x = chrons[[2]][[good_row]],

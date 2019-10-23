@@ -448,8 +448,10 @@ A file has been added to the standard Bacon output.  In each directory the file 
 
 ```{r svg_box, echo=FALSE, result="as-is"}
 
-success <- round(sum(params$success == 1, na.rm=TRUE) / length(dataset_list) * 400, 0)
-fail <- round((1 - sum(params$success == 1, na.rm=TRUE) / length(dataset_list)) * 400, 0)
+success <- round(sum(params$success == 1, na.rm=TRUE) /
+  length(dataset_list) * 400, 0)
+fail <- round((1 - sum(params$success == 1, na.rm=TRUE) /
+  length(dataset_list)) * 400, 0)
 
 htmltools::HTML(paste0('<svg width="400" height="110">
  <rect y="0" x="0" width="',success,'" height="100" style="fill:rgb(102,102,255);stroke-width:1;stroke:rgb(0,0,0)" />

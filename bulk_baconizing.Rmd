@@ -305,7 +305,6 @@ if ((!existing_params) | settings$reset_parameters == TRUE) {
                                                arrange(handle)
   params$success[is.na(params$success)] <- 0
   params$run[is.na(params$run)] <- 0
-  params$suitable[is.na(params$suitable)] <- 0
 }
 
 ```
@@ -383,9 +382,10 @@ ageorder <- get_table('agetypes')
 
 for (i in 1:nrow(params)) {
 
-  good_run <- (params$run[i] ==  1 & params$success[i] == 1)
+  good_run <- params$run[i] ==  1 &
+              params$success[i] == 1
 
-  if(!good_run & params$suitable[i] == 1) {
+  if(!good_run) {
     tester <- try(build_agefiles(param = params[i, ],
                                  ageorder = ageorder,
                                  datasets = dataset_list,

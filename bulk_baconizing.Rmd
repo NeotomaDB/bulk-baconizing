@@ -285,7 +285,8 @@ if ((!existing_params) | settings$reset_parameters == TRUE) {
                        reliableyoung = NA,
                        notes = ".",
                        user_notes = ".",
-                       stringsAsFactors = FALSE)
+                       stringsAsFactors = FALSE) %>%
+    arrange(handle)
 
   default <- params
 
@@ -300,7 +301,8 @@ if ((!existing_params) | settings$reset_parameters == TRUE) {
                                                  'c', rep('n',10),
                                                  'c', 'l','l','i',
                                                  'l','c','c','c','c'),
-                                               collapse='')))
+                                               collapse=''))) %>%
+                                               arrange(handle)
   params$success[is.na(params$success)] <- 0
   params$run[is.na(params$run)] <- 0
   params$suitable[is.na(params$suitable)] <- 0
@@ -403,7 +405,6 @@ for (i in 1:nrow(params)) {
   } else {
     cat("Skipping", params$handle[i], "\n")
   }
-
 }
 
 ```

@@ -1,6 +1,6 @@
 [![DOI](https://zenodo.org/badge/156887009.svg)](https://zenodo.org/badge/latestdoi/156887009)
 ![DUB](https://img.shields.io/dub/l/vibe-d.svg)
- [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)  [![Build Status](https://travis-ci.org/NeotomaDB/bulk-baconizing.svg?branch=master)](https://travis-ci.org/NeotomaDB/bulk-baconizing) [![NSF-1550707](https://img.shields.io/badge/NSF-1550707-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1550707) [![NSF-1241868](https://img.shields.io/badge/NSF-1241868-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1241868) [![NSF-1740694](https://img.shields.io/badge/NSF-1740694-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1740694)
+ [![lifecycle](https://img.shields.io/badge/lifecycle-archived-orange.svg)](https://doi.org/10.1038/s41597-019-0182-7)  [![Build Status](https://travis-ci.org/NeotomaDB/bulk-baconizing.svg?branch=master)](https://travis-ci.org/NeotomaDB/bulk-baconizing) [![NSF-1550707](https://img.shields.io/badge/NSF-1550707-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1550707) [![NSF-1241868](https://img.shields.io/badge/NSF-1241868-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1241868) [![NSF-1740694](https://img.shields.io/badge/NSF-1740694-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1740694)
 
 
 # Bulk Baconizing
